@@ -19,7 +19,6 @@ router.delete('/patients/:id', (req, res) => { });
 router.get('/api/cases', (req, res) => {
   const unassigned = req.params.unassigned;
   const assignedToId = req.params.assignedToId;
-
 });
 
 module.exports.router = router;
