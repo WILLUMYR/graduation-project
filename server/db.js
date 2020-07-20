@@ -13,9 +13,15 @@ mongoose.connect(url, { useNewUrlParser: true });
 let patientSchema = new Schema({
   username: { type: String, required: true },
   userPassword: { type: String, required: true },
-  problemDescription: { type: Object, required: false },
-  caseTaken: { type: Boolean, required: true },
-  healthProfessional: { type: String, required: true },
+  case: {
+    caseDescription: { type: Object, required: false },
+    caseTaken: { type: Boolean, required: true },
+    healthProfessional: { type: String, required: true },
+    messages: [{
+      message: { type: String },
+      isPatient: { type: Boolean }
+    }],
+  }
 });
 
 const Patients = mongoose.model('Test', new Schema({ name: String }));
