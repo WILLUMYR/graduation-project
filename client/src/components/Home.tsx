@@ -3,10 +3,17 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <div>
-      <p>HOME</p>
-      <button>login</button>
-      <button>Signup</button>
-    </div>
-  )
+    <BrowserRouter>
+      <div>
+        <p>Home</p>
+        <Link className="" to="/login">
+          Get started!
+        </Link>
+        <Switch>
+          <Route exact path="/"></Route>
+          <Route exact path="/login"></Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 }
