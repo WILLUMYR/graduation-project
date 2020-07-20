@@ -5,6 +5,9 @@
   "main": "/backend/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "installClient": "cd client && npm install",
+    "installServer": "cd server && npm install",
+    "installAll": "npm run installClient && npm run installServer",
     "dev": "concurrently \"cd client && npm run start\" \"cd backend && npm run dev\""
   },
   "extends": [
