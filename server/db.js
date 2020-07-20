@@ -4,17 +4,13 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {});
-
-const username = process.env.USERNAME;
-const secret = process.env.SECRET;
-const dbname = process.env.DBNAME;
-
-const url = `mongodb+srv://${username}:${secret}@graduationproject.mr5uk.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+const url = process.env.MONGO_URI;
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () { console.log('success!') });
 
 const patientSchema = new Schema({
   username: { type: String, required: true },
