@@ -15,6 +15,7 @@ db.once('open', function () { console.log('success!') });
 const patientSchema = new Schema({
   username: { type: String, required: true },
   userPassword: { type: String, required: true },
+  userEmail: { type: String, required: false },
   case: {
     caseDescription: { type: Object, required: false },
     caseTaken: { type: Boolean, required: true },
@@ -29,6 +30,16 @@ const patientSchema = new Schema({
 });
 
 const Patients = mongoose.model('patients', patientSchema);
+
+const healthProSchema = new Schema({
+  name: { type: String, required: true },
+  profession: { type: String, required: true },
+  email: { type: String, required: true },
+  userPassword: { type: String, required: true },
+  cases: [{ caseId: { type: String, required: true } }],
+});
+
+const healthPro = mongoose.model('healthPro', healthProSchema);
 
 const newPatient = new Patients({
   username: 'user name',
@@ -48,8 +59,4 @@ const newPatient = new Patients({
       },
     ],
   },
-});
-
-newPatient.save(function (err) {
-  if (err) console.log('error');
 });
