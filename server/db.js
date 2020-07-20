@@ -68,6 +68,7 @@ const casesSchema = new Schema({
   healthProId: { type: String, required: false },
   description: { type: String, required: false },
   created: Date.now(),
+  closed: { type: Boolean, required: true },
   messsages: [{
     message: { type: String, required: true },
     isPatient: { type: Boolean, required: true },
