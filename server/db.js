@@ -73,7 +73,9 @@ const newCase = new Cases({
   something: 'hello',
 });
 
-newCase.save(function (err, ()=>{}) {
-  if (err) console.error(err);
-  cb()
+newCase.save(function (err, newCase) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log(newCase.id);
 });
