@@ -8,7 +8,9 @@
     "installClient": "cd client && npm install",
     "installServer": "cd server && npm install",
     "installAll": "npm run installClient && npm run installServer",
-    "dev": "concurrently \"cd client && npm run start\" \"cd backend && npm run dev\""
+    "startClient": "cd client && npm run start",
+    "startServer": "cd server && npm run dev",
+    "dev": "concurrently \"npm run startClient\" \"npm run startServer\""
   },
   "extends": [
     "salt",
