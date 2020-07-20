@@ -10,7 +10,9 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () { console.log('success!') });
+db.once('open', function () {
+  console.log('success!');
+});
 
 const patientSchema = new Schema({
   username: { type: String, required: true },
@@ -59,4 +61,19 @@ const newPatient = new Patients({
       },
     ],
   },
+});
+
+const casesSchema = new Schema({
+  something: { type: String }
+});
+
+const Cases = mongoose.model('cases', casesSchema);
+
+const newCase = new Cases({
+  something: 'hello',
+});
+
+newCase.save(function (err, ()=>{}) {
+  if (err) console.error(err);
+  cb()
 });
