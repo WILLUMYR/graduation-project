@@ -10,8 +10,8 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('success!');
+db.once('open', () => {
+  console.log('MongoDB successfully connected!');
 });
 
 const patientSchema = new Schema({
@@ -38,7 +38,7 @@ const healthProSchema = new Schema({
   profession: { type: String, required: true },
   email: { type: String, required: true },
   userPassword: { type: String, required: true },
-  cases: [{ caseId: { type: String, required: true } }],
+  cases: [String],
 });
 
 const healthPro = mongoose.model('healthPro', healthProSchema);
@@ -64,7 +64,14 @@ const newPatient = new Patients({
 });
 
 const casesSchema = new Schema({
-  something: { type: String }
+  patientId: { type: String, required: true },
+  healthProId: { type: String, required: false },
+  description: { type: String, required: false },
+  created: Date.now(),
+  messsages: [{
+    message: { type: String, required: true },
+    isPatient: { type: Boolean, required: true },
+  }],
 });
 
 const Cases = mongoose.model('cases', casesSchema);
@@ -73,9 +80,7 @@ const newCase = new Cases({
   something: 'hello',
 });
 
-newCase.save(function (err, newCase) {
-  if (err) {
-    return console.error(err);
-  }
-  console.log(newCase.id);
-});
+// newCase.save((err, newCase) => {
+//   if (err) return console.error(err);
+//   console.log(newCase.id);
+// });
