@@ -17,7 +17,8 @@ export default function PatientLogin() {
     };
     fetch('/api/patients', {
       method: 'POST',
-      body: obj,
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(obj),
     });
   };
 
