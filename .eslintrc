@@ -1,4 +1,9 @@
 {
+  "extends": [
+    "salt",
+    "salt/react",
+    "salt/react/hooks"
+  ],
   "parserOptions": {
     "ecmaVersion": 2017
   },

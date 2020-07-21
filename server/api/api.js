@@ -2,7 +2,22 @@ const router = require('express').Router();
 
 router.get('/', (req, res) => res.send('Hello World!'));
 
-router.post('/patients', (req, res) => { });
+router.post('/patients', (req, res) => {
+  const createPatient = (username, password, email = '', gender) => {
+    return {
+      username,
+      password,
+      email,
+      gender,
+      created: undefined,
+      lastLogin: undefined,
+      cases: [],
+    }
+  }
+  // lag patient
+  // post patient til db
+  // gi response til bruker
+});
 
 router.post('/employees', (req, res) => { });
 

@@ -110,7 +110,7 @@ const newCase = new Cases({
   }],
 });
 
-newCase.save((err, newCase) => {
-  if (err) return console.error(err);
-  console.log(newCase.id);
-});
+// newCase.save((err, newCase) => {
+//   if (err) return console.error(err);
+//   console.log(newCase.id);
+// });

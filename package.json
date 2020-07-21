@@ -13,11 +13,6 @@
     "startServer": "cd server && npm run dev",
     "dev": "concurrently \"npm run startClient\" \"npm run startServer\""
   },
-  "extends": [
-    "salt",
-    "salt/react",
-    "salt/react/hooks"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ymirke/graduation-project.git"
