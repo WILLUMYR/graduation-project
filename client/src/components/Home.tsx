@@ -6,7 +6,7 @@ export default function Home() {
     <>
       <header className="home__header">
         <h1 className="header__title">
-          Home
+          OUR APP
         </h1>
         <Link className="header__login" to="/login">Login</Link>
       </header>
