@@ -1,3 +1,4 @@
+require('dotenv').config();
 const assert = require('assert');
 const request = require('supertest');
 const { MongoClient } = require('mongodb');
@@ -19,11 +20,14 @@ describe('insert', () => {
   let connection;
   let db;
 
+  const url = process.env.MONGO_URI;
+  const dbName = process.env.MONGO_DB;
+
   beforeAll(async () => {
-    connection = await MongoClient.connect(global.__MONGO_URI__, {
+    connection = await MongoClient.connect(url, {
       useNewUrlParser: true,
     });
-    db = await connection.db(global.__MONGO_DB_NAME__);
+    db = await connection.db(dbName);
   });
 
   afterAll(async () => {
