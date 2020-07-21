@@ -1,14 +1,40 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const api = require('./api');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
+require('dotenv').config();
+
+const { patientsApi, psychologistsApi, casesApi } = require('./api');
 
 const app = express();
+const url = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-app.use('/api', api.router);
+app.use('/api/patients', patientsApi.router);
+app.use('/api/psychologists', psychologistsApi.router);
+app.use('/api/cases', casesApi.router);
+
+app.use((req, res, next) => {
+  res.status(404).send();
+});
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).send(error.message);
+});
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('MongoDB successfully connected!');
+});
 
 app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`));

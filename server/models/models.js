@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const patientSchema = new Schema(
   {
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    email: { type: String, required: false },
+    email: { type: String, required: false, unique: true, sparse: true },
     gender: { type: String, enum: ['male', 'female', 'none'] },
     lastLogin: { type: Date },
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
@@ -18,7 +18,7 @@ const patientSchema = new Schema(
 const psychologistSchema = new Schema(
   {
     fullName: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     lastLogin: { type: Date },
     workingStatus: { type: String, enum: ['active', 'inactive', 'onVacation', 'deactivated'] },
@@ -62,38 +62,38 @@ const Psychologists = mongoose.model('psychologists', psychologistSchema);
 
 const Cases = mongoose.model('cases', casesSchema);
 
-const newPatient = new Patients({
-  username: 'user name',
-  userPassword: 'supersecretpassword',
-  case: {
-    caseDescription: 'not feeling good',
-    caseTaken: false,
-    healthProfessional: 123,
-    messages: [
-      {
-        message: 'I need help',
-        isPatient: true,
-      },
-      {
-        message: 'Okay, I can help you',
-        isPatient: false,
-      },
-    ],
-  },
-});
+// const newPatient = new Patients({
+//   username: 'user name',
+//   userPassword: 'supersecretpassword',
+//   case: {
+//     caseDescription: 'not feeling good',
+//     caseTaken: false,
+//     healthProfessional: 123,
+//     messages: [
+//       {
+//         message: 'I need help',
+//         isPatient: true,
+//       },
+//       {
+//         message: 'Okay, I can help you',
+//         isPatient: false,
+//       },
+//     ],
+//   },
+// });
 
-const newCase = new Cases({
-  patientId: '123',
-  healthProId: null,
-  description: 'problem...',
-  closed: false,
-  messsages: [
-    {
-      message: 'Thanks for reaching out, one of our health professionals will get to you as soon as possible.',
-      isPatient: false,
-    },
-  ],
-});
+// const newCase = new Cases({
+//   patientId: '123',
+//   healthProId: null,
+//   description: 'problem...',
+//   closed: false,
+//   messsages: [
+//     {
+//       message: 'Thanks for reaching out, one of our health professionals will get to you as soon as possible.',
+//       isPatient: false,
+//     },
+//   ],
+// });
 
 // newCase.save((err, newCase) => {
 //   if (err) return console.error(err);

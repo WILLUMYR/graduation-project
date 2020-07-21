@@ -1,3 +1,5 @@
-const router = require('./api');
+const patientsApi = require('./patients');
+const psychologistsApi = require('./psychologists');
+const casesApi = require('./cases');
 
-module.exports = router;
+module.exports = { patientsApi, psychologistsApi, casesApi };
