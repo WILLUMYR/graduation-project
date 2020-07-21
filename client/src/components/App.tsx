@@ -5,6 +5,7 @@ import Home from './Home';
 import LoginUser from './PatientLogin';
 import LoginEmployee from './EmployeeLogin';
 import Login from './Login';
+import Chat from './Chat';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/chat">
+          <Chat />
         </Route>
         <Route exact path="/">
           <Home />

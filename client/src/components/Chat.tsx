@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Chat() {
-  const cases: Array<String> = [];
+  const cases: Array<String> = []; // should be fetched from db.
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+
+  }, [message])
 
   const handleSubmit = (event: any) => {
     // maybe not any?
@@ -10,9 +14,9 @@ export default function Chat() {
     const obj: any = {
       patientId: '5f16edf1f4368bb6ea96c6ee',
       issue: message,
-      messages: [message],
+      messages: [],
     };
-    fetch('/api/patients', {
+    fetch('/api/cases', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
@@ -32,5 +36,7 @@ export default function Chat() {
         <input type="submit" placeholder="Submit" />
       </form>
     );
+  } else {
+    return <div></div>;
   }
-}
+} 
