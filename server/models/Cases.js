@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const CasesSchema = new Schema(
+const CasesSchema = new mongoose.Schema(
   {
-    patientId: { type: Schema.Types.ObjectId, ref: 'patients', required: true },
-    psychologistId: { type: Schema.Types.ObjectId, ref: 'psychologists' },
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'patients', required: true },
+    psychologistId: { type: mongoose.Schema.Types.ObjectId, ref: 'psychologists' },
     issue: { type: String, required: false },
     closed: { type: Boolean, default: false },
     messages: [
       {
         text: { type: String, required: true },
         respondent: { type: String, enum: ['patient', 'psychologist'] },
-        respondentId: { type: Schema.Types.ObjectId },
+        respondentId: { type: mongoose.Schema.Types.ObjectId },
         respondentName: { type: String, required: true },
         created: { type: Date, default: Date.now },
       },
@@ -28,4 +27,4 @@ const CasesSchema = new Schema(
   },
 );
 
-module.exports = Cases = mongoose.model('cases', CasesSchema);
+module.exports = Case = mongoose.model('cases', CasesSchema);

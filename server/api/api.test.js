@@ -1,5 +1,4 @@
-const assert = require('assert');
-const request = require('supertest');
+/*
 const { MongoClient } = require('mongodb');
 const {
   createPatient
@@ -36,10 +35,12 @@ describe('insert', () => {
         gender: 'male'
       }
     }
-    await createPatient(req);
+    // create object and send to db here!
+    //await createPatient(req);
 
     const insertedUser = await patients.findOne({ username: 'John Doe' });
     console.log(insertedUser);
     expect(insertedUser).toEqual(req.body);
   });
 });
+*/
