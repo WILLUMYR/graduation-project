@@ -1,38 +1,25 @@
-require('dotenv').config();
 const assert = require('assert');
 const request = require('supertest');
 const { MongoClient } = require('mongodb');
-
-// describe('The /api API - some starter tests', () => {
-//   it('returns Hello!', done => {
-//     request(app)
-//       .post('/patients')
-//       .set('Accept', 'application/json')
-//       .expect(response => {
-//         console.log(response);
-//         assert.strictEqual(response.text, 'Hello!');
-//       })
-//       .expect(200, done);
-//   });
-// });
 
 describe('insert', () => {
   let connection;
   let db;
 
-  const url = process.env.MONGO_URI;
-  const dbName = process.env.MONGO_DB;
+  beforeEach(async () => {
+    await db.collection('COLLECTION_NAME').deleteMany({});
+  });
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(url, {
+    connection = await MongoClient.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
+      useUnifiedTopology: true
     });
-    db = await connection.db(dbName);
+    db = await connection.db();
   });
 
   afterAll(async () => {
     await connection.close();
-    await db.close();
   });
 
   it('should insert a doc into collection', async () => {
