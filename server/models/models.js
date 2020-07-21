@@ -1,11 +1,9 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const url = process.env.MONGO_URI;
-
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
@@ -67,21 +65,29 @@ const casesSchema = new Schema({
   patientId: { type: String, required: true },
   healthProId: { type: String, required: false },
   description: { type: String, required: false },
-  created: Date.now(),
   closed: { type: Boolean, required: true },
   messsages: [{
     message: { type: String, required: true },
     isPatient: { type: Boolean, required: true },
   }],
+}, {
+  timestamps: true,
 });
 
 const Cases = mongoose.model('cases', casesSchema);
 
 const newCase = new Cases({
-  something: 'hello',
+  patientId: '123',
+  healthProId: null,
+  description: 'problem...',
+  closed: false,
+  messsages: [{
+    message: 'Thanks for reaching out, one of our health professionals will get to you as soon as possible.',
+    isPatient: false,
+  }],
 });
 
-// newCase.save((err, newCase) => {
-//   if (err) return console.error(err);
-//   console.log(newCase.id);
-// });
+newCase.save((err, newCase) => {
+  if (err) return console.error(err);
+  console.log(newCase.id);
+});

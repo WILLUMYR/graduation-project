@@ -5,10 +5,13 @@
   "main": "/backend/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
     "installClient": "cd client && npm install",
     "installServer": "cd server && npm install",
-    "installAll": "npm run installClient && npm run installServer",
-    "dev": "concurrently \"cd client && npm run start\" \"cd backend && npm run dev\""
+    "installAll": "npm install && npm run installClient && npm run installServer",
+    "startClient": "cd client && npm run start",
+    "startServer": "cd server && npm run dev",
+    "dev": "concurrently \"npm run startClient\" \"npm run startServer\""
   },
   "extends": [
     "salt",
@@ -28,14 +31,15 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
+    "babel-jest": "^24.9.0",
     "concurrently": "^5.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "babel-jest": "^24.9.0",
     "jest": "^24.9.0"
   },
   "dependencies": {}
