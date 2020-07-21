@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Chat() {
-  const cases: Array<String> = []; // fetch from db.
-  const [case: Array, setCase] = useState([]);
+  const [newCase, setCase] = useState('');
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [case])
+  // }, [case])
 
-  const handleSubmit = (event: any) => { // maybe not any?
+  const handleSubmit = (event: any) => {
+    // maybe not any?
     event.preventDefault();
     const obj: any = {
       patientId: '5f16edf1f4368bb6ea96c6ee',
@@ -21,10 +21,10 @@ export default function Chat() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
     });
-    setCase([message]);
+    setCase(message);
   };
 
-  if (cases.length === 0) {
+  if (newCase.length === 0) {
     return (
       <form onSubmit={handleSubmit}>
         <input
@@ -38,6 +38,11 @@ export default function Chat() {
       </form>
     );
   } else {
+    fetch(`/cases/${id}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(obj),
+    });
     return <div></div>;
   }
-} 
+}
