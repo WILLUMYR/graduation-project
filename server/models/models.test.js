@@ -1,8 +1,5 @@
-/*
 const { MongoClient } = require('mongodb');
-const {
-  createPatient
-} = require('./apiFunctions');
+const { Cases, Patients, Psychologists } = require('./index');
 
 describe('insert', () => {
   let connection;
@@ -43,4 +40,3 @@ describe('insert', () => {
     expect(insertedUser).toEqual(req.body);
   });
 });
-*/

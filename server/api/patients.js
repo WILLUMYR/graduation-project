@@ -4,6 +4,7 @@ const router = express.Router();
 const Patients = require('../models/Patients');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 router.post('/',
   [
@@ -24,7 +25,6 @@ router.post('/',
     const { username, password, email, gender } = req.body;
     try {
       let patient = await Patients.findOne({ username });
-      console.log('hlhafldsø');
 
       if (patient) {
         res.status(400).json({ errors: [{ msg: 'User already exists.' }] })
@@ -35,7 +35,6 @@ router.post('/',
         password,
         email,
         gender,
-        lastLogin,
         cases: [],
       });
 
@@ -45,9 +44,19 @@ router.post('/',
 
       await newPatient.save()
 
-      // return jwt
-      res.status(201).send('userRegistered')
+      const payload = {
+        patient: {
+          id: newPatient.id,
+          cases: newPatient.cases,
+        }
+      }
+
+      jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 36000000 }, (err, token) => {
+        if (err) throw err;
+        res.json(token);
+      });
     } catch (err) {
+      console.error(err);
       res.status(500).send('Server error')
     }
   });
