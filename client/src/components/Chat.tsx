@@ -38,7 +38,7 @@ export default function Chat() {
       </form>
     );
   } else {
-    fetch(`/cases/${id}`);
+    // fetch(`/cases/${id}`);
     return <div></div>;
   }
 }
