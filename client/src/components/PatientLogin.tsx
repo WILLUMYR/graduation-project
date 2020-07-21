@@ -6,41 +6,58 @@ export default function PatientLogin() {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
 
-  const handleSubmit = (event: any) => { // maybe not any?
+  const handleSubmit = (event: any) => {
+    // maybe not any?
     event.preventDefault();
-    const obj: Object = {
+    const obj: any = {
       username,
       password,
       email,
-      gender
-    }
+      gender,
+    };
     fetch('/api/patients', {
       method: 'POST',
       body: obj,
-    })
-  }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input placeholder="Username" type="text" onChange={event => {
-        setUsername(event.target.value);
-      }} />
+      <input
+        placeholder="Username"
+        type="text"
+        onChange={event => {
+          setUsername(event.target.value);
+        }}
+      />
       <br />
-      <input placeholder="Password" type="password" onChange={event => {
-        setPassword(event.target.value);
-      }} />
+      <input
+        placeholder="Password"
+        type="password"
+        onChange={event => {
+          setPassword(event.target.value);
+        }}
+      />
       <br />
-      <select name="Select Gender" id="" onChange={event => {
-        setGender(event.target.value);
-      }}>
+      <select
+        name="Select Gender"
+        id=""
+        onChange={event => {
+          setGender(event.target.value);
+        }}
+      >
         <option value="none">Gender: neither / rather not say</option>
         <option value="male">male</option>
         <option value="female">female</option>
       </select>
       <br />
-      <input placeholder="Email (optional)" type="text" onChange={event => {
-        setEmail(event.target.value);
-      }} />
+      <input
+        placeholder="Email (optional)"
+        type="text"
+        onChange={event => {
+          setEmail(event.target.value);
+        }}
+      />
       <input type="submit" value="Submit" />
     </form>
   );
