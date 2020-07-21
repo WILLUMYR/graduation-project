@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
-import LoginUser from './PatientLogin'
-import LoginEmployee from './EmployeeLogin'
+import LoginUser from './PatientLogin';
+import LoginEmployee from './EmployeeLogin';
 import Login from './Login';
 
 function App() {
@@ -23,7 +23,6 @@ function App() {
           <Home />
         </Route>
       </Switch>
-
     </BrowserRouter>
   );
 }

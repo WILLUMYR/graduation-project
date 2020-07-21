@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export default function PatientLogin() {
   return (
-    <form action="">
+    <form action="/api/patients" method="post">
       <input placeholder="Username" type="text" />
       <br />
       <input placeholder="Password" type="password" />
@@ -14,6 +14,7 @@ export default function PatientLogin() {
       </select>
       <br />
       <input placeholder="Email (optional)" type="text" />
+      <input type="submit" value="Submit" />
     </form>
-  )
+  );
 }
