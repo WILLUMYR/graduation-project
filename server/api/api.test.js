@@ -10,7 +10,7 @@ describe('insert', () => {
   let db;
 
   beforeEach(async () => {
-    await db.collection('COLLECTION_NAME').deleteMany({});
+    await db.collection('patients').deleteMany({});
   });
 
   beforeAll(async () => {
@@ -39,6 +39,7 @@ describe('insert', () => {
     await createPatient(req);
 
     const insertedUser = await patients.findOne({ username: 'John Doe' });
+    console.log(insertedUser);
     expect(insertedUser).toEqual(req.body);
   });
 });
