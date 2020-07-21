@@ -16,6 +16,8 @@ db.once('open', () => {
 router.get('/', (req, res) => res.send('Hello World!'));
 
 router.post('/patients', (req, res) => {
+  const { username, password, email, gender } = req.body;
+
   const createPatient = (username, password, email = '', gender) => {
     return {
       username,
@@ -25,21 +27,22 @@ router.post('/patients', (req, res) => {
       created: undefined,
       lastLogin: undefined,
       cases: [],
-    };
+    }
   };
+  const newPatient = new Patients(createPatient())
 });
 
-router.post('/employees', (req, res) => {});
+router.post('/employees', (req, res) => { });
 
-router.post('/cases', (req, res) => {});
+router.post('/cases', (req, res) => { });
 
 router.get('/cases/:id', (req, res) => res.send('test123'));
 
-router.post('/cases/:id', (req, res) => {});
+router.post('/cases/:id', (req, res) => { });
 
-router.delete('/cases/:id', (req, res) => {});
+router.delete('/cases/:id', (req, res) => { });
 
-router.delete('/patients/:id', (req, res) => {});
+router.delete('/patients/:id', (req, res) => { });
 
 router.get('/api/cases', (req, res) => {
   const unassigned = req.params.unassigned;
