@@ -1,6 +1,9 @@
 const assert = require('assert');
 const request = require('supertest');
 const { MongoClient } = require('mongodb');
+const {
+  createPatient
+} = require('./apiFunctions');
 
 describe('insert', () => {
   let connection;
@@ -25,10 +28,17 @@ describe('insert', () => {
   it('should insert patient to the patients collection', async () => {
     const patients = db.collection('patients');
 
-    const mockUser = { _id: '1', username: 'John Doe', password: 'secret', email: 'johndoe@mail.com', gender: 'male' };
-    await patients.insertOne(mockUser);
+    const req = {
+      body: {
+        username: 'John Doe',
+        password: 'secret',
+        email: 'johndoe@mail.com',
+        gender: 'male'
+      }
+    }
+    await createPatient(req);
 
-    const insertedUser = await patients.findOne({ _id: '1' });
-    expect(insertedUser).toEqual(mockUser);
+    const insertedUser = await patients.findOne({ username: 'John Doe' });
+    expect(insertedUser).toEqual(req.body);
   });
 });

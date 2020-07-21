@@ -1,5 +1,9 @@
-const createPatient = (username, password, email = '', gender) => {
-  return {
+const { Patients, Psychologists, Cases } = require('../models/models');
+
+const createPatient = (req, res) => {
+  // check for username & password
+  const { username, password, email, gender } = req.body;
+  const newPatient = new Patients({
     username,
     password,
     email,
@@ -7,16 +11,13 @@ const createPatient = (username, password, email = '', gender) => {
     created: undefined,
     lastLogin: undefined,
     cases: [],
-  };
-};
-
-const createPatientObj = (req, res) => {
-  const { username, password, email, gender } = req.body;
-  const newPatient = new Patients(createPatient(username, password, email, gender));
+  });
   newPatient.save((err, newPatient) => {
     if (err) res.status(500).send(err);
     res.status(201).send();
   });
 };
 
-module.exports = { createPatientObj };
+module.exports = {
+  createPatient
+};
