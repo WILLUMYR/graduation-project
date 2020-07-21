@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const casesSchema = new Schema(
+const CasesSchema = new Schema(
   {
     patientId: { type: Schema.Types.ObjectId, ref: 'patients', required: true },
     psychologistId: { type: Schema.Types.ObjectId, ref: 'psychologists' },
@@ -28,4 +28,4 @@ const casesSchema = new Schema(
   },
 );
 
-module.exports = Cases = mongoose.model('cases', casesSchema);
+module.exports = Cases = mongoose.model('cases', CasesSchema);

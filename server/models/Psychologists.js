@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const psychologistSchema = new Schema(
+const PsychologistSchema = new Schema(
   {
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true, },
@@ -15,4 +15,4 @@ const psychologistSchema = new Schema(
   },
 );
 
-module.exports = Psychologists = mongoose.model('psychologists', psychologistSchema);
+module.exports = Psychologists = mongoose.model('psychologists', PsychologistSchema);

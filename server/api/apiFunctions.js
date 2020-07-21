@@ -1,4 +1,4 @@
-const { Patients, Psychologists, Cases } = require('../models/models');
+const { Patients, Psychologists, Cases } = require('../models');
 
 const createPatient = (req, res) => {
   // check for username & password

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const { Patients, Psychologists, Cases } = require('../models/models');
+const { Patients, Psychologists, Cases } = require('../models/');
 const { createPatient, createCase } = require('./apiFunctions');
 
 const url = process.env.MONGO_URI;
