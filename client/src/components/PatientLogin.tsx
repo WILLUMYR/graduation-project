@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function PatientLogin() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+
+
   return (
     <form action="/api/patients" method="post">
-      <input placeholder="Username" type="text" />
+      <input placeholder="Username" type="text" onChange={event => {
+        setUsername(event.target.value);
+      }} />
       <br />
       <input placeholder="Password" type="password" />
       <br />
