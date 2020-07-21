@@ -1,3 +1,5 @@
-const models = require('./models');
+const Patients = require('./Patients');
+const Psychologists = require('./Psychologists');
+const Cases = require('./Cases');
 
-module.exports.models = models;
+module.exports = { Patients, Psychologists, Cases };
