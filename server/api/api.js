@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const { Patients, Psychologists, Cases } = require('../models/models');
@@ -29,7 +29,11 @@ router.post('/patients', (req, res) => {
       cases: [],
     }
   };
-  const newPatient = new Patients(createPatient())
+  const newPatient = new Patients(createPatient(username, password, email, gender))
+  newPatient.save((err, newPatient) => {
+    if (err) res.status(500).send(err);
+    res.status(201).send();
+  });
 });
 
 router.post('/employees', (req, res) => { });
