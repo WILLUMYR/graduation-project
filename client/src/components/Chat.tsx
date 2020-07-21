@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Chat() {
-  const cases: Array<String> = []; // should be fetched from db.
+  const cases: Array<String> = []; // fetch from db.
+  const [case: Array, setCase] = useState([]);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
 
-  }, [message])
+  }, [case])
 
-  const handleSubmit = (event: any) => {
-    // maybe not any?
+  const handleSubmit = (event: any) => { // maybe not any?
     event.preventDefault();
     const obj: any = {
       patientId: '5f16edf1f4368bb6ea96c6ee',
@@ -21,6 +21,7 @@ export default function Chat() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
     });
+    setCase([message]);
   };
 
   if (cases.length === 0) {
