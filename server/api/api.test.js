@@ -13,7 +13,7 @@ describe('insert', () => {
   beforeAll(async () => {
     connection = await MongoClient.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
     db = await connection.db();
   });
@@ -22,13 +22,13 @@ describe('insert', () => {
     await connection.close();
   });
 
-  it('should insert a doc into collection', async () => {
-    const users = db.collection('users');
+  it('should insert patient to the patients collection', async () => {
+    const patients = db.collection('patients');
 
-    const mockUser = { _id: 'some-user-id', name: 'John' };
-    await users.insertOne(mockUser);
+    const mockUser = { _id: '1', username: 'John Doe', password: 'secret', email: 'johndoe@mail.com', gender: 'male' };
+    await patients.insertOne(mockUser);
 
-    const insertedUser = await users.findOne({ _id: 'some-user-id' });
+    const insertedUser = await patients.findOne({ _id: '1' });
     expect(insertedUser).toEqual(mockUser);
   });
 });
