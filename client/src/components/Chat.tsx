@@ -38,11 +38,7 @@ export default function Chat() {
       </form>
     );
   } else {
-    fetch(`/cases/${id}`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(obj),
-    });
+    fetch(`/cases/${id}`);
     return <div></div>;
   }
 }
