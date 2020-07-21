@@ -2,7 +2,7 @@ require('dotenv').config();
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const { Patients, Psychologists, Cases } = require('../models/models');
-const { createPatient } = require('./apiFunctions');
+const { createPatient, createCase } = require('./apiFunctions');
 
 const url = process.env.MONGO_URI;
 
@@ -23,7 +23,9 @@ router.post('/patients', (req, res) => {
 
 router.post('/employees', (req, res) => { });
 
-router.post('/cases', (req, res) => { });
+router.post('/cases', (req, res) => {
+  createCase(req, res);
+});
 
 router.get('/cases/:id', (req, res) => res.send('test123'));
 

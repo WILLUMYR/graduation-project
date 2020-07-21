@@ -7,7 +7,6 @@ const patientSchema = new Schema(
     password: { type: String, required: true },
     email: { type: String, required: false },
     gender: { type: String, enum: ['male', 'female', 'none'] },
-    created: { type: Date, default: Date.now },
     lastLogin: { type: Date },
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
   },
@@ -21,7 +20,6 @@ const psychologistSchema = new Schema(
     fullName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    created: { type: Date, default: Date.now },
     lastLogin: { type: Date },
     workingStatus: { type: String, enum: ['active', 'inactive', 'onVacation', 'deactivated'] },
     cases: [{ type: Schema.Types.ObjectId, ref: 'cases' }],
@@ -34,10 +32,8 @@ const psychologistSchema = new Schema(
 const casesSchema = new Schema(
   {
     patientId: { type: Schema.Types.ObjectId, ref: 'patients', required: true },
-    psychologistId: { type: Schema.Types.ObjectId, ref: 'users' },
-    activeStatus: { type: Boolean, default: false },
-    description: { type: String, required: false },
-    created: { type: Date, default: Date.now },
+    psychologistId: { type: Schema.Types.ObjectId, ref: 'psychologists' },
+    issue: { type: String, required: false },
     closed: { type: Boolean, default: false },
     messages: [
       {

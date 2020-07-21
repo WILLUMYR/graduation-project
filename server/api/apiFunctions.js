@@ -18,6 +18,26 @@ const createPatient = (req, res) => {
   });
 };
 
+const createCase = (req, res) => {
+  // check for username & password
+  const { patientId, psychologistId, issue, closed } = req.body;
+  const newCase = new Cases({
+    patientId,
+    psychologistId,
+    issue,
+    closed,
+    messages: [],
+    notes: []
+  });
+  newCase.save((err, newCase) => {
+    if (err) res.status(500).send(err);
+    res.status(201).send();
+  });
+};
+
+
+
 module.exports = {
-  createPatient
+  createPatient,
+  createCase,
 };
