@@ -6,7 +6,7 @@ const Patients = require('../models/Patients');
 
 router.get('/', auth, async (req, res, next) => {
   try {
-    const patient = await Patients.findById(req.patient).select('-password');
+    const patient = await Patients.findById(req.patient.id).select('-password');
     res.json(patient);
   } catch (err) {
     console.error(err.message);

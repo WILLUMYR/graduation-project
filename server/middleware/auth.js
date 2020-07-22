@@ -12,6 +12,6 @@ module.exports = (req, res, next) => {
     req.patient = decoded.patient
     next();
   } catch (err) {
-    res.status(401).json({ msg: 'Authorization invalid' })
+    next(err);
   }
 }
