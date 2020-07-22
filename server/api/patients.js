@@ -5,8 +5,10 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
+const { ConnectionStates } = require('mongoose');
 
-router.post('/',
+router.post(
+  '/',
   [
     check('username', 'username is required').not().isEmpty(),
     check('password', 'please enter a password with 6 or more characters.').isLength({
@@ -17,10 +19,16 @@ router.post('/',
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        return res.status(400).json({ errors: errors.array() });
       }
 
-      const { username, password, email, gender } = req.body;
+      console.log('------>>>>', req.body);
+
+      const { username, password, gender } = req.body;
+
+      let email = req.body.email;
+
+      if (email === '') email = null;
 
       const newPatient = new Patients({
         username,
@@ -31,16 +39,16 @@ router.post('/',
 
       const salt = await bcrypt.genSalt(10);
 
-      newPatient.password = await bcrypt.hash(password, salt)
+      newPatient.password = await bcrypt.hash(password, salt);
 
-      await newPatient.save()
+      await newPatient.save();
 
       const payload = {
         patient: {
           id: newPatient.id,
           cases: newPatient.cases, // filter active cases
-        }
-      }
+        },
+      };
 
       jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 36000000 }, (err, token) => {
         if (err) throw err;
@@ -50,7 +58,7 @@ router.post('/',
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 // router.post('/login', async (req, res, next) => {
@@ -68,9 +76,9 @@ router.post('/',
 // });
 
 /** Route     GET api/auth
-  * Desc      Get patient data.
-  * Access    Private
-  */
+ * Desc      Get patient data.
+ * Access    Private
+ */
 router.get('/', auth, async (req, res, next) => {
   try {
     console.log(req.patient);
@@ -116,9 +124,9 @@ router.get('/', auth, async (req, res, next) => {
 // });
 
 /** Route     POST api/auth
-  * Desc      Authenticate user and get token
-  * Access    Public
-  */
+ * Desc      Authenticate user and get token
+ * Access    Public
+ */
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -141,8 +149,8 @@ router.post('/login', async (req, res, next) => {
       patient: {
         id: patient.id,
         cases: patient.cases,
-      }
-    }
+      },
+    };
 
     console.log(payload);
 

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 interface PatientSignUpInterface {
-  token: string,
-  setToken: Function,
+  token: string;
+  setToken: Function;
 }
 
-const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
+const PatientSignUp: React.SFC<PatientSignUpInterface> = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -28,6 +28,10 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
     });
+
+    const data = await JSON.stringify(fetchData);
+
+    console.log('----------', data);
 
     if (fetchData.token) {
       props.setToken(fetchData.token);
@@ -102,6 +106,6 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
       </main>
     </>
   );
-}
+};
 
-export default PatientSignUp
+export default PatientSignUp;
