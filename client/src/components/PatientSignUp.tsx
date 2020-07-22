@@ -8,8 +8,7 @@ export default function PatientSignUp() {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
 
-  const handleSubmit = async (event: any) => {
-    // maybe not any?
+  const handleSubmit = async (event: any) => {// maybe not any?
     event.preventDefault();
     const obj: any = {
       username,
@@ -17,6 +16,7 @@ export default function PatientSignUp() {
       email,
       gender,
     };
+
     const fetchData: any = await fetch('/api/patients', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -24,6 +24,7 @@ export default function PatientSignUp() {
     });
 
     if (fetchData.token) {
+      history.push('/chat');
     }
 
     // try {
