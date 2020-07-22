@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, /*Link,*/ Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
@@ -9,9 +9,12 @@ import PatientSignUp from './PatientSignUp';
 import PsychologistLogin from './PsychologistLogin';
 import PsychologistSignUp from './PsychologistSignUp';
 
-function App() {
-  // type Props = {}
+const App = () => {
   const [token, setToken] = useState('');
+
+  useEffect(() => {
+    fetch('',)
+  }, [])
 
   return (
     <BrowserRouter>
@@ -23,7 +26,7 @@ function App() {
           <PsychologistLogin />
         </Route>
         <Route exact path="/signup/patient">
-          <PatientSignUp setToken={setToken} />
+          <PatientSignUp setToken={setToken} token={token} />
         </Route>
         <Route exact path="/signup/psychologist">
           <PsychologistSignUp />

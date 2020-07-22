@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 const history = useHistory();
 
-export default function PatientSignUp() {
+interface PatientSignUpInterface {
+  token: string,
+  setToken: Function,
+}
+
+const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -97,3 +102,5 @@ export default function PatientSignUp() {
     </>
   );
 }
+
+export default PatientSignUp
