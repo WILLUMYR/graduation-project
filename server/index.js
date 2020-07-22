@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use('/api/auth', require('./api/auth'));
 app.use('/api/cases', require('./api/cases'));
 app.use('/api/patients', require('./api/patients'));
 app.use('/api/psychologists', require('./api/psychologists'));
