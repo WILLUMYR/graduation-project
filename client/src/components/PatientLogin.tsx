@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function PatientLogin() {
   const [username, setUsername] = useState('');
@@ -23,43 +24,62 @@ export default function PatientLogin() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Username"
-        type="text"
-        onChange={event => {
-          setUsername(event.target.value);
-        }}
-      />
-      <br />
-      <input
-        placeholder="Password"
-        type="password"
-        onChange={event => {
-          setPassword(event.target.value);
-        }}
-      />
-      <br />
-      <select
-        name="Select Gender"
-        id=""
-        onChange={event => {
-          setGender(event.target.value);
-        }}
-      >
-        <option value="none">Gender: neither / rather not say</option>
-        <option value="male">male</option>
-        <option value="female">female</option>
-      </select>
-      <br />
-      <input
-        placeholder="Email (optional)"
-        type="text"
-        onChange={event => {
-          setEmail(event.target.value);
-        }}
-      />
-      <input type="submit" value="Submit" />
-    </form>
+    <>
+      <header className="home__header">
+        <Link className="header__title" to="/">Home</Link>
+      </header>
+
+      <main className="login__content">
+        <section className="login__box">
+          <h1 className="content__user">Create an account</h1>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              className="form__text"
+              placeholder="Username"
+              type="text"
+              onChange={event => {
+                setUsername(event.target.value);
+              }}
+            />
+            <br />
+            <input
+              className="form__text"
+              placeholder="Password"
+              type="password"
+              onChange={event => {
+                setPassword(event.target.value);
+              }}
+            />
+            <br />
+            <input
+              className="form__text"
+              placeholder="Email (optional)"
+              type="text"
+              onChange={event => {
+                setEmail(event.target.value);
+              }}
+            />
+            <br />
+            <select
+              className="form__select"
+              name="Select Gender"
+              id=""
+              onChange={event => {
+                setGender(event.target.value);
+              }}
+            >
+              <option value="female">female</option>
+              <option value="male">male</option>
+              <option value="none">neither / rather not say</option>
+            </select>
+            <br />
+            <input className="form__submit" type="submit" value="Create account" />
+          </form>
+
+        </section>
+      </main>
+
+    </>
   );
 }

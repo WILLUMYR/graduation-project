@@ -2,37 +2,133 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.home__header {
+  background-color: #181b20;
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 0 5%;
+
+}
+
+.header__title {
+  text-decoration: none;
+  color: white;
+  font-weight: bolder;
+  font-size: 3rem;
+}
+.header__login {
+  text-decoration: none;
+  font-weight: bold; 
+  font-size: 1.5rem;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.home__content {
+  height: 90vh;
+  color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20vw;
+  font-weight: bold; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content__title {
+  font-size: 4rem;
+  font-weight: bolder;
+  margin: 20px 0;
+}
+
+.content__description {
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.content__login {
+  text-decoration: underline;
+  margin-top: 50px;
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #282c34;
+}
+
+.login__content {
+  background-color: #282c34;
+  height: 90vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding: auto;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.content__box {
+  width: 35vw;
+  height: 80vh;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0px 0px 20px black;
+  padding: 0 20px;
+}
+.login__box {
+  width: 35vw;
+  height: 60vh;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0px 0px 20px black;
+  padding: 0 20px;
+}
+
+.content__user {
+  font-size: 2.5rem;
+  font-weight: bolder;
+}
+
+.content__info {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 50px;
+}
+
+.content__link {
+  background-color: #282c34;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 0 5px #b7c4df;
+}
+
+.form__text {
+  height: 30px;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+.form__select {
+height: 35px;
+width: 51.5%;
+}
+
+.form__submit {
+font-size: 1.5rem;
+padding: 15px 40px;
+margin-top: 50px;
+background-color: #282c34;
+color: white;
+border: none;
+border-radius: 30px;
 }

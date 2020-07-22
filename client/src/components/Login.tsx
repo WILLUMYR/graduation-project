@@ -5,18 +5,26 @@ import { Link } from 'react-router-dom';
 export default function Login() {
   return (
     <>
-      <section>
-        <h1>Are you a user?</h1>
-        <Link className="" to="/login/user">Login As User</Link>
-      </section>
-      <section>
-        <h1>Are you an employee?</h1>
-        <Link className="" to="/login/employee">Login As An Employee</Link>
-      </section>
-      <div>
-        <p>Go back home</p>
-        <Link className="" to="/">home</Link>
-      </div>
+      <header className="home__header">
+        <Link className="header__title" to="/">Home</Link>
+      </header>
+
+      <main className="login__content">
+        <section className="content__box">
+          <h1 className="content__user">Are you a user?</h1>
+          <h3 className="content__info">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dicta porro suscipit, unde dolores totam nemo soluta quos dolorum dolore repellat reprehenderit ullam illum voluptas, debitis tempora quasi commodi exercitationem!
+          </h3>
+          <Link className="content__link" to="/login/user">Login As User</Link>
+        </section>
+        <section className="content__box">
+          <h1 className="content__user">Are you an employee?</h1>
+          <h3 className="content__info">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dicta porro suscipit, unde dolores totam nemo soluta quos dolorum dolore repellat reprehenderit ullam illum voluptas, debitis tempora quasi commodi exercitationem!
+          </h3>
+          <Link className="content__link" to="/login/employee">Login As An Employee</Link>
+        </section>
+      </main>
     </>
   )
 }

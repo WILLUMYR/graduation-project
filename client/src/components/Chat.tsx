@@ -37,9 +37,8 @@ export default function Chat() {
         <input type="submit" placeholder="Submit" />
       </form>
     );
-  } else { return <div></div> }
-  // else {
-  //   fetch(`/cases/${id}`);
-  //   return <div></div>;
-  // }
+  } else {
+    // fetch(`/cases/${id}`);
+    return <div></div>;
+  }
 }
