@@ -6,9 +6,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
-const Patients = require('../models/Patients');
-
-
 router.post('/',
   [
     check('username', 'username is required').not().isEmpty(),
@@ -76,6 +73,8 @@ router.post('/',
   */
 router.get('/', auth, async (req, res, next) => {
   try {
+    console.log(req.patient);
+
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
 
     const activeCase = patient.cases.find(obj => obj.closed === false);
@@ -140,10 +139,12 @@ router.post('/login', async (req, res, next) => {
 
     const payload = {
       patient: {
-        id: Patients.id,
-        cases: Patients.cases, // filter active cases
+        id: patient.id,
+        cases: patient.cases,
       }
     }
+
+    console.log(payload);
 
     jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 36000000 }, (err, token) => {
       if (err) throw err;
