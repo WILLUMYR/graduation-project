@@ -23,28 +23,17 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = props => {
       gender,
     };
 
-    const fetchData: any = await fetch('/api/patients', {
+    fetch('/api/patients', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
-    });
-
-    const data = await JSON.stringify(fetchData);
-
-    console.log('----------', data);
-
-    if (fetchData.token) {
-      props.setToken(fetchData.token);
-      history.push('/chat');
-    }
-
-    // try {
-    //   await Auth.signIn(email, password);
-    //   userHasAuthenticated(true);
-    //   history.push("/");
-    // } catch (e) {
-    //   alert(e.message);
-    // }
+    }).then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          props.setToken(data.token);
+          history.push('/chat');
+        }
+      });
   };
 
   return (
