@@ -1,44 +1,87 @@
 import React, { useState, /*useEffect*/ } from 'react';
+import { Link } from 'react-router-dom';
+import './Chat.css';
 
 export default function Chat() {
   const [newCase, setCase] = useState('');
+  const [issue, setIssue] = useState('');
   const [message, setMessage] = useState('');
 
   // useEffect(() => {
 
-  // }, [case])
+  // }, [newCase])
 
   const handleSubmit = (event: any) => {
     // maybe not any?
     event.preventDefault();
     const obj: any = {
       patientId: '5f16edf1f4368bb6ea96c6ee',
-      issue: message,
+      issue,
       messages: [],
     };
-    fetch('/api/cases', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(obj),
-    });
-    setCase(message);
+    // fetch('/api/cases', {
+    //   method: 'POST',
+    //   headers: { 'content-type': 'application/json' },
+    //   body: JSON.stringify(obj),
+    // });
+    setCase(issue);
   };
 
   if (newCase.length === 0) {
     return (
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Please describe your problem!"
-          onChange={event => {
-            setMessage(event.target.value);
-          }}
-        />
-        <input type="submit" placeholder="Submit" />
-      </form>
+      <>
+        <header className="home__header">
+          <Link className="header__title" to="/">
+            Home
+        </Link>
+        </header>
+
+        <main className="chat__content">
+          <section className="issue__box">
+            <h1 className="issue__title">Please describe your issue</h1>
+            <form className="issue__form" onSubmit={handleSubmit}>
+              <textarea
+                className="issue__input"
+                placeholder="Please describe your problem!"
+                onChange={event => {
+                  setIssue(event.target.value);
+                }}
+              />
+              <input className="issue__button" type="submit" value="Submit issue" />
+            </form>
+          </section>
+        </main>
+      </>
     );
   } else {
     // fetch(`/cases/${id}`);
-    return <div></div>;
+    return (
+      <>
+        <header className="home__header">
+          <Link className="header__title" to="/">
+            Home
+        </Link>
+        </header>
+
+        <main className="chat__content">
+          <section className="issue__content">
+            <h1>Issue ID: 2103198590231204</h1>
+            <p className="issue__text">{newCase}</p>
+          </section>
+          <section className="chat__messages">
+            <div className="message__box">
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veniam laborum odio porro expedita iste fuga vel quia iure, repellat quibusdam officiis voluptate quo, culpa quos debitis quod error inventore.</p>
+              <div className="message__img"></div>
+            </div>
+          </section>
+          <form className="message__form" action="submit">
+            <textarea className="message__input" placeholder="Your message..." onChange={event => {
+              setMessage(event.target.value);
+            }}></textarea>
+            <input className="message__button" type="submit" />
+          </form>
+        </main>
+      </>
+    )
   }
 }

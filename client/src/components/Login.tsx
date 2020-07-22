@@ -21,6 +21,10 @@ export default function Login() {
           <Link className="content__link" to="/login/patient">
             Login As User
           </Link>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <Link className="content__link" to="/signup/patient">
             Sign Up As User
           </Link>
@@ -35,6 +39,10 @@ export default function Login() {
           <Link className="content__link" to="/login/psychologist">
             Login As An Employee
           </Link>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <Link className="content__link" to="/signup/psychologist">
             Sign Up As An Employee
           </Link>

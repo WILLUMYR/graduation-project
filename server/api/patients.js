@@ -7,10 +7,6 @@ const jwt = require('jsonwebtoken');
 
 router.post('/',
   [
-    check('username', 'username is required')
-      .not()
-      .isEmpty(),
-    check('email', 'please input a valid email').isEmail(),
     check('password', 'please enter a password with 6 or more characters.').isLength({
       min: 6,
     }),
@@ -92,4 +88,4 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-module.exports.router = router;
+module.exports = router;

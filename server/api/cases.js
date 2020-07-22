@@ -27,4 +27,4 @@ router.get('/', async (req, res, next) => {
   // const assignedToId = req.params.assignedToId;
 });
 
-module.exports.router = router;
+module.exports = router;
