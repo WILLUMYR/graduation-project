@@ -8,7 +8,8 @@ export default function PatientSignUp() {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
 
-  const handleSubmit = async (event: any) => {// maybe not any?
+  const handleSubmit = async (event: any) => {
+    // maybe not any?
     event.preventDefault();
     const obj: any = {
       username,

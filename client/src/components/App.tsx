@@ -10,12 +10,8 @@ import PsychologistLogin from './PsychologistLogin';
 import PsychologistSignUp from './PsychologistSignUp';
 
 function App() {
-
   // type Props = {}
   const [token, setToken] = useState('');
-
-
-
 
   return (
     <BrowserRouter>
