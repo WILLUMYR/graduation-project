@@ -40,7 +40,7 @@ router.post('/',
       const payload = {
         patient: {
           id: newPatient.id,
-          cases: newPatient.cases,
+          cases: newPatient.cases, // filter active cases
         }
       }
 

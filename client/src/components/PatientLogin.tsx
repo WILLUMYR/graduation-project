@@ -79,7 +79,6 @@ export default function PatientLogin() {
 
         </section>
       </main>
-
     </>
   );
 }
