@@ -1,15 +1,26 @@
-import React, { useState, /*useEffect*/ } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Chat.css';
 
-export default function Chat() {
+interface Chat {
+  token: string,
+}
+
+const Chat: React.SFC<Chat> = (props) => {
   const [newCase, setCase] = useState('');
   const [issue, setIssue] = useState('');
   const [message, setMessage] = useState('');
 
-  // useEffect(() => {
-
-  // }, [newCase])
+  useEffect(() => {
+    if (props.token) {
+      fetch('/api/patients', {
+        headers: {
+          'content-type': 'application/json',
+          'x-auth-token': props.token
+        },
+      })
+    }
+  }, [])
 
   const handleSubmit = (event: any) => {
     // maybe not any?
@@ -85,3 +96,5 @@ export default function Chat() {
     )
   }
 }
+
+export default Chat;

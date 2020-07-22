@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-const history = useHistory();
 
 interface PatientSignUpInterface {
   token: string,
@@ -11,7 +10,8 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState('female');
+  const history = useHistory();
 
   const handleSubmit = async (event: any) => {
     // maybe not any?
@@ -30,6 +30,7 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = (props) => {
     });
 
     if (fetchData.token) {
+      props.setToken(fetchData.token);
       history.push('/chat');
     }
 

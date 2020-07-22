@@ -12,10 +12,6 @@ import PsychologistSignUp from './PsychologistSignUp';
 const App = () => {
   const [token, setToken] = useState('');
 
-  useEffect(() => {
-    fetch('',)
-  }, [])
-
   return (
     <BrowserRouter>
       <Switch>
@@ -35,7 +31,7 @@ const App = () => {
           <Login />
         </Route>
         <Route exact path="/chat">
-          <Chat />
+          <Chat token={token} />
         </Route>
         <Route exact path="/">
           <Home />
