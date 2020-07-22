@@ -1,9 +1,5 @@
-const assert = require('assert');
-const request = require('supertest');
 const { MongoClient } = require('mongodb');
-const {
-  createPatient
-} = require('./apiFunctions');
+const { Cases, Patients, Psychologists } = require('./index');
 
 describe('insert', () => {
   let connection;
@@ -36,7 +32,8 @@ describe('insert', () => {
         gender: 'male'
       }
     }
-    await createPatient(req);
+    // create object and send to db here!
+    //await createPatient(req);
 
     const insertedUser = await patients.findOne({ username: 'John Doe' });
     console.log(insertedUser);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, /*useEffect*/ } from 'react';
 
 export default function Chat() {
   const [newCase, setCase] = useState('');
@@ -37,8 +37,9 @@ export default function Chat() {
         <input type="submit" placeholder="Submit" />
       </form>
     );
-  } else {
-    fetch(`/cases/${id}`);
-    return <div></div>;
-  }
+  } else { return <div></div> }
+  // else {
+  //   fetch(`/cases/${id}`);
+  //   return <div></div>;
+  // }
 }

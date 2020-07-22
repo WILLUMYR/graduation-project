@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 require('dotenv').config();
 
-const { patientsApi, psychologistsApi, casesApi } = require('./api');
-
 const app = express();
 const url = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
@@ -16,9 +14,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use('/api/patients', patientsApi.router);
-app.use('/api/psychologists', psychologistsApi.router);
-app.use('/api/cases', casesApi.router);
+app.use('/api/auth', require('./api/auth'));
+app.use('/api/cases', require('./api/cases'));
+app.use('/api/patients', require('./api/patients'));
+app.use('/api/psychologists', require('./api/psychologists'));
 
 app.use((req, res, next) => {
   res.status(404).send();
