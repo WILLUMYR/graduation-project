@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './PatientLogin.css';
 
 export default function PatientLogin() {
   const [username, setUsername] = useState('');
@@ -31,7 +32,7 @@ export default function PatientLogin() {
 
       <main className="login__content">
         <section className="login__box">
-          <h1 className="content__user">Create an account</h1>
+          <h1 className="content__user">Sign in</h1>
 
           <form onSubmit={handleSubmit}>
             <input
@@ -52,29 +53,7 @@ export default function PatientLogin() {
               }}
             />
             <br />
-            <input
-              className="form__text"
-              placeholder="Email (optional)"
-              type="text"
-              onChange={event => {
-                setEmail(event.target.value);
-              }}
-            />
-            <br />
-            <select
-              className="form__select"
-              name="Select Gender"
-              id=""
-              onChange={event => {
-                setGender(event.target.value);
-              }}
-            >
-              <option value="female">female</option>
-              <option value="male">male</option>
-              <option value="none">neither / rather not say</option>
-            </select>
-            <br />
-            <input className="form__submit" type="submit" value="Create account" />
+            <input className="form__submit" type="submit" value="Sign in" />
           </form>
 
         </section>

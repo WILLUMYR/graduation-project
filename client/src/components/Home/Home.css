@@ -1,0 +1,55 @@
+.home__header {
+  background-color: #181b20;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 0 5%;
+
+}
+
+.header__title {
+  text-decoration: none;
+  color: white;
+  font-weight: bolder;
+  font-size: 3rem;
+}
+
+.header__login {
+  text-decoration: none;
+  font-weight: bold; 
+  font-size: 1.5rem;
+  color: white;
+}
+
+.home__content {
+  height: auto;
+  color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20vw;
+  font-weight: bold; 
+}
+
+.content__title {
+  font-size: 4rem;
+  font-weight: bolder;
+  margin: 20px 0;
+}
+
+.content__description {
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.content__login {
+  text-decoration: underline;
+  margin-top: 50px;
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #282c34;
+}

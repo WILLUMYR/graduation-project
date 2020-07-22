@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import './PatientSignUp.css';
 
 interface PatientSignUpInterface {
   token: string;
@@ -38,7 +39,7 @@ const PatientSignUp: React.SFC<PatientSignUpInterface> = props => {
 
   return (
     <>
-      <header className="home__header">
+      <header className="login__header">
         <Link className="header__title" to="/">
           Home
         </Link>

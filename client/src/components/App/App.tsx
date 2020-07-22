@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, /*Link,*/ Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './Home';
-import Login from './Login';
-import Chat from './Chat';
-import PatientLogin from './PatientLogin';
-import PatientSignUp from './PatientSignUp';
-import PsychologistLogin from './PsychologistLogin';
-import PsychologistSignUp from './PsychologistSignUp';
+import Home from '../Home/Home';
+import Login from '../Login/Login';
+import Chat from '../Chat/Chat';
+import PatientLogin from '../PatientLogin/PatientLogin';
+import PatientSignUp from '../PatientSignUp/PatientSignUp';
+import PsychologistLogin from '../PsychologistLogin/PsychologistLogin';
+import PsychologistSignUp from '../PsychologistSignUp/PsychologistSignUp';
 
 const App = () => {
   const [token, setToken] = useState('');
