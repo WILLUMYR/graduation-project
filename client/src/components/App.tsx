@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, /*Link,*/ Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
-import LoginUser from './PatientLogin';
-import LoginEmployee from './PsychologistLogin';
 import Login from './Login';
 import Chat from './Chat';
+import PatientLogin from './PatientLogin';
+import PatientSignUp from './PatientSignUp';
+import PsychologistLogin from './PsychologistLogin';
+import PsychologistSignUp from './PsychologistSignUp';
 
 function App() {
+
+  // type Props = {}
+  const [token, setToken] = useState('');
+
+
+
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/login/patient">
-          <LoginUser />
+          <PatientLogin />
         </Route>
         <Route exact path="/login/psychologist">
-          <LoginEmployee />
+          <PsychologistLogin />
         </Route>
         <Route exact path="/signup/patient">
-          <LoginUser />
+          <PatientSignUp setToken={setToken} />
         </Route>
         <Route exact path="/signup/psychologist">
-          <LoginEmployee />
+          <PsychologistSignUp />
         </Route>
         <Route exact path="/login">
           <Login />
