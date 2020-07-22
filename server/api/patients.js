@@ -22,13 +22,13 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      console.log('------>>>>', req.body);
-
       const { username, password, gender } = req.body;
 
       let email = req.body.email;
 
-      if (email === '') email = null;
+      if (email === '') {
+        email = undefined;
+      }
 
       const newPatient = new Patients({
         username,
