@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './PatientLogin.css';
+import Footer from '../Footer/Footer';
 
 const PatientLogin = (props: any) => {
   const [username, setUsername] = useState('');
@@ -59,6 +60,7 @@ const PatientLogin = (props: any) => {
           <Link className="form__submit" to="/signup/patient">Sign up</Link>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

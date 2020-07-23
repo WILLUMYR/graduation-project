@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import Footer from '../Footer/Footer';
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <h3>Let us help you.</h3>
         <Link className="content__login" to="/login/patient">Get started</Link>
       </section>
+      <Footer />
     </>
   );
 }
