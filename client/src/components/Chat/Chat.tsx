@@ -4,9 +4,9 @@ import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
 const Chat = (props: any) => {
-  // const [newCase, setCase] = useState('');
   const [issue, setIssue] = useState('');
   const [content, setContent] = useState();
+  const [message, setMessage] = useState();
 
   const history = useHistory();
 
@@ -17,36 +17,6 @@ const Chat = (props: any) => {
     }
     // check for existing case
   })
-
-  const mockCase: any = {
-    patientId: '12rej24235l6ø32',
-    psychologistId: '123414515',
-    issue: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus doloribus asperiores fugiat accusamus voluptas similique? Atque similique enim quis fugiat quo, ipsum obcaecati eligendi voluptates nihil unde iste molestias optio.',
-    closed: false,
-    messages: [
-      {
-        text: 'I will help you friend',
-        respondent: 'psychologist',
-        respondentId: '123414515',
-        respondentName: 'TestMan',
-        created: '21.02.2020',
-      },
-      {
-        text: 'OK',
-        respondent: 'patient',
-        respondentId: '123414515',
-        respondentName: 'username',
-        created: '21.02.2020',
-      },
-      {
-        text: 'your welcome',
-        respondent: 'psychologist',
-        respondentId: '123414515',
-        respondentName: 'TestMan',
-        created: '21.02.2020',
-      },
-    ]
-  }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -69,10 +39,13 @@ const Chat = (props: any) => {
         return res.json()
       }).then((data) => {
         setContent(data);
-      })
+        const json = JSON.stringify(data)
+        window.localStorage.setItem('case', json);
+      }).catch(err => { console.log(err) });
     });
   }
-  if (!content) {
+
+  if (!content || !window.localStorage.getItem('case')) {
     return (
       <>
         <main className="chat__content">
@@ -108,9 +81,12 @@ const Chat = (props: any) => {
             })}
           </section>
           <form className="message__form" action="submit">
-            <textarea className="message__input" placeholder="Your message..." /*onChange={event => {
-              setMessage(event.target.value);
-            }}*/></textarea>
+            <textarea
+              className="message__input"
+              placeholder="Your message..."
+              onChange={event => {
+                setMessage(event.target.value);
+              }}></textarea>
             <input className="message__button" type="submit" />
           </form>
         </main>
