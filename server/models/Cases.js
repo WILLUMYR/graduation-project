@@ -12,13 +12,13 @@ const casesSchema = new mongoose.Schema(
         respondent: { type: String, enum: ['patient', 'psychologist'] },
         respondentId: { type: mongoose.Schema.Types.ObjectId },
         respondentName: { type: String, required: true },
-        created: { type: Date, default: Date.now },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
     notes: [
       {
         text: { type: String, required: true },
-        created: { type: Date, default: Date.now },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
   },

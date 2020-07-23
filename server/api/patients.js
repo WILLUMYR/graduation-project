@@ -5,7 +5,6 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
-const { isBlank } = require('../helperFunctions');
 const { ConnectionStates } = require('mongoose');
 
 /** Route     POST api/patients
@@ -15,8 +14,9 @@ const { ConnectionStates } = require('mongoose');
 router.post(
   '/',
   [
-    check('username', 'username is required').not().isEmpty(),
-    check('password', 'please enter a password with 6 or more characters.').isLength({
+    check('username', 'username is required').trim().not().isEmpty(),
+    check('email', 'email should contain @ and . characters').optional().isEmail(),
+    check('password', 'please enter a password with 6 or more characters.').trim().isLength({
       min: 6,
     }),
   ],
@@ -29,16 +29,7 @@ router.post(
 
       const { username, gender } = req.body;
 
-      let email = req.body.email;
-
-      if (email === '') {
-        email = undefined;
-      }
-
-      if (isBlank(username)) {
-        res.status(400).send('Wrong input, username should not be blank');
-        return;
-      }
+      const email = req.body.email ? req.body.email : undefined;
 
       const salt = await bcrypt.genSalt(10);
       const password = await bcrypt.hash(req.body.password, salt);
@@ -55,7 +46,6 @@ router.post(
       const payload = {
         patient: {
           id: newPatient.id,
-          // cases: newPatient.cases,
         },
       };
 
@@ -79,11 +69,7 @@ router.get('/', auth, async (req, res, next) => {
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
     const activeCase = patient.cases.find(obj => obj.closed === false);
 
-    if (activeCase === undefined) {
-      patient.cases = [];
-    } else {
-      patient.cases = [activeCase];
-    }
+    patient.cases = activeCase ? [activeCase] : [];
 
     res.json(patient);
   } catch (err) {
@@ -98,23 +84,23 @@ router.get('/', auth, async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-
     const patient = await Patients.findOne({ username });
 
     if (!patient) {
-      throw new Error('Invalid credentials');
+      res.status(401).send('Not authorized');
+      return;
     }
 
     const isMatch = await bcrypt.compare(password, patient.password);
 
     if (!isMatch) {
-      throw new Error('Invalid credentials');
+      res.status(401).send('Not authorized');
+      return;
     }
 
     const payload = {
       patient: {
         id: patient.id,
-        // cases: patient.cases,
       },
     };
 
