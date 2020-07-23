@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './PatientLogin.css';
 
-export default function PatientLogin() {
+interface Props {
+  token: string;
+  setToken: Function;
+}
+
+const PatientLogin: React.FC<Props> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [gender, setGender] = useState('');
+  const history = useHistory();
 
   const handleSubmit = (event: any) => {
-    // maybe not any?
     event.preventDefault();
     const obj: any = {
       username,
       password,
-      email,
-      gender,
     };
-    fetch('/api/patients', {
+    fetch('/api/patients/login', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
-    });
+    }).then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          props.setToken(data.token);
+          history.push('/chat');
+        } else {
+          alert('Login failed.');
+        }
+      });
   };
 
   return (
@@ -61,3 +70,5 @@ export default function PatientLogin() {
     </>
   );
 }
+
+export default PatientLogin;

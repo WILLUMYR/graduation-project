@@ -16,7 +16,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login/patient">
-          <PatientLogin />
+          <PatientLogin setToken={setToken} token={token} />
         </Route>
         <Route exact path="/login/psychologist">
           <PsychologistLogin />
@@ -31,7 +31,7 @@ const App = () => {
           <Login />
         </Route>
         <Route exact path="/chat">
-          <Chat token={token} />
+          <Chat token={token} setToken={setToken} />
         </Route>
         <Route exact path="/">
           <Home />

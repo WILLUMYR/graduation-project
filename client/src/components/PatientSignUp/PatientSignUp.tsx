@@ -7,7 +7,7 @@ interface PatientSignUpInterface {
   setToken: Function;
 }
 
-const PatientSignUp: React.SFC<PatientSignUpInterface> = props => {
+const PatientSignUp: React.FC<PatientSignUpInterface> = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');

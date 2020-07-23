@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './Chat.css';
 
 interface Chat {
-  token: string,
+  token: string;
+  setToken: Function;
 }
 
 const Chat: React.SFC<Chat> = (props) => {
@@ -11,30 +13,37 @@ const Chat: React.SFC<Chat> = (props) => {
   const [issue, setIssue] = useState('');
   const [message, setMessage] = useState('');
 
+  const history = useHistory();
+
+  const logout = () => {
+    props.setToken('');
+    history.push('/');
+  }
+
+  // useEffect(() => {
+  //   if (props.token) {
+  //     fetch('/api/patients', {
+  //       headers: {
+  //         'content-type': 'application/json',
+  //         'x-auth-token': props.token
+  //       },
+  //     })
+  //   }
+  // }, [])
+
   useEffect(() => {
-    if (props.token) {
-      fetch('/api/patients', {
-        headers: {
-          'content-type': 'application/json',
-          'x-auth-token': props.token
-        },
-      })
+    if (props.token === '') {
+      history.push('/login')
     }
   }, [])
 
   const handleSubmit = (event: any) => {
-    // maybe not any?
     event.preventDefault();
     const obj: any = {
       patientId: '5f16edf1f4368bb6ea96c6ee',
       issue,
       messages: [],
     };
-    // fetch('/api/cases', {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: JSON.stringify(obj),
-    // });
     setCase(issue);
   };
 
@@ -61,6 +70,7 @@ const Chat: React.SFC<Chat> = (props) => {
               <input className="issue__button" type="submit" value="Submit issue" />
             </form>
           </section>
+          <button onClick={() => { logout() }}>LogOut</button>
         </main>
       </>
     );
