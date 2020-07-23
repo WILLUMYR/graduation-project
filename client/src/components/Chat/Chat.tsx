@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
 interface Chat {
@@ -15,16 +16,24 @@ const Chat: React.SFC<Chat> = (props) => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (props.token === '') {
-      history.push('/login')
-    }
-    // check for existing case
-  }, [])
+  // useEffect(() => {
+  //   if (props.token === '') {
+  //     history.push('/login')
+  //   }
+  //   // check for existing case
+  // }, [])
 
   const logout = () => {
     props.setToken('');
     history.push('/');
+  }
+
+  interface Message {
+    text: String;
+    respondent: String;
+    respondentId: String;
+    respondentName: String;
+    created: String;
   }
 
   interface Mock {
@@ -32,7 +41,7 @@ const Chat: React.SFC<Chat> = (props) => {
     psychologistId: String;
     issue: String;
     closed: Boolean;
-    messages: Array<Object>
+    messages: Array<Message>
   }
 
 
@@ -136,11 +145,7 @@ const Chat: React.SFC<Chat> = (props) => {
           </section>
           <section className="chat__messages">
             {content.messages.map((message: { text: React.ReactNode; }) => {
-              return (
-                <div key={Math.random()} className="message__box">
-                  <p>{message.text}</p>
-                  <div className="message__img"></div>
-                </div>)
+              return <ChatBubble key={Math.random()} message={message} />
             })}
           </section>
           <form className="message__form" action="submit">
