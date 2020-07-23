@@ -2,8 +2,7 @@ const router = require('express').Router();
 // const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
-const Cases = require('../models/Cases');
-const Patient = require('../models/Patients');
+const { Cases, Patients } = require('../models');
 
 router.post('/', auth, async (req, res, next) => {
   const { patientId } = req.patient;
@@ -20,9 +19,9 @@ router.post('/', auth, async (req, res, next) => {
   });
 });
 
-router.get('/:id', async (req, res, next) => { });
+router.get('/:id', async (req, res, next) => {});
 
-router.post('/:id', async (req, res, next) => { });
+router.post('/:id', async (req, res, next) => {});
 
 router.get('/', async (req, res, next) => {
   // const unassigned = req.params.unassigned;

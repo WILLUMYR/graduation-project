@@ -14,4 +14,4 @@ const psychologistSchema = new mongoose.Schema(
   },
 );
 
-module.exports = Psychologists = mongoose.model('psychologists', psychologistSchema);
+module.exports = mongoose.model('psychologists', psychologistSchema);

@@ -1,15 +1,13 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
-require('dotenv').config();
 
 const app = express();
 const url = process.env.MONGO_URI;
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -35,4 +33,4 @@ db.once('open', () => {
   console.log('MongoDB successfully connected!');
 });
 
-app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`));
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
