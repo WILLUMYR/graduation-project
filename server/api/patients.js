@@ -7,11 +7,16 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const { ConnectionStates } = require('mongoose');
 
+/** Route     POST api/patients
+ * Desc      Create new user and get token
+ * Access    Public
+ */
 router.post(
   '/',
   [
-    check('username', 'username is required').not().isEmpty(),
-    check('password', 'please enter a password with 6 or more characters.').isLength({
+    check('username', 'username is required').trim().not().isEmpty(),
+    check('email', 'email should contain @ and . characters').optional().isEmail(),
+    check('password', 'please enter a password with 6 or more characters.').trim().isLength({
       min: 6,
     }),
   ],
@@ -24,11 +29,7 @@ router.post(
 
       const { username, gender } = req.body;
 
-      let email = req.body.email;
-
-      if (email === '') {
-        email = undefined;
-      }
+      const email = req.body.email ? req.body.email : undefined;
 
       const salt = await bcrypt.genSalt(10);
       const password = await bcrypt.hash(req.body.password, salt);
@@ -45,7 +46,6 @@ router.post(
       const payload = {
         patient: {
           id: newPatient.id,
-          // cases: newPatient.cases,
         },
       };
 
@@ -60,53 +60,47 @@ router.post(
   },
 );
 
-/** Route     GET api/auth
+/** Route     GET api/patients
  * Desc      Get patient data.
  * Access    Private
  */
 router.get('/', auth, async (req, res, next) => {
   try {
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
-
     const activeCase = patient.cases.find(obj => obj.closed === false);
 
-    if (activeCase === undefined) {
-      patient.cases = [];
-    } else {
-      patient.cases = [activeCase];
-    }
+    patient.cases = activeCase ? [activeCase] : [];
 
     res.json(patient);
   } catch (err) {
-    console.error(err.message);
     next(err);
   }
 });
 
-/** Route     POST api/auth
+/** Route     POST api/patients/login
  * Desc      Authenticate user and get token
  * Access    Public
  */
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-
     const patient = await Patients.findOne({ username });
 
     if (!patient) {
-      throw new Error('Invalid credentials');
+      res.status(401).send('Not authorized');
+      return;
     }
 
     const isMatch = await bcrypt.compare(password, patient.password);
 
     if (!isMatch) {
-      throw new Error('Invalid credentials');
+      res.status(401).send('Not authorized');
+      return;
     }
 
     const payload = {
       patient: {
         id: patient.id,
-        cases: patient.cases,
       },
     };
 
