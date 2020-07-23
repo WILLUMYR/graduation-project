@@ -60,8 +60,22 @@ const Chat = (props: any) => {
   // }, [])
 
   const handleSubmit = (event: any) => {
+    const obj = {
+
+    }
     event.preventDefault();
-    setContent(mockCase);
+    fetch('/api/cases', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(obj),
+    }).then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          props.saveToken(data.token);
+          history.push('/chat');
+        }
+      });
+
   };
 
   if (!content) {
