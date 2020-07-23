@@ -100,6 +100,7 @@ const Chat = (props: any) => {
         });
     })
     inputEl.current.value = '';
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
 
