@@ -1,27 +1,19 @@
 import React from 'react'
 
-interface Message {
-  text: String;
-  respondent: String;
-  respondentId: String;
-  respondentName: String;
-  created: String;
-}
-
-type Props = {
-  message: Message,
-}
-
-
-
-
-const ChatBubbles = ({ message }: Props) => {
-  return (
-    <div className="message__box--user">
-      <p>{message.text}</p>
-      <div className="message__img"></div>
-    </div>
-  )
+const ChatBubbles = (props: any) => {
+  if (props.message.respondent === 'patient') {
+    return (
+      <div className="message__box message__box--user">
+        <p>{props.message.text}</p>
+      </div>
+    )
+  } else {
+    return (
+      <div className="message__box message__box--pro">
+        <p>{props.message.text}</p>
+      </div>
+    )
+  }
 }
 
 export default ChatBubbles;

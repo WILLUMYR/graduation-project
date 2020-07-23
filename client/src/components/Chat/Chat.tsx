@@ -1,52 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
-interface Chat {
-  token: string;
-  setToken: Function;
-}
-
-const Chat: React.SFC<Chat> = (props) => {
-  const [newCase, setCase] = useState('');
+const Chat = (props: any) => {
+  // const [newCase, setCase] = useState('');
   const [issue, setIssue] = useState('');
   const [content, setContent] = useState();
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   if (props.token === '') {
-  //     history.push('/login')
-  //   }
-  //   // check for existing case
-  // }, [])
+  useEffect(() => {
+    if (props.token === '') {
+      history.push('/login/patient');
+    }
+    // check for existing case
+  }, [])
 
-  const logout = () => {
-    props.setToken('');
-    history.push('/');
-  }
-
-  interface Message {
-    text: String;
-    respondent: String;
-    respondentId: String;
-    respondentName: String;
-    created: String;
-  }
-
-  interface Mock {
-    patientId: String;
-    psychologistId: String;
-    issue: String;
-    closed: Boolean;
-    messages: Array<Message>
-  }
-
-
-
-  const mockCase: Mock = {
+  const mockCase: any = {
     patientId: '12rej24235l6ø32',
     psychologistId: '123414515',
     issue: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus doloribus asperiores fugiat accusamus voluptas similique? Atque similique enim quis fugiat quo, ipsum obcaecati eligendi voluptates nihil unde iste molestias optio.',
@@ -76,7 +47,6 @@ const Chat: React.SFC<Chat> = (props) => {
     ]
   }
 
-
   // useEffect(() => {
   //   if (props.token) {
   //     fetch('/api/patients', {
@@ -88,27 +58,14 @@ const Chat: React.SFC<Chat> = (props) => {
   //   }
   // }, [])
 
-
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const obj: any = {
-      patientId: '5f16edf1f4368bb6ea96c6ee',
-      issue,
-      messages: [],
-    };
     setContent(mockCase);
   };
 
   if (!content) {
     return (
       <>
-        <header className="home__header">
-          <Link className="header__title" to="/">
-            Home
-        </Link>
-        </header>
-
         <main className="chat__content">
           <section className="issue__box">
             <h1 className="issue__title">Please describe your issue</h1>
@@ -123,7 +80,6 @@ const Chat: React.SFC<Chat> = (props) => {
               <input className="issue__button" type="submit" value="Submit issue" />
             </form>
           </section>
-          <button onClick={() => { logout() }}>LogOut</button>
         </main>
       </>
     );
@@ -132,12 +88,6 @@ const Chat: React.SFC<Chat> = (props) => {
     // fetch(`/cases/${id}`);
     return (
       <>
-        <header className="home__header">
-          <Link className="header__title" to="/">
-            Home
-        </Link>
-        </header>
-
         <main className="chat__content">
           <section className="issue__content">
             <h1>Issue ID: 2103198590231204</h1>

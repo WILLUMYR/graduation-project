@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './PatientLogin.css';
 
-interface Props {
-  token: string;
-  setToken: Function;
-}
-
-const PatientLogin: React.FC<Props> = (props) => {
+const PatientLogin = (props: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -25,7 +20,7 @@ const PatientLogin: React.FC<Props> = (props) => {
     }).then(response => response.json())
       .then(data => {
         if (data.token) {
-          props.setToken(data.token);
+          props.saveToken(data.token);
           history.push('/chat');
         } else {
           alert('Login failed.');
@@ -35,13 +30,9 @@ const PatientLogin: React.FC<Props> = (props) => {
 
   return (
     <>
-      <header className="home__header">
-        <Link className="header__title" to="/">Home</Link>
-      </header>
-
       <main className="login__content">
         <section className="login__box">
-          <h1 className="content__user">Sign in</h1>
+          <h1 className="content__user">Log in</h1>
 
           <form onSubmit={handleSubmit}>
             <input
@@ -62,9 +53,10 @@ const PatientLogin: React.FC<Props> = (props) => {
               }}
             />
             <br />
-            <input className="form__submit" type="submit" value="Sign in" />
+            <input className="form__submit" type="submit" value="Log in" />
           </form>
-
+          <p>Dont have an account?</p>
+          <Link className="form__submit" to="/signup/patient">Sign up</Link>
         </section>
       </main>
     </>

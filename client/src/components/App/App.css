@@ -1,4 +1,9 @@
 .App {
   text-align: center;
   margin: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  padding-top: 50px;
 }

@@ -1,28 +1,5 @@
-.home__header {
-  background-color: #181b20;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  padding: 0 5%;
-
-}
-
-.header__title {
-  text-decoration: none;
-  color: white;
-  font-weight: bolder;
-  font-size: 3rem;
-}
-
-.header__login {
-  text-decoration: none;
-  font-weight: bold; 
-  font-size: 1.5rem;
-  color: white;
+h3 {
+  font-size: 1.7rem;
 }
 
 .home__content {
@@ -47,9 +24,12 @@
 }
 
 .content__login {
-  text-decoration: underline;
-  margin-top: 50px;
-  font-size: 2rem;
-  font-weight: bolder;
-  color: #282c34;
+  background-color: #3762EA;
+  text-decoration: none;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: white;
 }

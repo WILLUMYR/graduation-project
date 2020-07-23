@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './PatientSignUp.css';
 
-interface PatientSignUpInterface {
-  token: string;
-  setToken: Function;
-}
-
-const PatientSignUp: React.FC<PatientSignUpInterface> = props => {
+const PatientSignUp = (props: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -31,7 +26,7 @@ const PatientSignUp: React.FC<PatientSignUpInterface> = props => {
     }).then(response => response.json())
       .then(data => {
         if (data.token) {
-          props.setToken(data.token);
+          props.saveToken(data.token);
           history.push('/chat');
         }
       });
@@ -39,12 +34,6 @@ const PatientSignUp: React.FC<PatientSignUpInterface> = props => {
 
   return (
     <>
-      <header className="login__header">
-        <Link className="header__title" to="/">
-          Home
-        </Link>
-      </header>
-
       <main className="login__content">
         <section className="login__box">
           <h1 className="content__user">Create an account</h1>

@@ -1,0 +1,36 @@
+.home__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: #181b20;
+  min-height: 7vh;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 0 20px; 
+}
+
+.header__title {
+  text-decoration: none;
+  color: white;
+  font-weight: bolder;
+  font-size: 3rem;
+}
+
+.header__link{
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  background-color: #181b20;
+}
+
+.header__login {
+  text-decoration: none;
+  font-weight: bold; 
+  font-size: 1.5rem;
+  color: white;
+}
