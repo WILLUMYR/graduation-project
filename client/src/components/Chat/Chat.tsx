@@ -6,7 +6,7 @@ import './Chat.css';
 const Chat = (props: any) => {
   const [issue, setIssue] = useState('');
   const [content, setContent] = useState();
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState('');
 
   const history = useHistory();
 
@@ -35,7 +35,7 @@ const Chat = (props: any) => {
     // check for existing case
   });
 
-  const handleSubmit = (event: any) => {
+  const handleSubmitForm = (event: any) => {
     event.preventDefault();
     fetch('/api/cases', {
       method: 'POST',
@@ -67,13 +67,46 @@ const Chat = (props: any) => {
     });
   };
 
+  const messageHandleSubmit: any = (event: any) => {
+    event.preventDefault();
+    fetch(`api/cases/${content.cases[0]._id}/message`, {
+      method: "PUT",
+      headers: {
+        'content-type': 'application/json',
+        'x-auth-token': props.token,
+      },
+      body: JSON.stringify({ text: message })
+    }).then((response) => {
+      if (response.status !== 201) return alert('Error');
+
+      fetch('/api/patients', {
+        headers: {
+          'content-type': 'application/json',
+          'x-auth-token': props.token,
+        },
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          setContent(data);
+          const json = JSON.stringify(data);
+          window.localStorage.setItem('case', json);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    })
+  }
+
+
   if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
     return (
       <>
         <main className="chat__content">
           <section className="issue__box">
             <h1 className="issue__title">Please describe your issue</h1>
-            <form className="issue__form" onSubmit={handleSubmit}>
+            <form className="issue__form" onSubmit={handleSubmitForm}>
               <textarea
                 className="issue__input"
                 placeholder="Please describe your problem!"
@@ -101,7 +134,7 @@ const Chat = (props: any) => {
               return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>
-          <form className="message__form" action="submit">
+          <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
             <textarea
               className="message__input"
               placeholder="Your message..."
