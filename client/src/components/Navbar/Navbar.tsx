@@ -16,7 +16,7 @@ export default function Navbar(props: any) {
         <Link className="header__title" to="/">
           Placeholder
         </Link>
-        <Link className="header__link" to="/">
+        <Link className="header__link" to="/login/psychologist">
           Login as a psychologist
         </Link>
       </header>

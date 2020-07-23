@@ -1,13 +1,38 @@
 import React from 'react';
-import './PsychologistLogin.css';
+import '../Login.css';
+import { Link } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 export default function PsychologistLogin() {
   return (
-    <form action="">
-      <input placeholder="Email" type="text" />
-      <br />
-      <input placeholder="Password" type="password" />
-      <input className="form__submit" type="submit" value="Login" />
-    </form>
+    <>
+      <main className="login__content">
+        <section className="login__box">
+          <h1 className="content__user">Login</h1>
+
+          <form>
+            <input
+              className="form__text"
+              placeholder="Email"
+              type="text"
+            />
+            <br />
+            <input
+              className="form__text"
+              placeholder="Password"
+              type="password"
+            />
+            <br />
+            <input className="form__submit" type="submit" value="Log in" />
+          </form>
+          <p>Dont have an account?</p>
+          <Link className="form__submit" to="/signup/psychologist">Sign up</Link>
+          <p className="PS">This Login page is only for professional Psychologists.<br></br>If you are looking for help from one,
+              please use our user login and post a case containing your issue. </p>
+          <Link className="form__goBack" to="/login/patient">User login</Link>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

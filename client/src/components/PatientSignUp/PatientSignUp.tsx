@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import './PatientSignUp.css';
+import '../Login.css';
 import Footer from '../Footer/Footer';
 
 const PatientSignUp = (props: any) => {
