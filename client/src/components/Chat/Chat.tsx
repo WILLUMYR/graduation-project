@@ -11,14 +11,62 @@ interface Chat {
 const Chat: React.SFC<Chat> = (props) => {
   const [newCase, setCase] = useState('');
   const [issue, setIssue] = useState('');
-  const [message, setMessage] = useState('');
+  const [content, setContent] = useState();
 
   const history = useHistory();
+
+  useEffect(() => {
+    if (props.token === '') {
+      history.push('/login')
+    }
+    // check for existing case
+  }, [])
 
   const logout = () => {
     props.setToken('');
     history.push('/');
   }
+
+  interface Mock {
+    patientId: String;
+    psychologistId: String;
+    issue: String;
+    closed: Boolean;
+    messages: Array<Object>
+  }
+
+
+
+  const mockCase: Mock = {
+    patientId: '12rej24235l6ø32',
+    psychologistId: '123414515',
+    issue: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus doloribus asperiores fugiat accusamus voluptas similique? Atque similique enim quis fugiat quo, ipsum obcaecati eligendi voluptates nihil unde iste molestias optio.',
+    closed: false,
+    messages: [
+      {
+        text: 'I will help you friend',
+        respondent: 'psychologist',
+        respondentId: '123414515',
+        respondentName: 'TestMan',
+        created: '21.02.2020',
+      },
+      {
+        text: 'OK',
+        respondent: 'patient',
+        respondentId: '123414515',
+        respondentName: 'username',
+        created: '21.02.2020',
+      },
+      {
+        text: 'your welcome',
+        respondent: 'psychologist',
+        respondentId: '123414515',
+        respondentName: 'TestMan',
+        created: '21.02.2020',
+      },
+    ]
+  }
+
 
   // useEffect(() => {
   //   if (props.token) {
@@ -31,11 +79,7 @@ const Chat: React.SFC<Chat> = (props) => {
   //   }
   // }, [])
 
-  useEffect(() => {
-    if (props.token === '') {
-      history.push('/login')
-    }
-  }, [])
+
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -44,10 +88,10 @@ const Chat: React.SFC<Chat> = (props) => {
       issue,
       messages: [],
     };
-    setCase(issue);
+    setContent(mockCase);
   };
 
-  if (newCase.length === 0) {
+  if (!content) {
     return (
       <>
         <header className="home__header">
@@ -75,6 +119,7 @@ const Chat: React.SFC<Chat> = (props) => {
       </>
     );
   } else {
+    console.log(content);
     // fetch(`/cases/${id}`);
     return (
       <>
@@ -87,18 +132,21 @@ const Chat: React.SFC<Chat> = (props) => {
         <main className="chat__content">
           <section className="issue__content">
             <h1>Issue ID: 2103198590231204</h1>
-            <p className="issue__text">{newCase}</p>
+            <p className="issue__text">{content.issue}</p>
           </section>
           <section className="chat__messages">
-            <div className="message__box">
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veniam laborum odio porro expedita iste fuga vel quia iure, repellat quibusdam officiis voluptate quo, culpa quos debitis quod error inventore.</p>
-              <div className="message__img"></div>
-            </div>
+            {content.messages.map((message: { text: React.ReactNode; }) => {
+              return (
+                <div key={Math.random()} className="message__box">
+                  <p>{message.text}</p>
+                  <div className="message__img"></div>
+                </div>)
+            })}
           </section>
           <form className="message__form" action="submit">
-            <textarea className="message__input" placeholder="Your message..." onChange={event => {
+            <textarea className="message__input" placeholder="Your message..." /*onChange={event => {
               setMessage(event.target.value);
-            }}></textarea>
+            }}*/></textarea>
             <input className="message__button" type="submit" />
           </form>
         </main>
