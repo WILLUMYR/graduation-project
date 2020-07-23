@@ -5,8 +5,13 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
+const { isBlank } = require('../helperFunctions');
 const { ConnectionStates } = require('mongoose');
 
+/** Route     POST api/patients
+ * Desc      Create new user and get token
+ * Access    Public
+ */
 router.post(
   '/',
   [
@@ -28,6 +33,11 @@ router.post(
 
       if (email === '') {
         email = undefined;
+      }
+
+      if (isBlank(username)) {
+        res.status(400).send('Wrong input, username should not be blank');
+        return;
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -60,14 +70,13 @@ router.post(
   },
 );
 
-/** Route     GET api/auth
+/** Route     GET api/patients
  * Desc      Get patient data.
  * Access    Private
  */
 router.get('/', auth, async (req, res, next) => {
   try {
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
-
     const activeCase = patient.cases.find(obj => obj.closed === false);
 
     if (activeCase === undefined) {
@@ -78,12 +87,11 @@ router.get('/', auth, async (req, res, next) => {
 
     res.json(patient);
   } catch (err) {
-    console.error(err.message);
     next(err);
   }
 });
 
-/** Route     POST api/auth
+/** Route     POST api/patients/login
  * Desc      Authenticate user and get token
  * Access    Public
  */
@@ -106,7 +114,7 @@ router.post('/login', async (req, res, next) => {
     const payload = {
       patient: {
         id: patient.id,
-        cases: patient.cases,
+        // cases: patient.cases,
       },
     };
 

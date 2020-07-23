@@ -4,7 +4,7 @@ const casesSchema = new mongoose.Schema(
   {
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'patients', required: true },
     psychologistId: { type: mongoose.Schema.Types.ObjectId, ref: 'psychologists' },
-    issue: { type: String, required: false },
+    issue: { type: String, required: true },
     closed: { type: Boolean, default: false },
     messages: [
       {
