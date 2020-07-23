@@ -11,13 +11,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 0 20px; 
+  z-index: 1;
 }
 
 .header__title {
   text-decoration: none;
   color: white;
   font-weight: bolder;
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .header__link{
@@ -26,11 +27,11 @@
   font-size: 1.2rem;
   border: none;
   background-color: #181b20;
+  transition: 0.1s ease;
 }
 
-.header__login {
-  text-decoration: none;
-  font-weight: bold; 
-  font-size: 1.5rem;
-  color: white;
+.header__link:hover {
+  color: #3762EA;
+  transition: 0.1s ease;
+  cursor: pointer;
 }

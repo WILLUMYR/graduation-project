@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import './PatientSignUp.css';
 
 const PatientSignUp = (props: any) => {
@@ -57,6 +57,7 @@ const PatientSignUp = (props: any) => {
               }}
             />
             <br />
+            <p>Email is not required for anonymity reasons, but can be added <br></br>if you wish to recieve notifications about your open cases.</p>
             <input
               className="form__text"
               placeholder="Email (optional)"
@@ -81,6 +82,8 @@ const PatientSignUp = (props: any) => {
             <br />
             <input className="form__submit" type="submit" value="Create account" />
           </form>
+          <Link className="form__goBack" to="/login/patient">Go back</Link>
+
         </section>
       </main>
     </>

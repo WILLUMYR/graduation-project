@@ -1,6 +1,8 @@
 .chat__content {
-  background-color: white;
-  height: auto;
+  background-image: url(../../Chat.svg);
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 86vh;
   padding-top: 30px;
   padding-bottom: 30px;
   padding: auto;
@@ -12,7 +14,6 @@
 .issue__box {
   width: 70vw;
   height: 80vh;
-  background-color: white;
   margin: 0 auto;
   border-radius: 30px;
   text-align: center;
@@ -20,8 +21,14 @@
 }
 
 .issue__title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bolder;
+}
+
+h1 {
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #dbdbdb; 
 }
 
 .issue__form {
@@ -38,17 +45,34 @@
   line-height: 1.5;
   border: 3px solid black;
   border-radius: 15px;
-  box-shadow: 0px 0px 10px #a0a9bb;
+  box-shadow: 0px 0px 5px #d2dcff;
+  border: none;
+  padding-top: 10px;
+  padding-left: 20px;
 }
 
 .issue__button {
   margin-top: 50px;
   padding: 10px 20px;
   background-color: #3762EA;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
   border: none;
   border-radius: 30px;
+  transition: 0.1s ease;
+  box-shadow: 0px 0px 5px #dde5ff;
+}
+
+.issue__text {
+  color: #353b46;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.issue__button:hover {
+  background-color: #2e52ca;
+  cursor: pointer;
+  transition: 0.1s ease;
 }
 
 .issue__content {
@@ -67,21 +91,28 @@
   display: flex;
   margin-top: 50px;
   padding: auto;
+  margin-bottom: 90px;
   align-items: center;
   display: flex;
   flex-direction:column ;
 }
 
 .message__box {
-  max-width: 60vw;
+  max-width: 55vw;
   position: relative;
-  min-height: 10vh;
+  min-height: 5vh;
   background-color: white;
-  margin: 20px auto;
+  margin: 15px auto;
   text-align: center;
   box-shadow: 0px 0px 20px rgb(232, 232, 232);
   padding: 0 20px;
   word-wrap: break-word;
+}
+
+.message__message {
+  margin: 0;
+  margin-top: 13px;
+  color: #181b20;
 }
 
 .message__box--user {
@@ -107,29 +138,42 @@
 }
 
 .message__form{
-  display:grid;
-  grid-template-columns: 5fr 2fr;
+  display: flex;
+  background-color: #181b20;
+  flex-direction: row;
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 90vw;
-  padding: 30px 5vw;
+  width: 100vw;
+  padding: 15px 8vw;
 }
 
 .message__input{
-  border-radius: 30px 0 0 30px;
+  border-radius: 30px;
   font-family: Helvetica;
   padding-left: 10px;
-  padding-top: 20px;
+  padding-top: 15px;
   display: flex;
-  height: 40px;
+  height: 30px;
+  width: 70%;
+  margin-right: 30px;
+  border: none;
+
 }
 
 .message__button{
-  border-radius: 0 30px 30px 0;
+  border-radius: 30px;
   background-color: #3762EA;
   color: white;
   font-weight: bold;
   border: none;
+  width: 10%;
+  box-shadow: 0px 0px 5px #313131;
+  cursor: pointer;
+}
+
+.message__button:hover {
+  background-color: #2e52ca;
+  transition: 0.1s ease;
 }
 

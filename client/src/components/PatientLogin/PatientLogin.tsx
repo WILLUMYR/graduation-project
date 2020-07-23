@@ -32,7 +32,7 @@ const PatientLogin = (props: any) => {
     <>
       <main className="login__content">
         <section className="login__box">
-          <h1 className="content__user">Log in</h1>
+          <h1 className="content__user">Login</h1>
 
           <form onSubmit={handleSubmit}>
             <input

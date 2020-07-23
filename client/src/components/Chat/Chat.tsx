@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
@@ -6,7 +6,9 @@ import './Chat.css';
 const Chat = (props: any) => {
   const [issue, setIssue] = useState('');
   const [content, setContent] = useState();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState();
+
+  const inputEl: any = useRef(null);
 
   const history = useHistory();
 
@@ -97,6 +99,7 @@ const Chat = (props: any) => {
           console.log(err);
         });
     })
+    inputEl.current.value = '';
   }
 
 
@@ -126,7 +129,7 @@ const Chat = (props: any) => {
       <>
         <main className="chat__content">
           <section className="issue__content">
-            <h1>Thank you for submiting, a psychologist will respond to you as soon as possible.</h1>
+            <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
           <section className="chat__messages">
@@ -136,6 +139,7 @@ const Chat = (props: any) => {
           </section>
           <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
             <textarea
+              ref={inputEl}
               className="message__input"
               placeholder="Your message..."
               onChange={event => {

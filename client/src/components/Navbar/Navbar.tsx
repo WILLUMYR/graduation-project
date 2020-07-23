@@ -14,7 +14,7 @@ export default function Navbar(props: any) {
     return (
       <header className="home__header">
         <Link className="header__title" to="/">
-          Home
+          Placeholder
         </Link>
         <Link className="header__link" to="/">
           Login as a psychologist
@@ -25,9 +25,9 @@ export default function Navbar(props: any) {
     return (
       <header className="home__header">
         <Link className="header__title" to="/">
-          Home
+          Placeholder
         </Link>
-        <button className="header__link" onClick={() => { logout() }}>LogOut</button>
+        <button className="header__link" onClick={() => { logout() }}>Log out</button>
       </header>
     )
   }

@@ -4,13 +4,13 @@ const ChatBubbles = (props: any) => {
   if (props.message.respondent === 'patient') {
     return (
       <div className="message__box message__box--user">
-        <p>{props.message.text}</p>
+        <p className="message__message">{props.message.text}</p>
       </div>
     )
   } else {
     return (
       <div className="message__box message__box--pro">
-        <p>{props.message.text}</p>
+        <p className="message__message">{props.message.text}</p>
       </div>
     )
   }
