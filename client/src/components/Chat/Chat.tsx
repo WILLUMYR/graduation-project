@@ -13,10 +13,27 @@ const Chat = (props: any) => {
   useEffect(() => {
     if (props.token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/patient');
-
+    } else {
+      fetch('/api/patients', {
+        headers: {
+          'content-type': 'application/json',
+          'x-auth-token': props.token,
+        },
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          setContent(data);
+          const json = JSON.stringify(data);
+          window.localStorage.setItem('case', json);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     // check for existing case
-  })
+  });
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -24,28 +41,33 @@ const Chat = (props: any) => {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token
+        'x-auth-token': props.token,
       },
       body: JSON.stringify({ issue }),
     }).then(response => {
-      if (response.status !== 201) return alert('Error')
+      if (response.status !== 201) return alert('Error');
 
       fetch('/api/patients', {
         headers: {
           'content-type': 'application/json',
-          'x-auth-token': props.token
+          'x-auth-token': props.token,
         },
-      }).then((res) => {
-        return res.json()
-      }).then((data) => {
-        setContent(data);
-        const json = JSON.stringify(data)
-        window.localStorage.setItem('case', json);
-      }).catch(err => { console.log(err) });
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          setContent(data);
+          const json = JSON.stringify(data);
+          window.localStorage.setItem('case', json);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
-  }
+  };
 
-  if (!content || !window.localStorage.getItem('case')) {
+  if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
     return (
       <>
         <main className="chat__content">
@@ -66,7 +88,6 @@ const Chat = (props: any) => {
       </>
     );
   } else {
-    console.log(content);
     // fetch(`/cases/${id}`);
     return (
       <>
@@ -76,8 +97,8 @@ const Chat = (props: any) => {
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
           <section className="chat__messages">
-            {content.cases[0].messages.map((message: { text: React.ReactNode; }) => {
-              return <ChatBubble key={Math.random()} message={message} />
+            {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
+              return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>
           <form className="message__form" action="submit">
@@ -86,13 +107,14 @@ const Chat = (props: any) => {
               placeholder="Your message..."
               onChange={event => {
                 setMessage(event.target.value);
-              }}></textarea>
+              }}
+            ></textarea>
             <input className="message__button" type="submit" />
           </form>
         </main>
       </>
-    )
+    );
   }
-}
+};
 
 export default Chat;
