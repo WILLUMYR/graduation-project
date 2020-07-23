@@ -8,7 +8,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 0 30px; 
-  z-index: 1;
+  z-index: 3;
 }
 
 .header__title {
