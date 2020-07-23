@@ -11,11 +11,12 @@ const Chat = (props: any) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (props.token === '') {
+    if (props.token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/patient');
+
     }
     // check for existing case
-  }, [])
+  })
 
   const mockCase: any = {
     patientId: '12rej24235l6ø32',
