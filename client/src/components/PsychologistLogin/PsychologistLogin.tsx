@@ -8,7 +8,7 @@ export default function PsychologistLogin() {
     <>
       <main className="login__content">
         <section className="login__box">
-          <h1 className="content__user">Login</h1>
+          <h1 className="content__user">Log in</h1>
 
           <form>
             <input
