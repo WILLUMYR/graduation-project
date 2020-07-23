@@ -25,7 +25,6 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-
       const { username, gender } = req.body;
 
       const email = req.body.email ? req.body.email : undefined;

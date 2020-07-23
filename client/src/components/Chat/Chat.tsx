@@ -48,36 +48,30 @@ const Chat = (props: any) => {
     ]
   }
 
-  // useEffect(() => {
-  //   if (props.token) {
-  //     fetch('/api/patients', {
-  //       headers: {
-  //         'content-type': 'application/json',
-  //         'x-auth-token': props.token
-  //       },
-  //     })
-  //   }
-  // }, [])
-
   const handleSubmit = (event: any) => {
-    const obj = {
-
-    }
     event.preventDefault();
     fetch('/api/cases', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(obj),
-    }).then(response => response.json())
-      .then(data => {
-        if (data.token) {
-          props.saveToken(data.token);
-          history.push('/chat');
-        }
-      });
+      headers: {
+        'content-type': 'application/json',
+        'x-auth-token': props.token
+      },
+      body: JSON.stringify({ issue }),
+    }).then(response => {
+      if (response.status !== 201) return alert('Error')
 
-  };
-
+      fetch('/api/patients', {
+        headers: {
+          'content-type': 'application/json',
+          'x-auth-token': props.token
+        },
+      }).then((res) => {
+        return res.json()
+      }).then((data) => {
+        setContent(data);
+      })
+    });
+  }
   if (!content) {
     return (
       <>
@@ -105,11 +99,11 @@ const Chat = (props: any) => {
       <>
         <main className="chat__content">
           <section className="issue__content">
-            <h1>Issue ID: 2103198590231204</h1>
-            <p className="issue__text">{content.issue}</p>
+            <h1>Thank you for submiting, a psychologist will respond to you as soon as possible.</h1>
+            <p className="issue__text">{content.cases[0].issue}</p>
           </section>
           <section className="chat__messages">
-            {content.messages.map((message: { text: React.ReactNode; }) => {
+            {content.cases[0].messages.map((message: { text: React.ReactNode; }) => {
               return <ChatBubble key={Math.random()} message={message} />
             })}
           </section>

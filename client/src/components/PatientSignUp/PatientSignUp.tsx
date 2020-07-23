@@ -5,7 +5,7 @@ import './PatientSignUp.css';
 const PatientSignUp = (props: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState();
   const [gender, setGender] = useState('female');
   const history = useHistory();
 
