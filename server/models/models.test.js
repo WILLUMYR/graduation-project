@@ -1,42 +1,76 @@
 const { MongoClient } = require('mongodb');
-const { Cases, Patients, Psychologists } = require('./index');
+const { connectDB, clearDatabase, closeDatabase } = require('../test/testdb');
 
-describe('insert', () => {
+const Patients = require('./Patients');
+const Cases = require('./Cases');
+const Psychologists = require('./Psychologists');
+
+describe('Models', () => {
   let connection;
   let db;
 
-  beforeEach(async () => {
-    await db.collection('patients').deleteMany({});
+  beforeAll(async () => await connectDB());
+
+  beforeEach(async () => await clearDatabase());
+
+  afterAll(async () => await closeDatabase());
+
+  it('Adding patient to patient collection', async () => {
+    const newPatient = new Patients({
+      username: "user23",
+      password: "secret24",
+      email: "user23@protonmail.com",
+      gender: "female",
+    })
+
+    await newPatient.save()
+
+    const insertedUser = await Patients.findOne({ username: newPatient.username });
+
+    expect(insertedUser).toBeTruthy();
+    expect(insertedUser.username).toBe(newPatient.username);
+    expect(insertedUser.email).toBe(newPatient.email);
+    expect(insertedUser.gender).toBe(newPatient.gender);
   });
 
-  beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    db = await connection.db();
+  it('Adding case to case collection', async () => {
+    const newPatient = new Patients({
+      username: "user23",
+      password: "secret24",
+      email: "user23@protonmail.com",
+      gender: "female",
+    })
+
+    await newPatient.save()
+
+    const insertedUser = await Patients.findOne({ username: 'user23' });
+
+    const newCase = new Cases({
+      patientId: insertedUser.id,
+      issue: 'Stringgg with problem here.',
+    })
+
+    await newCase.save()
+
+    const insertedCase = await Cases.findOne({ issue: newCase.issue });
+
+    expect(insertedCase).toBeTruthy();
+    expect(insertedCase.issue).toBe(newCase.issue);
   });
 
-  afterAll(async () => {
-    await connection.close();
-  });
+  it('Adding patient to patient collection', async () => {
+    const newPsychologist = new Psychologists({
+      fullName: 'Sigmant Freid',
+      email: 'SF@psycholigist.co.uk',
+      password: 'sAc$$t,=?fevWr',
+    })
 
-  it('should insert patient to the patients collection', async () => {
-    const patients = db.collection('patients');
+    await newPsychologist.save()
 
-    const req = {
-      body: {
-        username: 'John Doe',
-        password: 'secret',
-        email: 'johndoe@mail.com',
-        gender: 'male'
-      }
-    }
-    // create object and send to db here!
-    //await createPatient(req);
+    const insertedPsycholoigst = await Psychologists.findOne({ email: newPsychologist.email });
 
-    const insertedUser = await patients.findOne({ username: 'John Doe' });
-    console.log(insertedUser);
-    expect(insertedUser).toEqual(req.body);
+    expect(insertedPsycholoigst).toBeTruthy();
+    expect(insertedPsycholoigst.fullName).toBe(newPsychologist.fullName);
+    expect(insertedPsycholoigst.email).toBe(newPsychologist.email);
   });
 });

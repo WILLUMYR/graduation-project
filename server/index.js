@@ -25,7 +25,11 @@ app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -34,3 +38,5 @@ db.once('open', () => {
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+
+module.export = app;
