@@ -1,4 +1,3 @@
-const { MongoClient } = require('mongodb');
 const { connectDB, clearDatabase, closeDatabase } = require('../test/testdb');
 
 const Patients = require('./Patients');
