@@ -4,17 +4,15 @@ const Patients = require('./Patients');
 const Cases = require('./Cases');
 const Psychologists = require('./Psychologists');
 
-describe('Models', () => {
+describe.skip('Model unit tests', () => {
   let connection;
   let db;
 
   beforeAll(async () => await connectDB());
-
   beforeEach(async () => await clearDatabase());
-
   afterAll(async () => await closeDatabase());
 
-  it('Adding patient to patient collection', async () => {
+  it('Patient model', async () => {
     const newPatient = new Patients({
       username: "user23",
       password: "secret24",
@@ -32,7 +30,7 @@ describe('Models', () => {
     expect(insertedUser.gender).toBe(newPatient.gender);
   });
 
-  it('Adding case to case collection', async () => {
+  it('Case model', async () => {
     const newPatient = new Patients({
       username: "user23",
       password: "secret24",
@@ -57,7 +55,7 @@ describe('Models', () => {
     expect(insertedCase.issue).toBe(newCase.issue);
   });
 
-  it('Adding patient to patient collection', async () => {
+  it('Psychologist model', async () => {
     const newPsychologist = new Psychologists({
       fullName: 'Sigmant Freid',
       email: 'SF@psycholigist.co.uk',

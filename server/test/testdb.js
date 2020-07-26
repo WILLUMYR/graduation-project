@@ -8,10 +8,8 @@ const connectDB = async () => {
 
   const mongooseOpts = {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     useCreateIndex: true,
-    autoReconnect: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
   };
 
   await mongoose.connect(uri, mongooseOpts);
