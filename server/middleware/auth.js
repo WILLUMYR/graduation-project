@@ -8,7 +8,14 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWTSECRET);
 
-    req.patient = decoded.patient;
+    if (decoded.patient) {
+      req.patient = decoded.patient;
+    }
+
+    if (decoded.psychologist) {
+      req.psychologist = decoded.psychologist;
+    }
+
     next();
   } catch (err) {
     next(err);

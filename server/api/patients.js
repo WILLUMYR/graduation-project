@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const Patients = require('../models/Patients');
 const auth = require('../middleware/auth');
 
-
 /**Route     POST api/patients
  * Desc      Create new user and get token
  * Access    Public
@@ -24,9 +23,8 @@ router.post(
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
+      if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
       const { username, gender } = req.body;
 
       const email = req.body.email ? req.body.email : undefined;
@@ -66,6 +64,8 @@ router.post(
  */
 router.get('/', auth, async (req, res, next) => {
   try {
+    if (!req.patient) return res.status(401).send('Not authorized');
+
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
     const activeCase = patient.cases.find(obj => obj.closed === false);
 
@@ -84,19 +84,12 @@ router.get('/', auth, async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const patient = await Patients.findOne({ username });
 
-    if (!patient) {
-      res.status(401).send('Not authorized');
-      return;
-    }
+    const patient = await Patients.findOne({ username });
+    if (!patient) return res.status(401).send('Not authorized');
 
     const isMatch = await bcrypt.compare(password, patient.password);
-
-    if (!isMatch) {
-      res.status(401).send('Not authorized');
-      return;
-    }
+    if (!isMatch) return res.status(401).send('Not authorized');
 
     const payload = {
       patient: {
