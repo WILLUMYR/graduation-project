@@ -5,6 +5,7 @@ import moment from 'moment';
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
   const [view, setView] = useState('YourCases');
+  const [sidebar, setSidebar] = useState();
 
   const getCases = () => {
     fetch('/api/cases', {
@@ -24,6 +25,11 @@ export default function Dashboard(props: any) {
     getCases();
   }, [])
 
+
+  const selectCase = (id) => {
+    const newCase = cases.filter((item: { id: String; }) => item.id === id);
+    setSidebar(newCase)
+  }
 
   const switchCase = (view: String) => {
     switch (view) {
@@ -69,6 +75,16 @@ export default function Dashboard(props: any) {
           {switchCase(view)}
         </div>
         <div className="right__content">
+          {if (sideBar) {
+            return (
+              <section>
+            <h1>{sidebar._id}</h1>
+            <p>{sidebar.issue}</p>
+            <p>{sidebar.patientId}</p>
+            <p>{moment(sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+          </section>
+            )
+          }}
         </div>
       </section>
     </>
