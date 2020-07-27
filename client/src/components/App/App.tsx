@@ -40,9 +40,6 @@ const App = () => {
         <Route exact path="/login/psychologist">
           <PsychologistLogin />
         </Route>
-        <Route exact path="/signup/psychologist">
-          <PsychologistSignUp />
-        </Route>
         <Route exact path="/chat">
           <Chat token={token} saveToken={saveToken} />
         </Route>

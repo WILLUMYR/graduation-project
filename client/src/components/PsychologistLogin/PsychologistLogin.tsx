@@ -25,8 +25,6 @@ export default function PsychologistLogin() {
             <br />
             <input className="form__submit" type="submit" value="Log in" />
           </form>
-          <p>Dont have an account?</p>
-          <Link className="form__submit" to="/signup/psychologist">Sign up</Link>
           <p className="PS">This Login page is only for professional Psychologists.<br></br>If you are looking for help from one,
               please use our user login and post a case containing your issue. </p>
           <Link className="form__goBack" to="/login/patient">User login</Link>
