@@ -1,12 +1,14 @@
 require('dotenv').config();
 const router = require('express').Router();
-const Patients = require('../models/Patients');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const Patients = require('../models/Patients');
 const auth = require('../middleware/auth');
 
-/** Route     POST api/patients
+
+/**Route     POST api/patients
  * Desc      Create new user and get token
  * Access    Public
  */
@@ -58,7 +60,7 @@ router.post(
   },
 );
 
-/** Route     GET api/patients
+/**Route     GET api/patients
  * Desc      Get patient data.
  * Access    Private
  */
@@ -75,7 +77,7 @@ router.get('/', auth, async (req, res, next) => {
   }
 });
 
-/** Route     POST api/patients/login
+/**Route     POST api/patients/login
  * Desc      Authenticate user and get token
  * Access    Public
  */
