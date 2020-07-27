@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseCard from './CaseCard';
-import moment from 'moment';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
