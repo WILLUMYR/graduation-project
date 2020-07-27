@@ -112,10 +112,13 @@ router.put('/:id/assign', auth, async (req, res, next) => {
     if (!req.psychologist) return res.status(401).send('Not authorized');
 
     const currentCase = await Cases.findById(req.params.id);
+    const psychologist = await Psychologists.findById(req.psychologist.id);
 
     if (!currentCase.psychologistId) {
       currentCase.psychologistId = req.psychologist.id;
       await currentCase.save();
+      psychologist.cases.push(currentCase.id);
+      await psychologist.save();
       res.send('Case is assigned successfully');
     } else {
       res.status(409).send('Case has already been assigned');
