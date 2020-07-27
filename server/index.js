@@ -39,7 +39,6 @@ if (!process.env.ISTEST) { // could be better to split out
   });
 }
 
-
 const server = app.listen(port);
 
 module.exports = server;

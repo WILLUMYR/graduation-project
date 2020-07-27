@@ -7,9 +7,19 @@ import PatientLogin from '../PatientLogin/PatientLogin';
 import PatientSignUp from '../PatientSignUp/PatientSignUp';
 import PsychologistLogin from '../PsychologistLogin/PsychologistLogin';
 import Navbar from '../Navbar/Navbar';
+import Dashboard from '../Dashboard/Dashboard';
 
 const App = () => {
-  const [token, setToken] = useState('');
+  const initToken = () => {
+    const localToken = window.localStorage.getItem('token')
+    if (localToken) {
+      return localToken;
+    } else {
+      return '';
+    }
+  }
+
+  const [token, setToken] = useState(initToken);
 
   const saveToken = (token: string) => {
     window.localStorage.setItem('token', token);
@@ -24,7 +34,6 @@ const App = () => {
       }
     }
   })
-
 
   return (
     <BrowserRouter>
@@ -41,6 +50,9 @@ const App = () => {
         </Route>
         <Route exact path="/chat">
           <Chat token={token} saveToken={saveToken} />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard token={token} saveToken={saveToken} />
         </Route>
         <Route exact path="/">
           <Home />

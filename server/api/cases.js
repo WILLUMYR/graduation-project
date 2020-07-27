@@ -108,13 +108,17 @@ router.put(
   },
 );
 
-router.get('/:id', async (req, res, next) => { });
-
 router.post('/:id', async (req, res, next) => { });
 
-router.get('/', async (req, res, next) => {
-  // const unassigned = req.params.unassigned;
-  // const assignedToId = req.params.assignedToId;
+router.get('/', auth, async (req, res, next) => {
+  try {
+    const cases = await Cases.find({})
+    res.status(200).json({ cases })
+  } catch (err) {
+    next(err);
+  }
 });
+
+router.get('/:id', async (req, res, next) => { });
 
 module.exports = router;
