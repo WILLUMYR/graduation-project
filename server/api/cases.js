@@ -41,14 +41,14 @@ router.put('/:id/close', auth, async (req, res, next) => {
   try {
     const currentCase = await Cases.findById(req.params.id);
 
-    if (currentCase.patientId.toString() !== req.patient.id) return res.status(401).send('Not authorized');
+    if (currentCase.patientId.toString() !== req.patient.id) return res.status(401).json({ msg: 'Not authorized' });
 
     if (!currentCase.closed) {
       currentCase.closed = true;
       await currentCase.save();
-      res.send('Case is closed successfully');
+      res.status(200).json({ msg: 'Case is closed successfully' });
     } else {
-      res.status(409).send('Case has already been closed');
+      res.status(409).json({ msg: 'Case has already been closed' });
     }
   } catch (error) {
     next(error);
@@ -210,5 +210,7 @@ router.get('/assigned/:id', auth, async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/:id', async (req, res, next) => { });
 
 module.exports = router;

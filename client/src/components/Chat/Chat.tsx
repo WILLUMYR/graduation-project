@@ -7,6 +7,7 @@ const Chat = (props: any) => {
   const [issue, setIssue] = useState('');
   const [content, setContent] = useState();
   const [message, setMessage] = useState();
+  const [userFeedback, setUserFeedback] = useState('');
 
   const inputEl: any = useRef(null);
 
@@ -34,8 +35,26 @@ const Chat = (props: any) => {
           console.log(err);
         });
     }
-    // check for existing case
-  });
+  }, []);
+
+  const handleResponse = (response: any) => {
+    if (response.status !== 201) return alert('Error');
+
+    fetch('/api/patients', {
+      headers: {
+        'content-type': 'application/json',
+        'x-auth-token': props.token,
+      },
+    }).then(res => res.json())
+      .then(data => {
+        setContent(data);
+        const json = JSON.stringify(data);
+        window.localStorage.setItem('case', json);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   const handleSubmitForm = (event: any) => {
     event.preventDefault();
@@ -47,26 +66,8 @@ const Chat = (props: any) => {
       },
       body: JSON.stringify({ issue }),
     }).then(response => {
-      if (response.status !== 201) return alert('Error');
-
-      fetch('/api/patients', {
-        headers: {
-          'content-type': 'application/json',
-          'x-auth-token': props.token,
-        },
-      })
-        .then(res => {
-          return res.json();
-        })
-        .then(data => {
-          setContent(data);
-          const json = JSON.stringify(data);
-          window.localStorage.setItem('case', json);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    });
+      handleResponse(response);
+    })
   };
 
   const messageHandleSubmit: any = (event: any) => {
@@ -79,30 +80,35 @@ const Chat = (props: any) => {
       },
       body: JSON.stringify({ text: message })
     }).then((response) => {
-      if (response.status !== 201) return alert('Error');
-
-      fetch('/api/patients', {
-        headers: {
-          'content-type': 'application/json',
-          'x-auth-token': props.token,
-        },
-      })
-        .then(res => {
-          return res.json();
-        })
-        .then(data => {
-          setContent(data);
-          const json = JSON.stringify(data);
-          window.localStorage.setItem('case', json);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      handleResponse(response);
     })
+
     inputEl.current.value = '';
     window.scrollTo(0, document.body.scrollHeight);
   }
 
+  const closeCase = async () => {
+    const results = await fetch(`/api/cases/close/${content.cases[0]._id}`, {
+      method: "PUT",
+      headers: {
+        "x-auth-token": props.token,
+      }
+    })
+
+    if (results.status === 200) {
+      setUserFeedback('Case has been closed')
+      setTimeout(() => {
+        setUserFeedback('');
+        window.location.reload();
+      }, 4000)
+    } else {
+      setUserFeedback('Something went wrong, please try again later. ')
+      setTimeout(() => {
+        setUserFeedback('')
+        window.location.reload();
+      }, 4000)
+    }
+  }
 
   if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
     return (
@@ -125,7 +131,6 @@ const Chat = (props: any) => {
       </>
     );
   } else {
-    // fetch(`/cases/${id}`);
     return (
       <>
         <main className="chat__content">
@@ -133,6 +138,7 @@ const Chat = (props: any) => {
             <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
+          <button onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
               return <ChatBubble key={Math.random()} message={message} />;
