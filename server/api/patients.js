@@ -7,6 +7,20 @@ const jwt = require('jsonwebtoken');
 const Patients = require('../models/Patients');
 const auth = require('../middleware/auth');
 
+const respondPayload = (id, res) => {
+  const payload = {
+    patient: {
+      id,
+    },
+  };
+
+  jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
+    if (err) throw err;
+
+    res.status(201).json({ token });
+  });
+};
+
 /**Route     POST api/patients
  * Desc      Create new user and get token
  * Access    Public
@@ -41,17 +55,7 @@ router.post(
 
       await newPatient.save();
 
-      const payload = {
-        patient: {
-          id: newPatient.id,
-        },
-      };
-
-      jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
-        if (err) throw err;
-
-        res.status(201).json({ token });
-      });
+      respondPayload(newPatient.id, res);
     } catch (err) {
       next(err);
     }
@@ -64,7 +68,7 @@ router.post(
  */
 router.get('/', auth, async (req, res, next) => {
   try {
-    if (!req.patient) return res.status(401).send('Not authorized');
+    if (!req.patient) return res.status(401).json({ msg: 'Not authorized' });
 
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
     const activeCase = patient.cases.find(obj => obj.closed === false);
@@ -86,22 +90,12 @@ router.post('/login', async (req, res, next) => {
     const { username, password } = req.body;
 
     const patient = await Patients.findOne({ username });
-    if (!patient) return res.status(401).send('Not authorized');
+    if (!patient) return res.status(401).json({ msg: 'Not authorized' });
 
     const isMatch = await bcrypt.compare(password, patient.password);
-    if (!isMatch) return res.status(401).send('Not authorized');
+    if (!isMatch) return res.status(401).json({ msg: 'Not authorized' });
 
-    const payload = {
-      patient: {
-        id: patient.id,
-      },
-    };
-
-    jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
-      if (err) throw err;
-
-      res.status(200).json({ token });
-    });
+    respondPayload(patient.id, res);
   } catch (err) {
     next(err);
   }

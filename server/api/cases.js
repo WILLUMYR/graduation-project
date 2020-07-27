@@ -24,9 +24,9 @@ router.post('/', [check('issue', 'issue should not be blank').trim().not().isEmp
       newCase = await newCase.save();
       patient.cases.push(newCase.id);
       await patient.save();
-      res.status(201).send('Case successfully created');
+      res.status(201).json({ msg: 'Case successfully created' });
     } else {
-      res.status(409).send('Active case already exists');
+      res.status(409).json({ msg: 'Active case already exists' });
     }
   } catch (error) {
     next(error);
@@ -39,8 +39,10 @@ router.post('/', [check('issue', 'issue should not be blank').trim().not().isEmp
  */
 router.put('/:id/close', auth, async (req, res, next) => {
   try {
-    const currentCase = await Cases.findById(req.params.id);
+    // if (!req.patient) return res.status(401).json({ msg: 'Not authorized' });
+    // const currentCase = await Cases.find({ id: req.params.id, patientId: req.patient.id });
 
+    const currentCase = await Cases.findById(req.params.id);
     if (currentCase.patientId.toString() !== req.patient.id) return res.status(401).json({ msg: 'Not authorized' });
 
     if (!currentCase.closed) {
@@ -83,7 +85,7 @@ router.put(
         };
       } else if (psychologistJwt !== undefined) {
         const psychologist = await Psychologists.findById(psychologistJwt.id);
-        console.log('-----------', psychologist);
+
         newMessage = {
           text,
           respondent: 'psychologist',
@@ -91,12 +93,12 @@ router.put(
           respondentName: psychologist.fullName,
         };
       } else {
-        return res.status(401).send('Not authorized');
+        return res.status(401).json({ msg: 'Not authorized' });
       }
 
       currentCase.messages.push(newMessage);
       await currentCase.save();
-      res.status(201).send('Message is successfully created');
+      res.status(201).json({ msg: 'Message is successfully created' });
     } catch (error) {
       next(error);
     }
@@ -109,7 +111,7 @@ router.put(
  */
 router.put('/:id/assign', auth, async (req, res, next) => {
   try {
-    if (!req.psychologist) return res.status(401).send('Not authorized');
+    if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
     const currentCase = await Cases.findById(req.params.id);
     const psychologist = await Psychologists.findById(req.psychologist.id);
@@ -117,11 +119,12 @@ router.put('/:id/assign', auth, async (req, res, next) => {
     if (!currentCase.psychologistId) {
       currentCase.psychologistId = req.psychologist.id;
       await currentCase.save();
+
       psychologist.cases.push(currentCase.id);
       await psychologist.save();
-      res.send('Case is assigned successfully');
+      res.json({ msg: 'Case is assigned successfully' });
     } else {
-      res.status(409).send('Case has already been assigned');
+      res.status(409).json({ msg: 'Case has already been assigned' });
     }
   } catch (error) {
     next(error);
@@ -138,6 +141,9 @@ router.put(
   auth,
   async (req, res, next) => {
     try {
+      // if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
+      // const currentCase = await Cases.find({ id: req.params.id, psychologistId: req.psychologist.id });
+
       const currentCase = await Cases.findById(req.params.id);
       if (currentCase.psychologistId.toString() !== req.psychologist.id) return res.status(401).send('Not authorized');
 
@@ -145,7 +151,7 @@ router.put(
 
       currentCase.notes.push({ text });
       await currentCase.save();
-      res.status(201).send('Note is successfully created');
+      res.status(201).json({ msg: 'Note is successfully created' });
     } catch (error) {
       next(error);
     }
@@ -158,7 +164,7 @@ router.put(
  */
 router.get('/', auth, async (req, res, next) => {
   try {
-    if (!req.psychologist) return res.status(401).send('Not authorized');
+    if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
     const cases = await Cases.find({});
     res.json(cases);
@@ -173,9 +179,9 @@ router.get('/', auth, async (req, res, next) => {
  */
 router.get('/unassigned', auth, async (req, res, next) => {
   try {
-    if (!req.psychologist) return res.status(401).send('Not authorized');
+    if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
-    const cases = await Cases.find({ psychologistId: undefined });
+    const cases = await Cases.find({ psychologistId: undefined, closed: false });
     res.json(cases);
   } catch (err) {
     next(err);
@@ -188,9 +194,8 @@ router.get('/unassigned', auth, async (req, res, next) => {
  */
 router.get('/assigned', auth, async (req, res, next) => {
   try {
-    if (!req.psychologist) return res.status(401).send('Not authorized');
-
-    const cases = await Cases.find({ psychologistId: req.psychologist.id });
+    if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
+    const cases = await Cases.find({ psychologistId: req.psychologist.id, closed: false });
     res.json(cases);
   } catch (err) {
     next(err);
@@ -201,8 +206,11 @@ router.get('/assigned', auth, async (req, res, next) => {
  * Desc      Get specific assigned case.
  * Access    Private
  */
-router.get('/assigned/:id', auth, async (req, res, next) => {
+router.get('/:id', auth, async (req, res, next) => {
   try {
+    // if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
+    // const currentCase = await Cases.find({ id: req.params.id, psychologistId: req.psychologist.id });
+
     const currentCase = await Cases.findById(req.params.id);
     if (currentCase.psychologistId.toString() !== req.psychologist.id) return res.status(401).send('Not authorized');
     res.json(currentCase);
@@ -210,7 +218,5 @@ router.get('/assigned/:id', auth, async (req, res, next) => {
     next(err);
   }
 });
-
-router.get('/:id', async (req, res, next) => { });
 
 module.exports = router;

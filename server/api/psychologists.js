@@ -6,6 +6,20 @@ const jwt = require('jsonwebtoken');
 const Psychologists = require('../models/Psychologists');
 const auth = require('../middleware/auth');
 
+const respondPayload = (id, res) => {
+  const payload = {
+    psychologist: {
+      id,
+    },
+  };
+
+  jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
+    if (err) throw err;
+
+    res.status(201).json({ token });
+  });
+};
+
 /**Route     POST api/psychologists
  * Desc      Create new psychologist and get token
  * Access    Public
@@ -24,7 +38,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-      const { fullName, email, workingStatus } = req.body;
+      const { fullName, email } = req.body;
 
       const salt = await bcrypt.genSalt(10);
       const password = await bcrypt.hash(req.body.password, salt);
@@ -33,22 +47,11 @@ router.post(
         fullName,
         password,
         email,
-        workingStatus,
+        workingStatus: 'active',
       });
 
       await newPsychologist.save();
-
-      const payload = {
-        psychologist: {
-          id: newPsychologist.id,
-        },
-      };
-
-      jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
-        if (err) throw err;
-
-        res.status(201).json({ token });
-      });
+      respondPayload(newPsychologist.id, res);
     } catch (err) {
       next(err);
     }
@@ -61,7 +64,7 @@ router.post(
  */
 router.get('/', auth, async (req, res, next) => {
   try {
-    if (!req.psychologist) return res.status(401).send('Not authorized');
+    if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
     const psychologist = await Psychologists.findById(req.psychologist.id).select('-password').populate('cases').exec();
     res.json(psychologist);
@@ -79,22 +82,12 @@ router.post('/login', async (req, res, next) => {
     const { password, email } = req.body;
 
     const psychologist = await Psychologists.findOne({ email });
-    if (!psychologist) return res.status(401).send('Not authorized');
+    if (!psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
     const isMatch = await bcrypt.compare(password, psychologist.password);
-    if (!isMatch) return res.status(401).send('Not authorized');
+    if (!isMatch) return res.status(401).json({ msg: 'Not authorized' });
 
-    const payload = {
-      psychologist: {
-        id: psychologist.id,
-      },
-    };
-
-    jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
-      if (err) throw err;
-
-      res.status(200).json({ token });
-    });
+    respondPayload(psychologist.id, res);
   } catch (err) {
     next(err);
   }
