@@ -6,7 +6,6 @@ import Chat from '../Chat/Chat';
 import PatientLogin from '../PatientLogin/PatientLogin';
 import PatientSignUp from '../PatientSignUp/PatientSignUp';
 import PsychologistLogin from '../PsychologistLogin/PsychologistLogin';
-import PsychologistSignUp from '../PsychologistSignUp/PsychologistSignUp';
 import Navbar from '../Navbar/Navbar';
 
 const App = () => {
