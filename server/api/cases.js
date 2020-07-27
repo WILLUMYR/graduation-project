@@ -37,22 +37,22 @@ router.post('/', [check('issue', 'issue should not be blank').trim().not().isEmp
  * Desc      Update status to close the case
  * Access    Private
  */
-router.put('/:id/close', auth, async (req, res, next) => {
+router.put('/close/:id', auth, async (req, res, next) => {
   try {
     const caseId = req.params.id;
+    console.log(req.params.id);
     const currentCase = await Cases.findById(caseId);
 
     if (currentCase.patientId.toString() !== req.patient.id) {
-      res.status(401).send('Not authorized');
-      return;
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     if (!currentCase.closed) {
       currentCase.closed = true;
       await currentCase.save();
-      res.send('Case is closed successfully');
+      res.status(200).json({ msg: 'Case is closed successfully' });
     } else {
-      res.status(409).send('Case has already been closed');
+      res.status(409).json({ msg: 'Case has already been closed' });
     }
   } catch (error) {
     next(error);
