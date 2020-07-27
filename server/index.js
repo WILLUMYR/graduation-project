@@ -25,12 +25,21 @@ app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+if (!process.env.ISTEST) { // could be better to split out
+  mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('MongoDB successfully connected!');
-});
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', () => {
+    console.log('MongoDB successfully connected!');
+  });
+}
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+
+const server = app.listen(port);
+
+module.exports = server;
