@@ -16,7 +16,7 @@ const respondPayload = (id, res) => {
   jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 7200 }, (err, token) => {
     if (err) throw err;
 
-    res.status(201).json({ token });
+    res.json({ token });
   });
 };
 
@@ -51,6 +51,7 @@ router.post(
       });
 
       await newPsychologist.save();
+      res.status(201);
       respondPayload(newPsychologist.id, res);
     } catch (err) {
       next(err);
