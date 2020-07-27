@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Dashboard.css';
 import moment from 'moment';
+import Sidebar from './Sidebar';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
@@ -26,9 +27,9 @@ export default function Dashboard(props: any) {
   }, [])
 
 
-  const selectCase = (id) => {
-    const newCase = cases.filter((item: { id: String; }) => item.id === id);
-    setSidebar(newCase)
+  const selectCase = (id: String) => {
+    const newCase = cases.filter((item: { _id: String; }) => item._id === id);
+    setSidebar(newCase[0])
   }
 
   const switchCase = (view: String) => {
@@ -38,21 +39,29 @@ export default function Dashboard(props: any) {
           <p>Your cases</p>
         )
       case 'Unassigned':
+        const unassigned = cases.filter((item: any) => !item.psychologistsId)
         return (
-          <p>Unassigned Cases</p>
+          <>
+            {unassigned.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
+              return (
+                <div onClick={() => { selectCase(item._id) }} className="content__card" key={Math.random()}>
+                  <h2>Case identifier: {item._id}</h2>
+                  <h3>{item.issue}</h3>
+                  <p>{moment(item.createdAt).format('L')}</p>
+                </div>
+              )
+            })}
+          </>
         )
       case 'AllCases':
         return (
           <>
-            {cases.map((item: { createdAt: Date; _id: React.ReactNode; issue: React.ReactNode; }) => {
+            {cases.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
               return (
-                <div className="content__card" key={Math.random()}>
-                  <h2>Case Created:</h2>
-                  <h2>Case ID:</h2>
-                  <h2>Issue:</h2>
-                  <h2>{moment(item.createdAt).format('L')}</h2>
-                  <h2>{item._id}</h2>
-                  <h2>{item.issue}</h2>
+                <div onClick={() => { selectCase(item._id) }} className="content__card" key={Math.random()}>
+                  <h2>Case identifier: {item._id}</h2>
+                  <h3>{item.issue}</h3>
+                  <p>{moment(item.createdAt).format('L')}</p>
                 </div>
               )
             })}
@@ -65,7 +74,7 @@ export default function Dashboard(props: any) {
 
   return (
     <>
-      <div>
+      <div className="dashboard__nav">
         <button className="dashboard__button" onClick={() => { setView('YourCases') }}>Your Cases</button>
         <button className="dashboard__button" onClick={() => { setView('Unassigned') }}>Unassigned Cases</button>
         <button className="dashboard__button" onClick={() => { setView('AllCases') }}>All Cases</button>
@@ -74,31 +83,8 @@ export default function Dashboard(props: any) {
         <div className="left__content">
           {switchCase(view)}
         </div>
-        <div className="right__content">
-          {if (sideBar) {
-            return (
-              <section>
-            <h1>{sidebar._id}</h1>
-            <p>{sidebar.issue}</p>
-            <p>{sidebar.patientId}</p>
-            <p>{moment(sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-          </section>
-            )
-          }}
-        </div>
+        <Sidebar sidebar={sidebar} />
       </section>
     </>
   )
-
-  // if (cases !== undefined) {
-  //   return (
-  //     <section>
-  //       {cases.map((item: any) => {
-  //         return <p key={Math.random()}>{item.issue}</p>
-  //       })}
-  //     </section>
-  //   )
-  // } else {
-  //   return <p>loading...</p>
-  // }
 }
