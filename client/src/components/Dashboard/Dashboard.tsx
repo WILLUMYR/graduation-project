@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import './Dashboard.css';
+import moment from 'moment';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
@@ -13,6 +15,7 @@ export default function Dashboard(props: any) {
       return response.json()
     })
       .then((data) => {
+        console.log(data.cases);
         return setCases(data.cases)
       }).catch(err => console.error(err))
   }
@@ -34,8 +37,23 @@ export default function Dashboard(props: any) {
         )
       case 'AllCases':
         return (
-          <p>All Cases</p>
+          <>
+            {cases.map((item: { createdAt: Date; _id: React.ReactNode; issue: React.ReactNode; }) => {
+              return (
+                <div className="content__card" key={Math.random()}>
+                  <h2>Case Created:</h2>
+                  <h2>Case ID:</h2>
+                  <h2>Issue:</h2>
+                  <h2>{moment(item.createdAt).format('L')}</h2>
+                  <h2>{item._id}</h2>
+                  <h2>{item.issue}</h2>
+                </div>
+              )
+            })}
+          </>
         )
+      default:
+        return (<p>Default</p>)
     }
   }
 
@@ -46,8 +64,12 @@ export default function Dashboard(props: any) {
         <button className="dashboard__button" onClick={() => { setView('Unassigned') }}>Unassigned Cases</button>
         <button className="dashboard__button" onClick={() => { setView('AllCases') }}>All Cases</button>
       </div>
-      <section>
-        {switchCase(view)}
+      <section className="dash__content">
+        <div className="left__content">
+          {switchCase(view)}
+        </div>
+        <div className="right__content">
+        </div>
       </section>
     </>
   )
