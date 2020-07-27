@@ -11,7 +11,6 @@ const Chat = (props: any) => {
 
   const inputEl: any = useRef(null);
 
-
   const history = useHistory();
 
   useEffect(() => {

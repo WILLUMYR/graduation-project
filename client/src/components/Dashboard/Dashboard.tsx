@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './Dashboard.css';
-import moment from 'moment';
 import Sidebar from './Sidebar';
+import CaseCard from './CaseCard';
+import moment from 'moment';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
@@ -44,11 +45,7 @@ export default function Dashboard(props: any) {
           <>
             {unassigned.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
               return (
-                <div onClick={() => { selectCase(item._id) }} className="content__card" key={Math.random()}>
-                  <h2>Case identifier: {item._id}</h2>
-                  <h3>{item.issue}</h3>
-                  <p>{moment(item.createdAt).format('L')}</p>
-                </div>
+                <CaseCard selectCase={selectCase} key={Math.random()} item={item} />
               )
             })}
           </>
@@ -58,11 +55,7 @@ export default function Dashboard(props: any) {
           <>
             {cases.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
               return (
-                <div onClick={() => { selectCase(item._id) }} className="content__card" key={Math.random()}>
-                  <h2>Case identifier: {item._id}</h2>
-                  <h3>{item.issue}</h3>
-                  <p>{moment(item.createdAt).format('L')}</p>
-                </div>
+                <CaseCard selectCase={selectCase} key={Math.random()} item={item} />
               )
             })}
           </>
