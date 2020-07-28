@@ -8,11 +8,11 @@ const app = express();
 const url = process.env.MONGO_URI;
 const port = process.env.PORT || 5000;
 
-if (!process.env.node_env) {
-  process.env.node_env = 'dev'
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'dev'
 }
 
-if (process.env.node_env !== 'dev') {
+if (process.env.NODE_ENV !== 'dev') {
   mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

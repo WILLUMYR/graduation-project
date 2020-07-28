@@ -46,7 +46,7 @@ const App = () => {
           <PatientSignUp saveToken={saveToken} token={token} />
         </Route>
         <Route exact path="/login/psychologist">
-          <PsychologistLogin />
+          <PsychologistLogin saveToken={saveToken} />
         </Route>
         <Route exact path="/chat">
           <Chat token={token} saveToken={saveToken} />

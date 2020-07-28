@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
-export default function PsychologistLogin() {
+export default function PsychologistLogin(props: any) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    const obj: any = {
+      email,
+      password,
+    };
+
+    fetch('/api/psychologists/login', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(obj),
+    }).then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          props.saveToken(data.token);
+          history.push('/dashboard');
+        } else {
+          alert('Login failed.');
+        }
+      });
+  };
+
   return (
     <>
       <main className="login__content">
         <section className="login__box">
           <h1 className="content__user">Log in</h1>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
+              onChange={event => { setEmail(event.target.value) }}
               className="form__text"
               placeholder="Email"
               type="text"
             />
             <br />
             <input
+              onChange={event => { setPassword(event.target.value) }}
               className="form__text"
               placeholder="Password"
               type="password"
