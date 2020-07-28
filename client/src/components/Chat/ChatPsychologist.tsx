@@ -4,7 +4,6 @@ import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
 const ChatPsychologist = (props: any) => {
-  const [issue, setIssue] = useState('');
   const [content, setContent]: any = useState();
   const [message, setMessage] = useState();
   const [userFeedback, setUserFeedback] = useState('');
@@ -20,10 +19,12 @@ const ChatPsychologist = (props: any) => {
     }
 
     if (!props.currentCase) {
-      if (!window.localStorage.getItem('currCase')) {
+      if (!window.localStorage.getItem('caseId')) {
+        console.log('number 2');
         history.push('/dashboard');
+        return;
       }
-      props.setCurrentCase(window.localStorage.getItem('currCase'));
+      props.setCurrentCase(window.localStorage.getItem('caseId'));
     }
     fetch(`/api/cases/${props.currentCase}`, {
       headers: {
@@ -39,6 +40,7 @@ const ChatPsychologist = (props: any) => {
         console.log(data);
         const json = JSON.stringify(data);
         window.localStorage.setItem('case', json);
+        window.localStorage.setItem('caseId', data._id);
         setContent(data);
       })
       .catch(err => {
@@ -98,9 +100,13 @@ const ChatPsychologist = (props: any) => {
             <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.issue}</p>
           </section>
-          <button onClick={() => {
-            history.goBack()
-          }}>Go back</button>
+          <button
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            Go back
+          </button>
           <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.messages.map((message: { text: React.ReactNode }) => {
