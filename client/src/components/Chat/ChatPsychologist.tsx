@@ -15,9 +15,9 @@ const ChatPsychologist = (props: any) => {
 
   useEffect(() => {
     if (props.token === '' && !window.localStorage.getItem('token')) {
-      history.push('/login/patient');
+      history.push('/login/psychologist');
     } else {
-      fetch('/api/patients', {
+      fetch('/api/cases/:id', {
         headers: {
           'content-type': 'application/json',
           'x-auth-token': props.token,
@@ -45,7 +45,8 @@ const ChatPsychologist = (props: any) => {
         'content-type': 'application/json',
         'x-auth-token': props.token,
       },
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => {
         setContent(data);
         const json = JSON.stringify(data);
@@ -54,7 +55,7 @@ const ChatPsychologist = (props: any) => {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   const handleSubmitForm = (event: any) => {
     event.preventDefault();
@@ -67,48 +68,48 @@ const ChatPsychologist = (props: any) => {
       body: JSON.stringify({ issue }),
     }).then(response => {
       handleResponse(response);
-    })
+    });
   };
 
   const messageHandleSubmit: any = (event: any) => {
     event.preventDefault();
     fetch(`api/cases/${content.cases[0]._id}/message`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         'content-type': 'application/json',
         'x-auth-token': props.token,
       },
-      body: JSON.stringify({ text: message })
-    }).then((response) => {
+      body: JSON.stringify({ text: message }),
+    }).then(response => {
       handleResponse(response);
-    })
+    });
 
     inputEl.current.value = '';
     window.scrollTo(0, document.body.scrollHeight);
-  }
+  };
 
   const closeCase = async () => {
     const results = await fetch(`/api/cases/close/${content.cases[0]._id}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "x-auth-token": props.token,
-      }
-    })
+        'x-auth-token': props.token,
+      },
+    });
 
     if (results.status === 200) {
-      setUserFeedback('Case has been closed')
+      setUserFeedback('Case has been closed');
       setTimeout(() => {
         setUserFeedback('');
         window.location.reload();
-      }, 4000)
+      }, 4000);
     } else {
-      setUserFeedback('Something went wrong, please try again later. ')
+      setUserFeedback('Something went wrong, please try again later. ');
       setTimeout(() => {
-        setUserFeedback('')
+        setUserFeedback('');
         window.location.reload();
-      }, 4000)
+      }, 4000);
     }
-  }
+  };
 
   if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
     return (
@@ -138,7 +139,14 @@ const ChatPsychologist = (props: any) => {
             <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
-          <button onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
+          <button
+            onClick={() => {
+              closeCase();
+            }}
+          >
+            Close case
+          </button>{' '}
+          <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
               return <ChatBubble key={Math.random()} message={message} />;

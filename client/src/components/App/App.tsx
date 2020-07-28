@@ -12,29 +12,30 @@ import ChatPsychologist from '../Chat/ChatPsychologist';
 
 const App = () => {
   const initToken = () => {
-    const localToken = window.localStorage.getItem('token')
+    const localToken = window.localStorage.getItem('token');
     if (localToken) {
       return localToken;
     } else {
       return '';
     }
-  }
+  };
 
   const [token, setToken] = useState(initToken);
+  const [currentCase, setCurrentCase] = useState();
 
   const saveToken = (token: string) => {
     window.localStorage.setItem('token', token);
     setToken(token);
-  }
+  };
 
   useEffect(() => {
     if (token === '') {
-      const localToken = window.localStorage.getItem('token')
+      const localToken = window.localStorage.getItem('token');
       if (localToken) {
         setToken(localToken);
       }
     }
-  })
+  });
 
   return (
     <BrowserRouter>
@@ -53,10 +54,10 @@ const App = () => {
           <Chat token={token} saveToken={saveToken} />
         </Route>
         <Route exact path="/chat/psychologist">
-          <ChatPsychologist token={token} saveToken={saveToken} />
+          <ChatPsychologist token={token} saveToken={saveToken} currentCase={currentCase} />
         </Route>
         <Route exact path="/dashboard">
-          <Dashboard token={token} saveToken={saveToken} />
+          <Dashboard token={token} saveToken={saveToken} setCurrentCase={setCurrentCase} />
         </Route>
         <Route exact path="/">
           <Home />
@@ -64,6 +65,6 @@ const App = () => {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

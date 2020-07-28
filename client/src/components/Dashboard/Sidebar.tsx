@@ -16,10 +16,17 @@ function DisplayButton(props: any) {
     return <button>YOUR CASES</button>;
   }
   if (props.buttonView === 'Unassigned') {
-    return <button onClick={() => {
-      assignCase(props.id, props.token);
-      history.push('/chat');
-    }}>Assign case</button>;
+    return (
+      <button
+        onClick={() => {
+          assignCase(props.id, props.token);
+          props.setCurrentCase(props.id);
+          history.push('/chat/psychologist');
+        }}
+      >
+        Assign case
+      </button>
+    );
   }
   if (props.buttonView === 'AllCases') {
     return <button>ALL CASES</button>;
@@ -36,7 +43,12 @@ export default function Sidebar(props: any) {
         <p>{props.sidebar.patientId}</p>
         <p>{moment(props.sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
 
-        <DisplayButton buttonView={props.buttonView} id={props.sidebar._id} token={props.token} />
+        <DisplayButton
+          buttonView={props.buttonView}
+          id={props.sidebar._id}
+          token={props.token}
+          setCurrentCase={props.setCurrentCase}
+        />
       </section>
     );
   } else {

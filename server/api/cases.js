@@ -196,7 +196,7 @@ router.get('/assigned', auth, async (req, res, next) => {
   }
 });
 
-/**Route     GET api/cases/assigned/:id
+/**Route     GET api/cases/:id
  * Desc      Get specific assigned case.
  * Access    Private
  */

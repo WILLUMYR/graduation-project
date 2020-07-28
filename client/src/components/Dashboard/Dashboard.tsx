@@ -35,7 +35,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/assigned');
-            setButtonView('YourCases')
+            setButtonView('YourCases');
           }}
         >
           Your Cases
@@ -44,7 +44,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/unassigned');
-            setButtonView('Unassigned')
+            setButtonView('Unassigned');
           }}
         >
           Unassigned Cases
@@ -53,7 +53,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases');
-            setButtonView('AllCases')
+            setButtonView('AllCases');
           }}
         >
           All Cases
@@ -64,7 +64,7 @@ export default function Dashboard(props: any) {
           <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
-        <Sidebar sidebar={sidebar} buttonView={buttonView} token={props.token} />
+        <Sidebar sidebar={sidebar} buttonView={buttonView} token={props.token} setCurrentCase={props.setCurrentCase} />
       </section>
     </>
   );
