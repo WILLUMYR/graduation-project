@@ -17,13 +17,14 @@ const ChatPsychologist = (props: any) => {
     if (props.token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
     } else {
-      fetch('/api/cases/:id', {
+      fetch(`/api/cases/${props.currentCase}`, {
         headers: {
           'content-type': 'application/json',
           'x-auth-token': props.token,
         },
       })
         .then(res => {
+          console.log(res);
           return res.json();
         })
         .then(data => {
@@ -111,23 +112,11 @@ const ChatPsychologist = (props: any) => {
     }
   };
 
-  if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
+  if (!content) {
     return (
       <>
         <main className="chat__content">
-          <section className="issue__box">
-            <h1 className="issue__title">Please describe your issue</h1>
-            <form className="issue__form" onSubmit={handleSubmitForm}>
-              <textarea
-                className="issue__input"
-                placeholder="Please describe your problem!"
-                onChange={event => {
-                  setIssue(event.target.value);
-                }}
-              />
-              <input className="issue__button" type="submit" value="Submit issue" />
-            </form>
-          </section>
+          <div>Loading</div>
         </main>
       </>
     );
