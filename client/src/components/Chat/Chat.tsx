@@ -88,7 +88,7 @@ const Chat = (props: any) => {
   }
 
   const closeCase = async () => {
-    const results = await fetch(`/api/cases/close/${content.cases[0]._id}`, {
+    const results = await fetch(`/api/cases/${content.cases[0]._id}/close`, {
       method: "PUT",
       headers: {
         "x-auth-token": props.token,

@@ -60,7 +60,7 @@ const ChatPsychologist = (props: any) => {
 
   const messageHandleSubmit: any = (event: any) => {
     event.preventDefault();
-    fetch(`api/cases/${content._id}/message`, {
+    fetch(`/api/cases/${content._id}/message`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',

@@ -30,7 +30,7 @@ function DisplayButton(props: any) {
     );
   }
   if (props.buttonView === 'AllCases') {
-    return <button>ALL CASES</button>;
+    return <div></div>;
   }
   if (true) return <div></div>;
 }
