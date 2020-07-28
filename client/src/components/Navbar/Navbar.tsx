@@ -2,9 +2,14 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Navbar.css';
 
+interface Props {
+  token: string;
+  saveToken: (arg0: string) => void;
+}
 
-export default function Navbar(props: any) {
+export const Navbar: React.FC<Props> = (props) => {
   const history = useHistory();
+
   const logout = () => {
     props.saveToken('');
     history.push('/');

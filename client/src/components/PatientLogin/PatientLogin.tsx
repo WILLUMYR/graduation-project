@@ -3,17 +3,23 @@ import { Link, useHistory } from 'react-router-dom';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
-const PatientLogin = (props: any) => {
+interface props {
+  token: string;
+  saveToken: (arg0: string) => void;
+}
+
+export const PatientLogin: React.FC<props> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const obj: any = {
       username,
       password,
     };
+
     fetch('/api/patients/login', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -44,7 +50,9 @@ const PatientLogin = (props: any) => {
                 setUsername(event.target.value);
               }}
             />
+
             <br />
+
             <input
               className="form__text"
               placeholder="Password"
@@ -53,7 +61,9 @@ const PatientLogin = (props: any) => {
                 setPassword(event.target.value);
               }}
             />
+
             <br />
+
             <input className="form__submit" type="submit" value="Log in" />
           </form>
           <p>Dont have an account?</p>
@@ -64,5 +74,3 @@ const PatientLogin = (props: any) => {
     </>
   );
 }
-
-export default PatientLogin;

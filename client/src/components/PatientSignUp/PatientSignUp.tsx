@@ -3,15 +3,19 @@ import { useHistory, Link } from 'react-router-dom';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
-const PatientSignUp = (props: any) => {
+interface props {
+  token: string;
+  saveToken: (arg0: string) => void;
+}
+
+export const PatientSignUp: React.FC<props> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const [gender, setGender] = useState('female');
   const history = useHistory();
 
-  const handleSubmit = async (event: any) => {
-    // maybe not any?
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const obj: any = {
       username,
@@ -91,5 +95,3 @@ const PatientSignUp = (props: any) => {
     </>
   );
 };
-
-export default PatientSignUp;

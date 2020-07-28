@@ -3,12 +3,24 @@ import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
-const ChatPsychologist = (props: any) => {
-  const [content, setContent]: any = useState();
-  const [message, setMessage] = useState();
+interface props {
+  token: string;
+  saveToken: (arg0: string) => void;
+  currentCase: any;
+  setCurrentCase: any;
+}
+
+interface content {
+  cases: Array<{ _id: string }>;
+  messages: Array<Object>;
+}
+
+export const ChatPsychologist: React.FC<props> = (props) => {
+  const [content, setContent] = useState();
+  const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState('');
 
-  const inputEl: any = useRef(null);
+  const inputEl = useRef<null | HTMLTextAreaElement>(null);
 
   const history = useHistory();
 
@@ -23,6 +35,7 @@ const ChatPsychologist = (props: any) => {
         history.push('/dashboard');
         return;
       }
+
       props.setCurrentCase(window.localStorage.getItem('caseId'));
     }
 
@@ -129,5 +142,3 @@ const ChatPsychologist = (props: any) => {
     );
   }
 };
-
-export default ChatPsychologist;

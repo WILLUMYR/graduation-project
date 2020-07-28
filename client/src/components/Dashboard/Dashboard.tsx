@@ -3,7 +3,13 @@ import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
 
-export default function Dashboard(props: any) {
+interface props {
+  token: string;
+  saveToken: (arg0: string) => void;
+  setCurrentCase: any;
+}
+
+export const Dashboard: React.FC<props> = (props) => {
   const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
@@ -20,7 +26,7 @@ export default function Dashboard(props: any) {
     })
   }, [])
 
-  const getCases = (url: any) => {
+  const getCases = (url: string) => {
     fetch(url, {
       headers: {
         'x-auth-token': props.token,

@@ -3,13 +3,24 @@ import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
-const Chat = (props: any) => {
-  const [issue, setIssue] = useState('');
-  const [content, setContent] = useState();
-  const [message, setMessage] = useState();
-  const [userFeedback, setUserFeedback] = useState('');
+interface props {
+  token: string
+  saveToken: (arg0: string) => void
+}
 
-  const inputEl: any = useRef(null);
+interface content {
+  cases: Array<{ _id: string }>
+}
+
+export const Chat: React.FC<props> = (props) => {
+  const [issue, setIssue] = useState<string>('');
+  const [content, setContent] = useState<content>();
+  const [message, setMessage] = useState<string>();
+  const [userFeedback, setUserFeedback] = useState<string>('');
+
+  setInterval(() => { console.log(content); }, 3000)
+
+  const inputEl = useRef<null | HTMLTextAreaElement>(null);
 
   const history = useHistory();
 
@@ -37,7 +48,11 @@ const Chat = (props: any) => {
     }
   }, []);
 
-  const handleResponse = (response: any) => {
+  interface response {
+    status: number;
+  }
+
+  const handleResponse = (response: response) => {
     if (response.status !== 201) return alert('Error');
 
     fetch('/api/patients', {
@@ -56,7 +71,7 @@ const Chat = (props: any) => {
       });
   }
 
-  const handleSubmitForm = (event: any) => {
+  const handleSubmitForm = (event: React.FormEvent) => {
     event.preventDefault();
     fetch('/api/cases', {
       method: 'POST',
@@ -70,8 +85,9 @@ const Chat = (props: any) => {
     })
   };
 
-  const messageHandleSubmit: any = (event: any) => {
+  const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
     fetch(`api/cases/${content.cases[0]._id}/message`, {
       method: "PUT",
       headers: {
@@ -160,5 +176,3 @@ const Chat = (props: any) => {
     );
   }
 };
-
-export default Chat;

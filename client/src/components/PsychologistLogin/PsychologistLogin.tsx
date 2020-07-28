@@ -3,14 +3,23 @@ import '../Login.css';
 import { Link, useHistory } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
-export default function PsychologistLogin(props: any) {
+interface props {
+  saveToken: (arg0: string) => void
+}
+
+interface submitObj {
+  email: string;
+  password: string;
+}
+
+export const PsychologistLogin: React.FC<props> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const obj: any = {
+    const obj: submitObj = {
       email,
       password,
     };

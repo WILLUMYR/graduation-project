@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import Footer from '../Footer/Footer';
 
-export default function Home() {
+export const Home: React.FC = () => {
   return (
     <>
       <section className="home__content">

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from '../Home/Home';
-import Chat from '../Chat/Chat';
-import PatientLogin from '../PatientLogin/PatientLogin';
-import PatientSignUp from '../PatientSignUp/PatientSignUp';
-import PsychologistLogin from '../PsychologistLogin/PsychologistLogin';
-import Navbar from '../Navbar/Navbar';
-import Dashboard from '../Dashboard/Dashboard';
-import ChatPsychologist from '../Chat/ChatPsychologist';
+import { Home } from '../Home/Home';
+import { Chat } from '../Chat/Chat';
+import { PatientLogin } from '../PatientLogin/PatientLogin';
+import { PatientSignUp } from '../PatientSignUp/PatientSignUp';
+import { PsychologistLogin } from '../PsychologistLogin/PsychologistLogin';
+import { Navbar } from '../Navbar/Navbar';
+import { ChatPsychologist } from '../Chat/ChatPsychologist';
+import { Dashboard } from '../Dashboard/Dashboard';
 
 const App = () => {
   const initToken = () => {
@@ -21,7 +21,7 @@ const App = () => {
   };
 
   const [token, setToken] = useState(initToken);
-  const [currentCase, setCurrentCase] = useState();
+  const [currentCase, setCurrentCase]: any = useState();
 
   const saveToken = (token: string) => {
     window.localStorage.setItem('token', token);
@@ -51,12 +51,15 @@ const App = () => {
           <PsychologistLogin saveToken={saveToken} />
         </Route>
         <Route exact path="/chat">
+          {/*  */}
           <Chat token={token} saveToken={saveToken} />
         </Route>
         <Route exact path="/chat/psychologist">
+          {/*  */}
           <ChatPsychologist token={token} saveToken={saveToken} currentCase={currentCase} setCurrentCase={setCurrentCase} />
         </Route>
         <Route exact path="/dashboard">
+          {/*  */}
           <Dashboard token={token} saveToken={saveToken} setCurrentCase={setCurrentCase} />
         </Route>
         <Route exact path="/">
