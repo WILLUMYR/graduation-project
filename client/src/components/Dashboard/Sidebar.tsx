@@ -16,7 +16,10 @@ function DisplayButton(props: any) {
   };
 
   if (props.buttonView === 'YourCases') {
-    return <button>YOUR CASES</button>;
+    return <button onClick={() => {
+      props.setCurrentCase(props.id);
+      history.push('/chat/psychologist');
+    }}>Open case</button>;
   }
   if (props.buttonView === 'Unassigned') {
     return (
