@@ -1,8 +1,10 @@
-import React from 'react';
-import CaseCard from './CaseCard';
+import React, { useEffect, useState } from 'react'
+import CaseCard from './CaseCard'
 
-export default function Cases() {
-  const getCases = (url: string) => {
+export default function CaseList(props: any) {
+  const [newCase, setNewCase] = useState();
+
+  const getCases = (url: any) => {
     fetch(url, {
       headers: {
         'x-auth-token': props.token,
@@ -19,5 +21,14 @@ export default function Cases() {
       })
       .catch(err => console.error(err));
   };
-  return <div></div>;
+
+  useEffect(() => {
+
+  }, [])
+
+  return (
+    <section>
+
+    </section>
+  )
 }

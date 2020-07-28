@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseCard from './CaseCard';
@@ -7,24 +7,6 @@ export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
   const [view, setView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
-
-  const getCases = (url: string) => {
-    fetch(url, {
-      headers: {
-        'x-auth-token': props.token,
-      },
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setCases(data);
-        data.map((item: { createdAt: Date; _id: String; issue: React.ReactNode }) => {
-          return <CaseCard selectCase={selectCase} key={Math.random()} item={item} />;
-        });
-      })
-      .catch(err => console.error(err));
-  };
 
   const selectCase = (id: String) => {
     const newCase = cases.filter((item: { _id: String }) => item._id === id);
@@ -37,9 +19,7 @@ export default function Dashboard(props: any) {
         return (
           <>
             <div>
-              {() => {
-                getCases('api/cases/assigned');
-              }}
+              {getCases('api/cases/assigned')}
             </div>
           </>
         );
@@ -47,9 +27,7 @@ export default function Dashboard(props: any) {
         return (
           <>
             <div>
-              {() => {
-                getCases('api/cases/unassigned');
-              }}
+              {getCases('api/cases/unassigned')}
             </div>
           </>
         );
@@ -57,9 +35,7 @@ export default function Dashboard(props: any) {
         return (
           <>
             <div>
-              {() => {
-                getCases('api/cases');
-              }}
+              {getCases('api/cases')}
             </div>
           </>
         );
