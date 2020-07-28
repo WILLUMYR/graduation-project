@@ -28,6 +28,7 @@ const ChatPsychologist = (props: any) => {
           return res.json();
         })
         .then(data => {
+          console.log(data);
           setContent(data);
           const json = JSON.stringify(data);
           window.localStorage.setItem('case', json);
