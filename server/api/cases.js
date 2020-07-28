@@ -161,7 +161,7 @@ router.get('/', auth, async (req, res, next) => {
     if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
 
     const cases = await Cases.find({});
-    res.json({ cases });
+    res.json(cases);
   } catch (err) {
     next(err);
   }

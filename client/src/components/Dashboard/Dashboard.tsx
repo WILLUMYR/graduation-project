@@ -8,8 +8,8 @@ export default function Dashboard(props: any) {
   const [view, setView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
 
-  const getCases = () => {
-    fetch('/api/cases', {
+  const getCases = (url: string) => {
+    fetch(url, {
       headers: {
         "x-auth-token": props.token
       }
@@ -17,14 +17,15 @@ export default function Dashboard(props: any) {
       return response.json()
     })
       .then((data) => {
-        console.log(data.cases);
-        return setCases(data.cases)
+        setCases(data);
+        data.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
+          return (
+            <CaseCard selectCase={selectCase} key={Math.random()} item={item} />
+          )
+        })
       }).catch(err => console.error(err))
   }
 
-  useEffect(() => {
-    getCases();
-  }, [])
 
 
   const selectCase = (id: String) => {
@@ -35,28 +36,24 @@ export default function Dashboard(props: any) {
   const switchCase = (view: String) => {
     switch (view) {
       case 'YourCases':
-        return (
-          <p>Your cases</p>
-        )
-      case 'Unassigned':
-        const unassigned = cases.filter((item: any) => !item.psychologistsId)
+        getCases('api/cases/assigned');
         return (
           <>
-            {unassigned.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
-              return (
-                <CaseCard selectCase={selectCase} key={Math.random()} item={item} />
-              )
-            })}
+            {() => {
+              getCases('api/cases')
+            }}
+          </>
+        )
+      case 'Unassigned':
+        return (
+          <>
+            {() => { getCases('api/cases/unassigned') }}
           </>
         )
       case 'AllCases':
         return (
           <>
-            {cases.map((item: { createdAt: Date; _id: String; issue: React.ReactNode; }) => {
-              return (
-                <CaseCard selectCase={selectCase} key={Math.random()} item={item} />
-              )
-            })}
+            {() => { getCases('api/cases') }}
           </>
         )
       default:
