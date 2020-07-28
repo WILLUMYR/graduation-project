@@ -1,12 +1,11 @@
 import React, { useState, useEffect, ReactNode } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
-import CaseCard from './CaseCard';
 import CaseList from './CaseList';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
-  const [view, setView] = useState('YourCases');
+  const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
 
   const selectCase = (id: String) => {
@@ -36,6 +35,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/assigned');
+            setButtonView('YourCases')
           }}
         >
           Your Cases
@@ -44,6 +44,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/unassigned');
+            setButtonView('Unassigned')
           }}
         >
           Unassigned Cases
@@ -52,6 +53,7 @@ export default function Dashboard(props: any) {
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases');
+            setButtonView('AllCases')
           }}
         >
           All Cases
@@ -62,7 +64,7 @@ export default function Dashboard(props: any) {
           <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
-        <Sidebar sidebar={sidebar} />
+        <Sidebar sidebar={sidebar} buttonView={buttonView} />
       </section>
     </>
   );

@@ -10,6 +10,7 @@ export default function Sidebar(props: any) {
         <p>{props.sidebar.issue}</p>
         <p>{props.sidebar.patientId}</p>
         <p>{moment(props.sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+
         <button>Take on case</button>
       </section>
     )
