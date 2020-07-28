@@ -1,15 +1,22 @@
 import React from 'react';
 import moment from 'moment';
 
+const assignCase = (caseId: any, token: string) => {
+  fetch(`/api/cases/${caseId}/assign`, {
+    method: 'PUT',
+    headers: { 'x-auth-token': token },
+  });
+};
+
 function DisplayButton(props: any) {
   if (props.buttonView === 'YourCases') {
-    return <button>YOUR CASES</button>
+    return <button>YOUR CASES</button>;
   }
   if (props.buttonView === 'Unassigned') {
-    return <button>UNASIGNED CASES</button>
+    return <button>UNASIGNED CASES</button>;
   }
   if (props.buttonView === 'AllCases') {
-    return <button>ALL CASES</button>
+    return <button>ALL CASES</button>;
   }
   if (true) return <div></div>;
 }
@@ -25,8 +32,12 @@ export default function Sidebar(props: any) {
 
         <DisplayButton buttonView={props.buttonView} />
       </section>
-    )
+    );
   } else {
-    return <section className="right__content"><p>Please select a case</p></section>
+    return (
+      <section className="right__content">
+        <p>Please select a case</p>
+      </section>
+    );
   }
 }
