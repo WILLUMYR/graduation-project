@@ -14,31 +14,36 @@ const ChatPsychologist = (props: any) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (props.currentCase === undefined) setContent(window.localStorage.getItem('case'))
-
     if (props.token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
-    } else {
-      fetch(`/api/cases/${props.currentCase}`, {
-        headers: {
-          'content-type': 'application/json',
-          'x-auth-token': props.token,
-        },
-      })
-        .then(res => {
-          console.log(res);
-          return res.json();
-        })
-        .then(data => {
-          console.log(data);
-          const json = JSON.stringify(data);
-          window.localStorage.setItem('case', json);
-          setContent(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      return;
     }
+
+    if (!props.currentCase) {
+      if (!window.localStorage.getItem('currCase')) {
+        history.push('/dashboard');
+      }
+      props.setCurrentCase(window.localStorage.getItem('currCase'));
+    }
+    fetch(`/api/cases/${props.currentCase}`, {
+      headers: {
+        'content-type': 'application/json',
+        'x-auth-token': props.token,
+      },
+    })
+      .then(res => {
+        console.log(res);
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        const json = JSON.stringify(data);
+        window.localStorage.setItem('case', json);
+        setContent(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
 
   const handleResponse = (response: any) => {

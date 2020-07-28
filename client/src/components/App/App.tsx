@@ -54,7 +54,7 @@ const App = () => {
           <Chat token={token} saveToken={saveToken} />
         </Route>
         <Route exact path="/chat/psychologist">
-          <ChatPsychologist token={token} saveToken={saveToken} currentCase={currentCase} />
+          <ChatPsychologist token={token} saveToken={saveToken} currentCase={currentCase} setCurrentCase={setCurrentCase} />
         </Route>
         <Route exact path="/dashboard">
           <Dashboard token={token} saveToken={saveToken} setCurrentCase={setCurrentCase} />
