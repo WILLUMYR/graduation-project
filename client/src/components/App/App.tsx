@@ -8,6 +8,7 @@ import PatientSignUp from '../PatientSignUp/PatientSignUp';
 import PsychologistLogin from '../PsychologistLogin/PsychologistLogin';
 import Navbar from '../Navbar/Navbar';
 import Dashboard from '../Dashboard/Dashboard';
+import ChatPsychologist from '../Chat/ChatPsychologist';
 
 const App = () => {
   const initToken = () => {
@@ -50,6 +51,9 @@ const App = () => {
         </Route>
         <Route exact path="/chat">
           <Chat token={token} saveToken={saveToken} />
+        </Route>
+        <Route exact path="/chat/psychologist">
+          <ChatPsychologist token={token} saveToken={saveToken} />
         </Route>
         <Route exact path="/dashboard">
           <Dashboard token={token} saveToken={saveToken} />
