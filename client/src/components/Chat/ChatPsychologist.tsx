@@ -20,13 +20,13 @@ const ChatPsychologist = (props: any) => {
 
     if (!props.currentCase) {
       if (!window.localStorage.getItem('caseId')) {
-        console.log('number 2');
         history.push('/dashboard');
         return;
       }
       props.setCurrentCase(window.localStorage.getItem('caseId'));
     }
-    fetch(`/api/cases/${props.currentCase}`, {
+
+    fetch(`/api/cases/${window.localStorage.getItem('caseId')}`, {
       headers: {
         'content-type': 'application/json',
         'x-auth-token': props.token,
