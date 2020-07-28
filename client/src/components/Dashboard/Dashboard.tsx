@@ -4,14 +4,18 @@ import Sidebar from './Sidebar';
 import CaseList from './CaseList';
 
 export default function Dashboard(props: any) {
-  const [cases, setCases] = useState();
+  const initCaseState: any = fetch('/api/cases/assigned', {
+    headers: {
+      'x-auth-token': props.token,
+    },
+  }).then(res => {
+    console.log(res);
+    return res.json();
+  });
+
+  const [cases, setCases] = useState(initCaseState);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
-
-  const selectCase = (id: String) => {
-    const newCase = cases.filter((item: { _id: String }) => item._id === id);
-    setSidebar(newCase[0]);
-  };
 
   const getCases = (url: any) => {
     fetch(url, {
@@ -26,6 +30,11 @@ export default function Dashboard(props: any) {
         setCases(data);
       })
       .catch(err => console.error(err));
+  };
+
+  const selectCase = (id: String) => {
+    const newCase = cases.filter((item: { _id: String }) => item._id === id);
+    setSidebar(newCase[0]);
   };
 
   return (
