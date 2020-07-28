@@ -42,9 +42,8 @@ const ChatPsychologist = (props: any) => {
   const handleResponse = (response: any) => {
     if (response.status !== 201) return alert('Error');
 
-    fetch('/api/patients', {
+    fetch(`/api/cases/${content._id}`, {
       headers: {
-        'content-type': 'application/json',
         'x-auth-token': props.token,
       },
     })
@@ -57,20 +56,6 @@ const ChatPsychologist = (props: any) => {
       .catch(err => {
         console.log(err);
       });
-  };
-
-  const handleSubmitForm = (event: any) => {
-    event.preventDefault();
-    fetch('/api/cases', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-auth-token': props.token,
-      },
-      body: JSON.stringify({ issue }),
-    }).then(response => {
-      handleResponse(response);
-    });
   };
 
   const messageHandleSubmit: any = (event: any) => {
