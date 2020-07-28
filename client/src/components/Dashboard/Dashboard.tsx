@@ -64,7 +64,7 @@ export default function Dashboard(props: any) {
           <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
-        <Sidebar sidebar={sidebar} buttonView={buttonView} />
+        <Sidebar sidebar={sidebar} buttonView={buttonView} token={props.token} />
       </section>
     </>
   );
