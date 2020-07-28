@@ -75,7 +75,7 @@ const ChatPsychologist = (props: any) => {
 
   const messageHandleSubmit: any = (event: any) => {
     event.preventDefault();
-    fetch(`api/cases/${content.cases[0]._id}/message`, {
+    fetch(`api/cases/${content._id}/message`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
@@ -88,29 +88,6 @@ const ChatPsychologist = (props: any) => {
 
     inputEl.current.value = '';
     window.scrollTo(0, document.body.scrollHeight);
-  };
-
-  const closeCase = async () => {
-    const results = await fetch(`/api/cases/close/${content.cases[0]._id}`, {
-      method: 'PUT',
-      headers: {
-        'x-auth-token': props.token,
-      },
-    });
-
-    if (results.status === 200) {
-      setUserFeedback('Case has been closed');
-      setTimeout(() => {
-        setUserFeedback('');
-        window.location.reload();
-      }, 4000);
-    } else {
-      setUserFeedback('Something went wrong, please try again later. ');
-      setTimeout(() => {
-        setUserFeedback('');
-        window.location.reload();
-      }, 4000);
-    }
   };
 
   if (!content) {
@@ -127,18 +104,11 @@ const ChatPsychologist = (props: any) => {
         <main className="chat__content">
           <section className="issue__content">
             <h1>Your case has been sucessfully submitted</h1>
-            <p className="issue__text">{content.cases[0].issue}</p>
+            <p className="issue__text">{content.issue}</p>
           </section>
-          <button
-            onClick={() => {
-              closeCase();
-            }}
-          >
-            Close case
-          </button>{' '}
           <p>{userFeedback}</p>
           <section className="chat__messages">
-            {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
+            {content.messages.map((message: { text: React.ReactNode }) => {
               return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>

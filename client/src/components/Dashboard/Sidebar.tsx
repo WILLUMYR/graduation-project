@@ -2,15 +2,18 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
-const assignCase = (caseId: any, token: string) => {
-  fetch(`/api/cases/${caseId}/assign`, {
-    method: 'PUT',
-    headers: { 'x-auth-token': token },
-  });
-};
-
 function DisplayButton(props: any) {
   const history = useHistory();
+
+  const assignCase = (caseId: any, token: string) => {
+    fetch(`/api/cases/${caseId}/assign`, {
+      method: 'PUT',
+      headers: { 'x-auth-token': token },
+    }).then(() => {
+      props.setCurrentCase(props.id);
+      history.push('/chat/psychologist');
+    });
+  };
 
   if (props.buttonView === 'YourCases') {
     return <button>YOUR CASES</button>;
@@ -20,8 +23,6 @@ function DisplayButton(props: any) {
       <button
         onClick={() => {
           assignCase(props.id, props.token);
-          props.setCurrentCase(props.id);
-          history.push('/chat/psychologist');
         }}
       >
         Assign case
