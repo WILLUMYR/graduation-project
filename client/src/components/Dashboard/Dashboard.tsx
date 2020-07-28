@@ -88,7 +88,12 @@ export default function Dashboard(props: any) {
         </button>
       </div>
       <section className="dash__content">
-        <div className="left__content">{switchCase(view)}</div>
+        {/* <div className="left__content">{switchCase(view)}</div> */}
+        <div className="left__content">
+          {cases.map((item: { createdAt: Date; _id: String; issue: React.ReactNode }) => {
+            return <CaseCard selectCase={selectCase} key={Math.random()} item={item} />;
+          })}
+        </div>
         <Sidebar sidebar={sidebar} />
       </section>
     </>
