@@ -4,18 +4,21 @@ import Sidebar from './Sidebar';
 import CaseList from './CaseList';
 
 export default function Dashboard(props: any) {
-  const initCaseState: any = fetch('/api/cases/assigned', {
-    headers: {
-      'x-auth-token': props.token,
-    },
-  }).then(res => {
-    console.log(res);
-    return res.json();
-  });
-
-  const [cases, setCases] = useState(initCaseState);
+  const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
+
+  useEffect(() => {
+    fetch('/api/cases/assigned', {
+      headers: {
+        'x-auth-token': props.token,
+      },
+    }).then(res => {
+      return res.json();
+    }).then((data) => {
+      return setCases(data)
+    })
+  }, [])
 
   const getCases = (url: any) => {
     fetch(url, {

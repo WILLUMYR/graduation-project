@@ -2,7 +2,7 @@ import React from 'react';
 import CaseCard from './CaseCard';
 
 const CaseList = (props: any) => {
-  if (typeof props.cases === 'object') {
+  if (props.cases.length > 0) {
     return (
       <>
         {props.cases.map((item: any) => {

@@ -5,7 +5,7 @@ import './Chat.css';
 
 const ChatPsychologist = (props: any) => {
   const [issue, setIssue] = useState('');
-  const [content, setContent] = useState();
+  const [content, setContent]: any = useState();
   const [message, setMessage] = useState();
   const [userFeedback, setUserFeedback] = useState('');
 
@@ -14,6 +14,8 @@ const ChatPsychologist = (props: any) => {
   const history = useHistory();
 
   useEffect(() => {
+    if (props.currentCase === undefined) setContent(window.localStorage.getItem('case'))
+
     if (props.token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
     } else {
@@ -29,9 +31,9 @@ const ChatPsychologist = (props: any) => {
         })
         .then(data => {
           console.log(data);
-          setContent(data);
           const json = JSON.stringify(data);
           window.localStorage.setItem('case', json);
+          setContent(data);
         })
         .catch(err => {
           console.log(err);
@@ -91,6 +93,9 @@ const ChatPsychologist = (props: any) => {
             <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.issue}</p>
           </section>
+          <button onClick={() => {
+            history.goBack()
+          }}>Go back</button>
           <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.messages.map((message: { text: React.ReactNode }) => {
