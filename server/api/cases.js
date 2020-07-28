@@ -42,9 +42,6 @@ router.put('/:id/close', auth, async (req, res, next) => {
     if (!req.patient) return res.status(401).json({ msg: 'Not authorized' });
     const currentCase = await Cases.findOne({ _id: req.params.id, patientId: req.patient.id });
 
-    // const currentCase = await Cases.findById(req.params.id);
-    // if (currentCase.patientId.toString() !== req.patient.id) return res.status(401).json({ msg: 'Not authorized' });
-
     if (!currentCase.closed) {
       currentCase.closed = true;
       await currentCase.save();
@@ -144,9 +141,6 @@ router.put(
       if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
       const currentCase = await Cases.findOne({ _id: req.params.id, psychologistId: req.psychologist.id });
 
-      // const currentCase = await Cases.findById(req.params.id);
-      // if (currentCase.psychologistId.toString() !== req.psychologist.id) return res.status(401).send('Not authorized');
-
       const { text } = req.body;
 
       currentCase.notes.push({ text });
@@ -211,8 +205,6 @@ router.get('/:id', auth, async (req, res, next) => {
     if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
     const currentCase = await Cases.findOne({ _id: req.params.id, psychologistId: req.psychologist.id });
 
-    // const currentCase = await Cases.findById(req.params.id);
-    // if (currentCase.psychologistId.toString() !== req.psychologist.id) return res.status(401).send('Not authorized');
     res.json(currentCase);
   } catch (err) {
     next(err);
