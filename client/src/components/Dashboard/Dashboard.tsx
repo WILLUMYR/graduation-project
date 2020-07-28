@@ -25,40 +25,9 @@ export default function Dashboard(props: any) {
       })
       .then(data => {
         setCases(data);
-        // data.map((item: { createdAt: Date; _id: String; issue: React.ReactNode }) => {
-        //   return <CaseCard selectCase={selectCase} key={Math.random()} item={item} />;
-        // });
       })
       .catch(err => console.error(err));
   };
-
-  // const switchCase = (view: String) => {
-  //   switch (view) {
-  //     case 'YourCases':
-  //       return (
-  //         <CaseList url="api/cases/assigned" selectCase={selectCase} />
-  //       );
-  //     case 'Unassigned':
-  //       return (
-  //         <>
-  //           <div>
-  //             {getCases('api/cases/assigned')}
-  //             {getCases('api/cases/unassigned')}
-  //             {getCases('api/cases')}
-  //           </div>
-  //         </>
-  //       );
-  //     case 'AllCases':
-  //       return (
-  //         <>
-  //           <div>
-  //           </div>
-  //         </>
-  //       );
-  //     default:
-  //       return <p>Default</p>;
-  //   }
-  // };
 
   return (
     <>
@@ -66,7 +35,7 @@ export default function Dashboard(props: any) {
         <button
           className="dashboard__button"
           onClick={() => {
-            setView('YourCases');
+            getCases('api/cases/assigned');
           }}
         >
           Your Cases
@@ -74,7 +43,7 @@ export default function Dashboard(props: any) {
         <button
           className="dashboard__button"
           onClick={() => {
-            setView('Unassigned');
+            getCases('api/cases/unassigned');
           }}
         >
           Unassigned Cases
@@ -82,16 +51,15 @@ export default function Dashboard(props: any) {
         <button
           className="dashboard__button"
           onClick={() => {
-            setView('AllCases');
+            getCases('api/cases');
           }}
         >
           All Cases
         </button>
       </div>
       <section className="dash__content">
-        {/* <div className="left__content">{switchCase(view)}</div> */}
         <div className="left__content">
-          <CaseList cases={cases} />
+          <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
         <Sidebar sidebar={sidebar} />
