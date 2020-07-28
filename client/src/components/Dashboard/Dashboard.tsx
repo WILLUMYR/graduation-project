@@ -2,6 +2,7 @@ import React, { useState, useEffect, ReactNode } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseCard from './CaseCard';
+import CaseList from './CaseList';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState();
@@ -90,10 +91,9 @@ export default function Dashboard(props: any) {
       <section className="dash__content">
         {/* <div className="left__content">{switchCase(view)}</div> */}
         <div className="left__content">
-          {cases.map((item: { createdAt: Date; _id: String; issue: React.ReactNode }) => {
-            return <CaseCard selectCase={selectCase} key={Math.random()} item={item} />;
-          })}
+          <CaseList cases={cases} />
         </div>
+
         <Sidebar sidebar={sidebar} />
       </section>
     </>
