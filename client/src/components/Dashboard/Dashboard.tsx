@@ -17,17 +17,15 @@ export default function Dashboard(props: any) {
     switch (view) {
       case 'YourCases':
         return (
-          <>
-            <div>
-              {getCases('api/cases/assigned')}
-            </div>
-          </>
+          <CaseList url="api/cases/assigned" />
         );
       case 'Unassigned':
         return (
           <>
             <div>
+              {getCases('api/cases/assigned')}
               {getCases('api/cases/unassigned')}
+              {getCases('api/cases')}
             </div>
           </>
         );
@@ -35,7 +33,6 @@ export default function Dashboard(props: any) {
         return (
           <>
             <div>
-              {getCases('api/cases')}
             </div>
           </>
         );
