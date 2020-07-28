@@ -2,6 +2,7 @@ import React, { useState, useEffect, ReactNode } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
+import './Dashboard.css';
 
 export default function Dashboard(props: any) {
   const [cases, setCases] = useState([]);

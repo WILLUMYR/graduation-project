@@ -135,7 +135,6 @@ const Chat = (props: any) => {
       <>
         <main className="chat__content">
           <section className="issue__content">
-            <h1>Your case has been sucessfully submitted</h1>
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
           <button onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
