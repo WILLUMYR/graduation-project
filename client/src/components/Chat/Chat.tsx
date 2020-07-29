@@ -167,21 +167,22 @@ export const Chat: React.FC<props> = (props) => {
           <section className="issue__content">
             <p className="issue__text">{content.cases[0].issue}</p>
           </section>
-          <button onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
+          <button className="close__case__button" onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
               return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>
           <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
-            <textarea
+            <input
+              type="text"
               className="message__input"
               placeholder="Your message..."
               value={message}
               onChange={event => {
                 setMessage(event.target.value);
               }}
-            ></textarea>
+            ></input>
             <input className="message__button" type="submit" />
           </form>
         </main>

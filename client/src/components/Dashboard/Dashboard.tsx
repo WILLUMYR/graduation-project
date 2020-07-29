@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
@@ -14,6 +15,15 @@ export const Dashboard: React.FC<props> = (props) => {
   const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (props.token === '' && !window.localStorage.getItem('token')) {
+      history.push('/login/psychologist');
+      return;
+    }
+  })
 
   useEffect(() => {
     fetch('/api/cases/assigned', {

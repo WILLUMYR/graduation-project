@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #181b20;
+  /* background-color: #181b20; */
   padding: 15px 10%;
   /* border-bottom: 2px solid #3762EA; */
 }
@@ -41,7 +41,6 @@
 
 .right__content h2 {
   font-size: 0.8rem;
-  text-align: left;
 }
 
 .right__content button {
@@ -77,6 +76,7 @@
 .content__card:hover {
   box-shadow: 0px 0px 10px rgb(145, 189, 255) ;
   transition: 0.1s ease;
+  cursor: pointer;
 }
 
 .content__card p {

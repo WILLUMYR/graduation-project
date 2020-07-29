@@ -17,7 +17,19 @@
   align-items: center;
 }
 
-.chat__content button:hover {
+
+.close__case__button {
+  background-color: #3762EA;
+  box-shadow: 0 0 10px #cbd7ff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+.close__case__button:hover {
   background-color: #2e52ca;
   transition: 0.1s ease;
 }
@@ -164,7 +176,6 @@ h1 {
   border-radius: 30px;
   font-family: Helvetica;
   padding-left: 10px;
-  padding-top: 15px;
   display: flex;
   height: 30px;
   width: 70%;

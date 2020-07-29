@@ -183,14 +183,15 @@ export const ChatPsychologist: React.FC<props> = props => {
               })}
             </section>
             <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
-              <textarea
+              <input
+                type="text"
                 className="message__input"
                 placeholder="Your message..."
                 value={message}
                 onChange={event => {
                   setMessage(event.target.value);
                 }}
-              ></textarea>
+              ></input>
               <input className="message__button" type="submit" />
             </form>
           </main>

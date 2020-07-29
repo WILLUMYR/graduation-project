@@ -18,7 +18,9 @@ export const Home: React.FC = () => {
           Lorem ipsum dolor sit amet consectetur, adipisicing elit.
         </h5>
         <h3>Let us help you.</h3>
-        <Link className="content__login" to="/login/patient">Get started</Link>
+        <Link className="content__login" to="/signup/patient">Get started</Link>
+        <h5 className="content__description">Already have an account?</h5>
+        <Link className="content__signup" to="/login/patient">Log in</Link>
       </section>
       <Footer />
     </>
