@@ -191,7 +191,6 @@ h1 {
 }
 
 aside {
-  height: 100vh;
   overflow: scroll;
   width: 0vw;
   max-height: 100vh;
@@ -222,7 +221,7 @@ aside button:hover {
 .show__notes {
   transition: 0.5s ease;
   background-color: white;
-  box-shadow: -5px 0 10px rgb(224, 224, 224);
+  box-shadow: -5px 5px 10px rgb(224, 224, 224);
   width: 30vw;
   height: 100%;
 }
