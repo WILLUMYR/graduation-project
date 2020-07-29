@@ -8,6 +8,11 @@ interface props {
   saveToken: (arg0: string) => void;
 }
 
+interface submitObj {
+  username: string;
+  password: string;
+}
+
 export const PatientLogin: React.FC<props> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +20,7 @@ export const PatientLogin: React.FC<props> = (props) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const obj: any = {
+    const obj: submitObj = {
       username,
       password,
     };

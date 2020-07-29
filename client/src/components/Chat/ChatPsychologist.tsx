@@ -38,6 +38,7 @@ export const ChatPsychologist: React.FC<props> = props => {
   const [content, setContent] = useState<content>(initContent);
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
+  const [note, setNote] = useState<string>('');
 
   const history = useHistory();
 
@@ -97,7 +98,14 @@ export const ChatPsychologist: React.FC<props> = props => {
       });
   };
 
-  const submitNote = (event: React.FormEvent) => {};
+  const submitNote = (event: React.FormEvent) => {
+    event.preventDefault();
+    fetch(`/api/cases/${content._id}/note`, {
+      method: 'PUT',
+      headers: { 'x-auth-token': props.token },
+      body: JSON.stringify({ text: note })
+    })
+  };
 
   const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -157,7 +165,9 @@ export const ChatPsychologist: React.FC<props> = props => {
               );
             })}
             <form action="">
-              <input type="text" />
+              <input onChange={(event) => {
+                setNote(event.target.value);
+              }} type="text" />
               <input type="submit" />
             </form>
           </aside>
