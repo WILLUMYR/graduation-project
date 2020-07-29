@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
+import moment from 'moment';
 
 interface props {
   token: string;
@@ -102,9 +103,20 @@ export const ChatPsychologist: React.FC<props> = props => {
     event.preventDefault();
     fetch(`/api/cases/${content._id}/note`, {
       method: 'PUT',
-      headers: { 'x-auth-token': props.token },
-      body: JSON.stringify({ text: note })
+      headers: {
+        'content-type': 'application/json',
+        'x-auth-token': props.token,
+      },
+      body: JSON.stringify({ text: note }),
     })
+      .then(response => {
+        handleResponse(response);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    setNote('');
   };
 
   const messageHandleSubmit = (event: React.FormEvent) => {
@@ -116,9 +128,13 @@ export const ChatPsychologist: React.FC<props> = props => {
         'x-auth-token': props.token,
       },
       body: JSON.stringify({ text: message }),
-    }).then(response => {
-      handleResponse(response);
-    });
+    })
+      .then(response => {
+        handleResponse(response);
+      })
+      .catch(err => {
+        console.error(err);
+      });
 
     setMessage('');
     window.scrollTo(0, document.body.scrollHeight);
@@ -154,20 +170,24 @@ export const ChatPsychologist: React.FC<props> = props => {
               return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>
-          <button>Case Notes</button>
+          <button className="notes__button">Case Notes</button>
           <aside>
             {content.notes.map(note => {
               return (
                 <div key={Math.random()}>
                   <h4>{note.text}</h4>
-                  <p>{note.createdAt}</p>
+                  <p>{moment(note.createdAt).format('L')}</p>
                 </div>
               );
             })}
             <form action="submit" onSubmit={submitNote}>
-              <input onChange={(event) => {
-                setNote(event.target.value);
-              }} type="text" />
+              <input
+                value={note}
+                onChange={event => {
+                  setNote(event.target.value);
+                }}
+                type="text"
+              />
               <input type="submit" />
             </form>
           </aside>

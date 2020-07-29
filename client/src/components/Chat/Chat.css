@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.chat__content button {
+/* .chat__content button {
   position: absolute;
   right: 300px;
   top: 10px;
@@ -23,7 +23,7 @@
   padding: 10px 20px;
   box-shadow: 0px 0px 5px #313131;
   cursor: pointer;
-}
+} */
 
 .chat__content button:hover {
   background-color: #2e52ca;
@@ -202,4 +202,9 @@ aside {
   top: 300px;
   left: 50px;
   background-color: #2e52ca;
+}
+
+.notes__button {
+  position: fixed;
+  right: 10px;
 }
