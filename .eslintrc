@@ -1,13 +1,18 @@
 {
   "extends": [
-    "salt",
-    "salt/react",
-    "salt/react/hooks"
+    "airbnb"
   ],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "project": "./client/tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
   },
   "env": {
     "es6": true
-  }
+  },
 }
