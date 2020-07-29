@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
-import './Dashboard.css';
 
-interface props {
+interface Props {
   token: string;
-  saveToken: (arg0: string) => void;
   setCurrentCase: any;
 }
 
-export const Dashboard: React.FC<props> = (props) => {
+const Dashboard: React.FC<Props> = (props: Props) => {
   const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
@@ -20,12 +18,9 @@ export const Dashboard: React.FC<props> = (props) => {
       headers: {
         'x-auth-token': props.token,
       },
-    }).then(res => {
-      return res.json();
-    }).then((data) => {
-      return setCases(data)
-    })
-  }, [props.token])
+    }).then((res) => res.json()).then((data) => setCases(data));
+    // eslint-disable-next-line react/destructuring-assignment
+  }, [props.token]);
 
   const getCases = (url: string) => {
     fetch(url, {
@@ -33,16 +28,18 @@ export const Dashboard: React.FC<props> = (props) => {
         'x-auth-token': props.token,
       },
     })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setCases(data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
   };
 
   const selectCase = (id: String) => {
+    // eslint-disable-next-line no-underscore-dangle
     const newCase = cases.filter((item: { _id: String }) => item._id === id);
     setSidebar(newCase[0]);
   };
@@ -51,6 +48,7 @@ export const Dashboard: React.FC<props> = (props) => {
     <>
       <div className="dashboard__nav">
         <button
+          type="button"
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/assigned');
@@ -60,6 +58,7 @@ export const Dashboard: React.FC<props> = (props) => {
           Your Cases
         </button>
         <button
+          type="button"
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases/unassigned');
@@ -69,6 +68,7 @@ export const Dashboard: React.FC<props> = (props) => {
           Unassigned Cases
         </button>
         <button
+          type="button"
           className="dashboard__button"
           onClick={() => {
             getCases('api/cases');
@@ -83,8 +83,21 @@ export const Dashboard: React.FC<props> = (props) => {
           <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
-        <Sidebar sidebar={sidebar} buttonView={buttonView} token={props.token} setCurrentCase={props.setCurrentCase} />
+        <Sidebar
+          sidebar={sidebar}
+          buttonView={buttonView}
+          token={
+            // eslint-disable-next-line react/destructuring-assignment
+            props.token
+          }
+          setCurrentCase={
+            // eslint-disable-next-line react/destructuring-assignment
+            props.setCurrentCase
+          }
+        />
       </section>
     </>
   );
-}
+};
+
+export default Dashboard;

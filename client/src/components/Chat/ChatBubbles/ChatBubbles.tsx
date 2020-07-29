@@ -1,19 +1,29 @@
-import React from 'react'
+import React from 'react';
 
-const ChatBubbles = (props: any) => {
-  if (props.message.respondent === 'patient') {
-    return (
-      <div className="message__box message__box--user">
-        <p className="message__message message--user">{props.message.text}</p>
-      </div>
-    )
-  } else {
-    return (
-      <div className="message__box message__box--pro">
-        <p className="message__message message--pro">{props.message.text}</p>
-      </div>
-    )
+interface Props {
+  message: {
+    respondent: string;
+    text: string;
   }
 }
+
+const ChatBubbles: React.FC<Props> = (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { respondent, text } = props.message;
+
+  if (respondent === 'patient') {
+    return (
+      <div className="message__box message__box--user">
+        <p className="message__message message--user">{text}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="message__box message__box--pro">
+      <p className="message__message message--pro">{text}</p>
+    </div>
+  );
+};
 
 export default ChatBubbles;

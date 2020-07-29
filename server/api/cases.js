@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
-const { Cases, Patients, Psychologists } = require('../models');
+const auth = require('../middleware/auth')
+const { Cases, Patients, Psychologists } = require('../models')
 
 /** Route     POST api/cases
  * Desc      Create new case
@@ -210,4 +210,4 @@ router.get('/:id', auth, async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;

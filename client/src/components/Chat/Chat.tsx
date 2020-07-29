@@ -3,12 +3,11 @@ import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
-interface props {
+interface Props {
   token: string
-  saveToken: (arg0: string) => void
 }
 
-interface content {
+interface Content {
   cases: Array<{
     _id: string;
     issue: string;
@@ -18,21 +17,21 @@ interface content {
   }>
 }
 
-const initContent = {
+const InitContent = {
   cases: [
     {
       _id: '',
       issue: '',
       messages: [
-        { text: '' }
-      ]
-    }
-  ]
-}
+        { text: '' },
+      ],
+    },
+  ],
+};
 
-export const Chat: React.FC<props> = (props) => {
+const Chat: React.FC<Props> = (props: Props) => {
   const [issue, setIssue] = useState<string>('');
-  const [content, setContent] = useState<content>(initContent);
+  const [content, setContent] = useState<Content>(InitContent);
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
 
@@ -48,25 +47,27 @@ export const Chat: React.FC<props> = (props) => {
           'x-auth-token': props.token,
         },
       })
-        .then(res => {
-          return res.json();
-        })
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           setContent(data);
           const json = JSON.stringify(data);
           window.localStorage.setItem('case', json);
         })
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error(err);
+          return undefined;
         });
     }
+    // eslint-disable-next-line react/destructuring-assignment
   }, [props.token, history]);
 
-  interface response {
+  interface Response {
     status: number;
   }
 
-  const handleResponse = (response: response) => {
+  function handleResponse(response: Response) {
+    // eslint-disable-next-line no-alert
     if (response.status !== 201) return alert('Error');
 
     fetch('/api/patients', {
@@ -74,15 +75,17 @@ export const Chat: React.FC<props> = (props) => {
         'content-type': 'application/json',
         'x-auth-token': props.token,
       },
-    }).then(res => res.json())
-      .then(data => {
+    }).then((res) => res.json())
+      .then((data) => {
         setContent(data);
         const json = JSON.stringify(data);
         window.localStorage.setItem('case', json);
       })
-      .catch(err => {
-        console.log(err);
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
       });
+    return undefined;
   }
 
   const handleSubmitForm = (event: React.FormEvent) => {
@@ -94,51 +97,52 @@ export const Chat: React.FC<props> = (props) => {
         'x-auth-token': props.token,
       },
       body: JSON.stringify({ issue }),
-    }).then(response => {
+    }).then((response) => {
       handleResponse(response);
-    })
+    });
   };
 
   const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
+    // eslint-disable-next-line no-underscore-dangle
     fetch(`api/cases/${content.cases[0]._id}/message`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         'content-type': 'application/json',
         'x-auth-token': props.token,
       },
-      body: JSON.stringify({ text: message })
+      body: JSON.stringify({ text: message }),
     }).then((response) => {
       handleResponse(response);
-    })
+    });
 
     setMessage('');
     window.scrollTo(0, document.body.scrollHeight);
-  }
+  };
 
   const closeCase = async () => {
+    // eslint-disable-next-line no-underscore-dangle
     const results = await fetch(`/api/cases/${content.cases[0]._id}/close`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "x-auth-token": props.token,
-      }
-    })
+        'x-auth-token': props.token,
+      },
+    });
 
     if (results.status === 200) {
-      setUserFeedback('Case has been closed')
+      setUserFeedback('Case has been closed');
       setTimeout(() => {
         setUserFeedback('');
         window.location.reload();
-      }, 4000)
+      }, 4000);
     } else {
-      setUserFeedback('Something went wrong, please try again later. ')
+      setUserFeedback('Something went wrong, please try again later. ');
       setTimeout(() => {
-        setUserFeedback('')
+        setUserFeedback('');
         window.location.reload();
-      }, 4000)
+      }, 4000);
     }
-  }
+  };
 
   if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
     return (
@@ -150,7 +154,7 @@ export const Chat: React.FC<props> = (props) => {
               <textarea
                 className="issue__input"
                 placeholder="Please describe your problem!"
-                onChange={event => {
+                onChange={(event) => {
                   setIssue(event.target.value);
                 }}
               />
@@ -160,32 +164,35 @@ export const Chat: React.FC<props> = (props) => {
         </main>
       </>
     );
-  } else {
-    return (
-      <>
-        <main className="chat__content">
-          <section className="issue__content">
-            <p className="issue__text">{content.cases[0].issue}</p>
-          </section>
-          <button onClick={() => { closeCase() }}>Close case</button> <p>{userFeedback}</p>
-          <section className="chat__messages">
-            {content.cases[0].messages.map((message: { text: React.ReactNode }) => {
-              return <ChatBubble key={Math.random()} message={message} />;
-            })}
-          </section>
-          <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
-            <textarea
-              className="message__input"
-              placeholder="Your message..."
-              value={message}
-              onChange={event => {
-                setMessage(event.target.value);
-              }}
-            ></textarea>
-            <input className="message__button" type="submit" />
-          </form>
-        </main>
-      </>
-    );
   }
+
+  return (
+    <>
+      <main className="chat__content">
+        <section className="issue__content">
+          <p className="issue__text">{content.cases[0].issue}</p>
+        </section>
+        <button type="button" onClick={() => { closeCase(); }}>Close case</button>
+        <p>{userFeedback}</p>
+        <section className="chat__messages">
+          {// eslint-disable-next-line max-len
+            content.cases[0].messages.map((oneMessage: { text: React.ReactNode }) => <ChatBubble key={Math.random()} message={oneMessage} />)
+          }
+        </section>
+        <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
+          <textarea
+            className="message__input"
+            placeholder="Your message..."
+            value={message}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+          />
+          <input className="message__button" type="submit" />
+        </form>
+      </main>
+    </>
+  );
 };
+
+export default Chat;
