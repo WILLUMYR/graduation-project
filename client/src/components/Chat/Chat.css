@@ -208,6 +208,7 @@ aside {
   height: 100vh;
   /* position: fixed; */
   overflow-x: hidden;
+  overflow-y: scroll;
   width: 0;
   height: 100%;
   background-color: hsl(226, 63%, 49%);
@@ -226,11 +227,16 @@ aside {
 .hide__notes {
   transition: 0.1s ease;
   background-color: white;
+  display: none;
 }
 
-.notes__button {
+.hide__notes__button {
   position: fixed;
   right: 10px;
+}
+
+.show__notes__button {
+  visibility: hidden;
 }
 
 .note__card {
