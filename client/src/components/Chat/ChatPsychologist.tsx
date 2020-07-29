@@ -154,14 +154,24 @@ export const ChatPsychologist: React.FC<props> = props => {
       <>
         <div className="all__content">
           <main className="chat__content">
-            <button
-              className="goBack__button"
-              onClick={() => {
-                history.goBack();
-              }}
-            >
-              Go back
+            <div className="action__buttons">
+              <button
+                className="goBack__button"
+                onClick={() => {
+                  history.goBack();
+                }}
+              >
+                Go back
             </button>
+              <button
+                onClick={() => {
+                  setShowNotes(!showNotes);
+                }}
+                className={showNotes ? 'show__notes__button' : 'hide__notes__button'}
+              >
+                Case Notes
+            </button>
+            </div>
             <section className="issue__content">
               <h1>CASE ID: {content._id}</h1>
               <p className="issue__text">{content.issue}</p>
@@ -172,15 +182,6 @@ export const ChatPsychologist: React.FC<props> = props => {
                 return <ChatBubble key={Math.random()} message={message} />;
               })}
             </section>
-            <button
-              onClick={() => {
-                setShowNotes(!showNotes);
-              }}
-              className={showNotes ? 'show__notes__button' : 'hide__notes__button'}
-            >
-              Case Notes
-            </button>
-
             <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
               <textarea
                 className="message__input"
@@ -209,15 +210,15 @@ export const ChatPsychologist: React.FC<props> = props => {
                 </div>
               );
             })}
-            <form action="submit" onSubmit={submitNote}>
-              <input
+            <form className="note__form" action="submit" onSubmit={submitNote}>
+              <input className="note__form__input"
                 value={note}
                 onChange={event => {
                   setNote(event.target.value);
                 }}
                 type="text"
               />
-              <input type="submit" />
+              <input className="note__form__button" type="submit" />
             </form>
           </aside>
         </div>

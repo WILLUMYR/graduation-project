@@ -4,14 +4,16 @@
   background-image: url('../../Dashboard.svg');
   background-size: cover;
   background-attachment: fixed;
+  min-height: 86vh;
 }
 
 .dashboard__nav{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 30px 20%;
-  border-bottom: 2px solid #3762EA;
+  background-color: #181b20;
+  padding: 15px 10%;
+  /* border-bottom: 2px solid #3762EA; */
 }
 
 .left__content {
@@ -34,7 +36,12 @@
 
 .right__content h1 {
   margin: 0;
-  border: 0;
+  border-bottom: 2px solid lightgrey;
+}
+
+.right__content h2 {
+  font-size: 0.8rem;
+  text-align: left;
 }
 
 .right__content button {
@@ -57,10 +64,11 @@
   position: relative;
   background-color: white;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 3fr 1fr;
   overflow: hidden;
   margin-bottom: 10px;
-  padding: 10px 10px;
+  padding: 0px 10px;
+  padding-bottom:10px;
   border-radius: 10px;
   box-shadow: 0px 0px 5px rgb(230, 230, 230) ;
   transition: 0.1s ease;
@@ -75,15 +83,21 @@
   margin: 0;
   margin-top: 10px;
   color: black;
+  font-size: 0.6rem;
+  color: grey;
 }
 
 .content__card h2 {
   font-size: 0.8rem;
+  font-weight: bolder;
   margin: 3px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgrey;
+  align-self: center;
 }
 
 .content__card h3 {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   margin: 3px 0;
 }
 
@@ -94,11 +108,51 @@
   font-weight: bold;
   border: none;
   padding: 10px 20px;
-  box-shadow: 0px 0px 5px #dbe8ff;
+  box-shadow: 0px 0px 5px #3762EA;
   cursor: pointer;
+  outline: none;
 }
 
 .dashboard__button:hover {
   background-color: #2e52ca;
   transition: 0.1s ease;
+  outline: none;
+}
+
+.dashboard__button--not {
+  border-radius: 30px;
+  background-color: white;
+  color: black;
+  border: 3px solid #3762EA;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 5px #929292;
+  cursor: pointer;
+  outline: none;
+}
+
+.dashboard__button--not:hover {
+  background-color: #87b3ff;
+  transition: 0.1s ease;
+  outline: none;
+}
+
+.closed__true {
+  background-color: rgb(190, 190, 190);
+  position: absolute;
+  right: 15px;
+  top: 6px;
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.closed__false {
+  background-color: #3762EA;
+  position: absolute;
+  right: 15px;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
 }

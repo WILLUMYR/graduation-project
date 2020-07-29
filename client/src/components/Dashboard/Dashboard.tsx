@@ -51,7 +51,7 @@ export const Dashboard: React.FC<props> = (props) => {
     <>
       <div className="dashboard__nav">
         <button
-          className="dashboard__button"
+          className={buttonView === 'YourCases' ? "dashboard__button" : "dashboard__button--not"}
           onClick={() => {
             getCases('api/cases/assigned');
             setButtonView('YourCases');
@@ -60,7 +60,7 @@ export const Dashboard: React.FC<props> = (props) => {
           Your Cases
         </button>
         <button
-          className="dashboard__button"
+          className={buttonView === 'Unassigned' ? "dashboard__button" : "dashboard__button--not"}
           onClick={() => {
             getCases('api/cases/unassigned');
             setButtonView('Unassigned');
@@ -69,7 +69,7 @@ export const Dashboard: React.FC<props> = (props) => {
           Unassigned Cases
         </button>
         <button
-          className="dashboard__button"
+          className={buttonView === 'AllCases' ? "dashboard__button" : "dashboard__button--not"}
           onClick={() => {
             getCases('api/cases');
             setButtonView('AllCases');
@@ -83,7 +83,7 @@ export const Dashboard: React.FC<props> = (props) => {
           <CaseList cases={cases} selectCase={selectCase} />
         </div>
 
-        <Sidebar sidebar={sidebar} buttonView={buttonView} token={props.token} setCurrentCase={props.setCurrentCase} />
+        <Sidebar setSidebar={setSidebar} sidebar={sidebar} buttonView={buttonView} token={props.token} setCurrentCase={props.setCurrentCase} />
       </section>
     </>
   );
