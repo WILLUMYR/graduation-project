@@ -151,58 +151,60 @@ export const ChatPsychologist: React.FC<props> = props => {
   } else {
     return (
       <>
-        <main className="chat__content">
-          <button
-            className="goBack__button"
-            onClick={() => {
-              history.goBack();
-            }}
-          >
-            Go back
-          </button>
-          <section className="issue__content">
-            <h1>CASE ID: {content._id}</h1>
-            <p className="issue__text">{content.issue}</p>
-          </section>
-          <p>{userFeedback}</p>
-          <section className="chat__messages">
-            {content.messages.map((message: { text: React.ReactNode }) => {
-              return <ChatBubble key={Math.random()} message={message} />;
-            })}
-          </section>
-          <button className="notes__button">Case Notes</button>
-          <aside>
-            {content.notes.map(note => {
-              return (
-                <div key={Math.random()}>
-                  <h4>{note.text}</h4>
-                  <p>{moment(note.createdAt).format('L')}</p>
-                </div>
-              );
-            })}
-            <form action="submit" onSubmit={submitNote}>
-              <input
-                value={note}
-                onChange={event => {
-                  setNote(event.target.value);
-                }}
-                type="text"
-              />
-              <input type="submit" />
-            </form>
-          </aside>
-          <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
-            <textarea
-              className="message__input"
-              placeholder="Your message..."
-              value={message}
-              onChange={event => {
-                setMessage(event.target.value);
+        <div className="all__content">
+          <main className="chat__content">
+            <button
+              className="goBack__button"
+              onClick={() => {
+                history.goBack();
               }}
-            ></textarea>
-            <input className="message__button" type="submit" />
-          </form>
-        </main>
+            >
+              Go back
+          </button>
+            <section className="issue__content">
+              <h1>CASE ID: {content._id}</h1>
+              <p className="issue__text">{content.issue}</p>
+            </section>
+            <p>{userFeedback}</p>
+            <section className="chat__messages">
+              {content.messages.map((message: { text: React.ReactNode }) => {
+                return <ChatBubble key={Math.random()} message={message} />;
+              })}
+            </section>
+            <button className="notes__button">Case Notes</button>
+            <aside>
+              {content.notes.map(note => {
+                return (
+                  <div key={Math.random()}>
+                    <h4>{note.text}</h4>
+                    <p>{moment(note.createdAt).format('L')}</p>
+                  </div>
+                );
+              })}
+              <form action="submit" onSubmit={submitNote}>
+                <input
+                  value={note}
+                  onChange={event => {
+                    setNote(event.target.value);
+                  }}
+                  type="text"
+                />
+                <input type="submit" />
+              </form>
+            </aside>
+            <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
+              <textarea
+                className="message__input"
+                placeholder="Your message..."
+                value={message}
+                onChange={event => {
+                  setMessage(event.target.value);
+                }}
+              ></textarea>
+              <input className="message__button" type="submit" />
+            </form>
+          </main>
+        </div>
       </>
     );
   }
