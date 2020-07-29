@@ -6,7 +6,7 @@
 }
 
 .chat__content {
-  background-image: url(../../home.svg);
+  background-image: url(../../Chat.svg);
   background-size: cover;
   background-attachment: fixed;
   min-height: 86vh;
