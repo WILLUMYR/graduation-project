@@ -193,7 +193,7 @@ h1 {
 aside {
   height: 100vh;
   overflow: scroll;
-  width: 0;
+  width: 0vw;
   max-height: 100vh;
   background-color: hsl(226, 63%, 49%);
   padding-bottom: 20px;
@@ -222,7 +222,6 @@ aside button:hover {
 .show__notes {
   transition: 0.5s ease;
   background-color: white;
-  /* border-left: 2px solid #3762EA; */
   box-shadow: -5px 0 10px rgb(224, 224, 224);
   width: 30vw;
   height: 100%;
@@ -231,7 +230,8 @@ aside button:hover {
 .hide__notes {
   transition: 0.5s ease;
   background-color: white;
-  display: none;
+  visibility: hidden;
+  width: 0;
 }
 
 .hide__notes__button {
