@@ -60,7 +60,7 @@ export const Chat: React.FC<props> = (props) => {
           console.log(err);
         });
     }
-  }, []);
+  }, [props.token, history]);
 
   interface response {
     status: number;

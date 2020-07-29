@@ -35,7 +35,7 @@ const App = () => {
         setToken(localToken);
       }
     }
-  });
+  }, [token]);
 
   return (
     <BrowserRouter>

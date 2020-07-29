@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
@@ -25,7 +25,7 @@ export const Dashboard: React.FC<props> = (props) => {
     }).then((data) => {
       return setCases(data)
     })
-  }, [])
+  }, [props.token])
 
   const getCases = (url: string) => {
     fetch(url, {

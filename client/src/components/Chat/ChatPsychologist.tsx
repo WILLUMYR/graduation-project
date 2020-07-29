@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
@@ -77,7 +77,7 @@ export const ChatPsychologist: React.FC<props> = props => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [history, props.token, props.currentCase]);
 
   const handleResponse = (response: any) => {
     if (response.status !== 201) return alert('Error');
@@ -158,13 +158,13 @@ export const ChatPsychologist: React.FC<props> = props => {
           <aside>
             {content.notes.map(note => {
               return (
-                <>
+                <div key={Math.random()}>
                   <h4>{note.text}</h4>
                   <p>{note.createdAt}</p>
-                </>
+                </div>
               );
             })}
-            <form action="">
+            <form action="submit" onSubmit={submitNote}>
               <input onChange={(event) => {
                 setNote(event.target.value);
               }} type="text" />
