@@ -2,6 +2,7 @@ import React, { useState, useEffect, ReactNode } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
+import './Dashboard.css';
 
 interface props {
   token: string;

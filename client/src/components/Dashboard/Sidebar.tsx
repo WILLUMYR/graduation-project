@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import './Dashboard.css';
 
 function DisplayButton(props: any) {
   const history = useHistory();
@@ -57,9 +58,7 @@ export default function Sidebar(props: any) {
     );
   } else {
     return (
-      <section className="right__content">
-        <p>Please select a case</p>
-      </section>
+      <div></div>
     );
   }
 }

@@ -40,15 +40,15 @@ export const ChatPsychologist: React.FC<props> = (props) => {
     }
 
     if (!props.currentCase) {
-      if (!window.localStorage.getItem('caseId')) {
+      if (window.localStorage.getItem('caseId')) {
+        console.log('number 2');
         history.push('/dashboard');
         return;
       }
 
       props.setCurrentCase(window.localStorage.getItem('caseId'));
     }
-
-    fetch(`/api/cases/${window.localStorage.getItem('caseId')}`, {
+    fetch(`/api/cases/${props.currentCase}`, {
       headers: {
         'content-type': 'application/json',
         'x-auth-token': props.token,
@@ -118,17 +118,17 @@ export const ChatPsychologist: React.FC<props> = (props) => {
     return (
       <>
         <main className="chat__content">
-          <section className="issue__content">
-            <h1>Your case has been sucessfully submitted</h1>
-            <p className="issue__text">{content.issue}</p>
-          </section>
-          <button
+          <button className="goBack__button"
             onClick={() => {
               history.goBack();
             }}
           >
             Go back
           </button>
+          <section className="issue__content">
+            <h1>CASE ID: {content._id}</h1>
+            <p className="issue__text">{content.issue}</p>
+          </section>
           <p>{userFeedback}</p>
           <section className="chat__messages">
             {content.messages.map((message: { text: React.ReactNode }) => {
