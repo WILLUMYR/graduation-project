@@ -161,7 +161,7 @@ export const ChatPsychologist: React.FC<props> = props => {
               }}
             >
               Go back
-          </button>
+            </button>
             <section className="issue__content">
               <h1>CASE ID: {content._id}</h1>
               <p className="issue__text">{content.issue}</p>
@@ -172,29 +172,15 @@ export const ChatPsychologist: React.FC<props> = props => {
                 return <ChatBubble key={Math.random()} message={message} />;
               })}
             </section>
-            <button onClick={() => {
-              setShowNotes(!showNotes)
-            }} className="notes__button">Case Notes</button>
-            <aside className={showNotes ? "show__notes" : "hide__notes"}>
-              {content.notes.map(note => {
-                return (
-                  <div key={Math.random()}>
-                    <h4>{note.text}</h4>
-                    <p>{moment(note.createdAt).format('L')}</p>
-                  </div>
-                );
-              })}
-              <form action="submit" onSubmit={submitNote}>
-                <input
-                  value={note}
-                  onChange={event => {
-                    setNote(event.target.value);
-                  }}
-                  type="text"
-                />
-                <input type="submit" />
-              </form>
-            </aside>
+            <button
+              onClick={() => {
+                setShowNotes(!showNotes);
+              }}
+              className="notes__button"
+            >
+              Case Notes
+            </button>
+
             <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
               <textarea
                 className="message__input"
@@ -207,6 +193,26 @@ export const ChatPsychologist: React.FC<props> = props => {
               <input className="message__button" type="submit" />
             </form>
           </main>
+          <aside className={showNotes ? 'show__notes' : 'hide__notes'}>
+            {content.notes.map(note => {
+              return (
+                <div key={Math.random()}>
+                  <h4>{note.text}</h4>
+                  <p>{moment(note.createdAt).format('L')}</p>
+                </div>
+              );
+            })}
+            <form action="submit" onSubmit={submitNote}>
+              <input
+                value={note}
+                onChange={event => {
+                  setNote(event.target.value);
+                }}
+                type="text"
+              />
+              <input type="submit" />
+            </form>
+          </aside>
         </div>
       </>
     );

@@ -64,7 +64,7 @@ h1 {
 }
 
 .issue__content {
-  min-width: 90%;
+  /* min-width: 90%; */
   max-width: 97%;
   text-align: center;
   background-color: white;
@@ -114,7 +114,7 @@ h1 {
 }
 
 .chat__messages {
-  width: 90vw;
+  /* width: 90vw; */
   height: auto;
   display: flex;
   margin-top: 50px;
@@ -203,21 +203,24 @@ h1 {
 }
 
 aside {
-  width: 300px;
+  /* width: 300px; */
   height: 100vh;
-  position: fixed;
+  /* position: fixed; */
+  overflow-x: hidden;
+  width: 0;
   top: 200px;
   right: -310px;
   background-color: #2e52ca;
 }
 
-.show__notes{
+.show__notes {
   transition: 0.1s ease;
-  right: 50px;
+  /* right: 50px; */
   background-color: cyan;
+  width: 30vw;
 }
 
-.hide__notes{
+.hide__notes {
   transition: 0.1s ease;
   background-color: coral;
 }
