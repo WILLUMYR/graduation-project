@@ -135,6 +135,14 @@ export const ChatPsychologist: React.FC<props> = (props) => {
               return <ChatBubble key={Math.random()} message={message} />;
             })}
           </section>
+          <button>Case Notes</button>
+          <aside>
+            <p></p>
+            <form action="">
+              <input type="text" />
+              <input type="submit" />
+            </form>
+          </aside>
           <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
             <textarea
               className="message__input"
