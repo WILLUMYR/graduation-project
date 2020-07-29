@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { check, validationResult } = require('express-validator');
-const auth = require('../middleware/auth')
-const { Cases, Patients, Psychologists } = require('../models')
+const { check/* , validationResult */ } = require('express-validator');
+const auth = require('../middleware/auth');
+const { Cases, Patients, Psychologists } = require('../models');
 
 /** Route     POST api/cases
  * Desc      Create new case
@@ -12,7 +12,7 @@ router.post('/', [check('issue', 'issue should not be blank').trim().not().isEmp
     const patientId = req.patient.id;
     const { issue } = req.body;
     const patientPopulated = await Patients.findById(req.patient.id).populate('cases').exec();
-    const activeCase = patientPopulated.cases.find(obj => obj.closed === false);
+    const activeCase = patientPopulated.cases.find((obj) => obj.closed === false);
     const patient = patientPopulated.depopulate('cases');
 
     if (activeCase === undefined) {
@@ -52,6 +52,7 @@ router.put('/:id/close', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+  return undefined;
 });
 
 /** Route     PUT api/cases/:id/message
@@ -99,6 +100,7 @@ router.put(
     } catch (error) {
       next(error);
     }
+    return undefined;
   },
 );
 
@@ -126,6 +128,7 @@ router.put('/:id/assign', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+  return undefined;
 });
 
 /** Route     PUT api/cases/:id/note
@@ -139,7 +142,10 @@ router.put(
   async (req, res, next) => {
     try {
       if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
-      const currentCase = await Cases.findOne({ _id: req.params.id, psychologistId: req.psychologist.id });
+      const currentCase = await Cases.findOne({
+        _id: req.params.id,
+        psychologistId: req.psychologist.id,
+      });
 
       const { text } = req.body;
 
@@ -149,10 +155,11 @@ router.put(
     } catch (error) {
       next(error);
     }
+    return undefined;
   },
 );
 
-/**Route     GET api/cases
+/** Route     GET api/cases
  * Desc      Get all cases.
  * Access    Private
  */
@@ -165,9 +172,10 @@ router.get('/', auth, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-/**Route     GET api/cases/unassigned
+/** Route     GET api/cases/unassigned
  * Desc      Get all unassigned cases.
  * Access    Private
  */
@@ -180,9 +188,10 @@ router.get('/unassigned', auth, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-/**Route     GET api/cases/assigned
+/** Route     GET api/cases/assigned
  * Desc      Get all assigned cases.
  * Access    Private
  */
@@ -194,20 +203,25 @@ router.get('/assigned', auth, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-/**Route     GET api/cases/:id
+/** Route     GET api/cases/:id
  * Desc      Get specific assigned case.
  * Access    Private
  */
 router.get('/:id', auth, async (req, res, next) => {
   try {
     if (!req.psychologist) return res.status(401).json({ msg: 'Not authorized' });
-    const currentCase = await Cases.findOne({ _id: req.params.id, psychologistId: req.psychologist.id });
+    const currentCase = await Cases.findOne({
+      _id: req.params.id,
+      psychologistId: req.psychologist.id,
+    });
     res.json(currentCase);
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-export default router;
+module.exports = router;

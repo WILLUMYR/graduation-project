@@ -21,7 +21,7 @@ const respondPayload = (id, res) => {
   });
 };
 
-/**Route     POST api/patients
+/** Route     POST api/patients
  * Desc      Create new user and get token
  * Access    Public
  */
@@ -59,10 +59,11 @@ router.post(
     } catch (err) {
       next(err);
     }
+    return undefined;
   },
 );
 
-/**Route     GET api/patients
+/** Route     GET api/patients
  * Desc      Get patient data.
  * Access    Private
  */
@@ -71,7 +72,7 @@ router.get('/', auth, async (req, res, next) => {
     if (!req.patient) return res.status(401).json({ msg: 'Not authorized' });
 
     const patient = await Patients.findById(req.patient.id).select('-password').populate('cases').exec();
-    const activeCase = patient.cases.find(obj => obj.closed === false);
+    const activeCase = patient.cases.find((obj) => obj.closed === false);
 
     patient.cases = activeCase ? [activeCase] : [];
 
@@ -79,9 +80,10 @@ router.get('/', auth, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-/**Route     POST api/patients/login
+/** Route     POST api/patients/login
  * Desc      Authenticate user and get token
  * Access    Public
  */
@@ -99,6 +101,7 @@ router.post('/login', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
 module.exports = router;
