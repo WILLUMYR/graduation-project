@@ -4,7 +4,7 @@ const Patients = require('./Patients');
 const Cases = require('./Cases');
 const Psychologists = require('./Psychologists');
 
-describe.skip('Model unit tests', () => {
+describe('Model unit tests', () => {
   let connection;
   let db;
 

@@ -9,10 +9,10 @@ const url = process.env.MONGO_URI;
 const port = process.env.PORT || 5000;
 
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'dev';
+  process.env.NODE_ENV = 'test';
 }
 
-if (process.env.NODE_ENV !== 'dev') {
+if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
