@@ -13,6 +13,10 @@ interface props {
 interface content {
   _id: string;
   issue: string;
+  notes: Array<{
+    text: string;
+    createdAt: Date;
+  }>;
   messages: Array<{
     text: string
   }>
@@ -23,6 +27,12 @@ const initContent = {
   issue: '',
   messages: [
     { text: '' }
+  ],
+  notes: [
+    {
+      text: '',
+      createdAt: Date.now()
+    }
   ]
 }
 
@@ -137,7 +147,14 @@ export const ChatPsychologist: React.FC<props> = (props) => {
           </section>
           <button>Case Notes</button>
           <aside>
-            <p></p>
+            {content.notes.map((note) => {
+              return (
+                <>
+                  <h4>{note.text}</h4>
+                  <p>{note.createdAt}</p>
+                </>
+              )
+            })}
             <form action="">
               <input type="text" />
               <input type="submit" />
