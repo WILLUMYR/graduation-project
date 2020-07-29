@@ -15,28 +15,26 @@ interface content {
   issue: string;
   notes: Array<{
     text: string;
-    createdAt: Date;
+    createdAt: number;
   }>;
   messages: Array<{
-    text: string
-  }>
+    text: string;
+  }>;
 }
 
 const initContent = {
   _id: '',
   issue: '',
-  messages: [
-    { text: '' }
-  ],
+  messages: [{ text: '' }],
   notes: [
     {
       text: '',
-      createdAt: Date.now()
-    }
-  ]
-}
+      createdAt: Date.now(),
+    },
+  ],
+};
 
-export const ChatPsychologist: React.FC<props> = (props) => {
+export const ChatPsychologist: React.FC<props> = props => {
   const [content, setContent] = useState<content>(initContent);
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
@@ -99,7 +97,9 @@ export const ChatPsychologist: React.FC<props> = (props) => {
       });
   };
 
-  const messageHandleSubmit: any = (event: any) => {
+  const submitNote = (event: React.FormEvent) => {};
+
+  const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     fetch(`/api/cases/${content._id}/message`, {
       method: 'PUT',
@@ -128,7 +128,8 @@ export const ChatPsychologist: React.FC<props> = (props) => {
     return (
       <>
         <main className="chat__content">
-          <button className="goBack__button"
+          <button
+            className="goBack__button"
             onClick={() => {
               history.goBack();
             }}
@@ -147,13 +148,13 @@ export const ChatPsychologist: React.FC<props> = (props) => {
           </section>
           <button>Case Notes</button>
           <aside>
-            {content.notes.map((note) => {
+            {content.notes.map(note => {
               return (
                 <>
                   <h4>{note.text}</h4>
                   <p>{note.createdAt}</p>
                 </>
-              )
+              );
             })}
             <form action="">
               <input type="text" />

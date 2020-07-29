@@ -56,7 +56,12 @@ const App = () => {
         </Route>
         <Route exact path="/chat/psychologist">
           {/*  */}
-          <ChatPsychologist token={token} saveToken={saveToken} currentCase={currentCase} setCurrentCase={setCurrentCase} />
+          <ChatPsychologist
+            token={token}
+            saveToken={saveToken}
+            currentCase={currentCase}
+            setCurrentCase={setCurrentCase}
+          />
         </Route>
         <Route exact path="/dashboard">
           {/*  */}
