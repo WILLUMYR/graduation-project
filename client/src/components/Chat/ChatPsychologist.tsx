@@ -40,6 +40,7 @@ export const ChatPsychologist: React.FC<props> = props => {
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
   const [note, setNote] = useState<string>('');
+  const [showNotes, setShowNotes] = useState<boolean>(false);
 
   const history = useHistory();
 
@@ -171,8 +172,10 @@ export const ChatPsychologist: React.FC<props> = props => {
                 return <ChatBubble key={Math.random()} message={message} />;
               })}
             </section>
-            <button className="notes__button">Case Notes</button>
-            <aside>
+            <button onClick={() => {
+              setShowNotes(!showNotes)
+            }} className="notes__button">Case Notes</button>
+            <aside className={showNotes ? "show__notes" : "hide__notes"}>
               {content.notes.map(note => {
                 return (
                   <div key={Math.random()}>
