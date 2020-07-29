@@ -194,6 +194,7 @@ export const ChatPsychologist: React.FC<props> = props => {
             </form>
           </main>
           <aside className={showNotes ? 'show__notes' : 'hide__notes'}>
+            <button onClick={() => { setShowNotes(!showNotes); }}>x</button>
             {content.notes.map(note => {
               return (
                 <div className="note__card" key={Math.random()}>
