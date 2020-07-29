@@ -196,7 +196,7 @@ export const ChatPsychologist: React.FC<props> = props => {
           <aside className={showNotes ? 'show__notes' : 'hide__notes'}>
             {content.notes.map(note => {
               return (
-                <div key={Math.random()}>
+                <div className="note__card" key={Math.random()}>
                   <h4>{note.text}</h4>
                   <p>{moment(note.createdAt).format('L')}</p>
                 </div>
