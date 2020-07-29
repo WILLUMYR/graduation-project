@@ -11,16 +11,25 @@ interface props {
 }
 
 interface content {
-  cases: Array<{ _id: string }>;
-  messages: Array<Object>;
+  _id: string;
+  issue: string;
+  messages: Array<{
+    text: string
+  }>
+}
+
+const initContent = {
+  _id: '',
+  issue: '',
+  messages: [
+    { text: '' }
+  ]
 }
 
 export const ChatPsychologist: React.FC<props> = (props) => {
-  const [content, setContent] = useState();
+  const [content, setContent] = useState<content>(initContent);
   const [message, setMessage] = useState<string>();
-  const [userFeedback, setUserFeedback] = useState('');
-
-  const inputEl = useRef<null | HTMLTextAreaElement>(null);
+  const [userFeedback, setUserFeedback] = useState<string>('');
 
   const history = useHistory();
 
@@ -93,7 +102,7 @@ export const ChatPsychologist: React.FC<props> = (props) => {
       handleResponse(response);
     });
 
-    inputEl.current.value = '';
+    setMessage('');
     window.scrollTo(0, document.body.scrollHeight);
   };
 
@@ -128,9 +137,9 @@ export const ChatPsychologist: React.FC<props> = (props) => {
           </section>
           <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
             <textarea
-              ref={inputEl}
               className="message__input"
               placeholder="Your message..."
+              value={message}
               onChange={event => {
                 setMessage(event.target.value);
               }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
@@ -9,18 +9,32 @@ interface props {
 }
 
 interface content {
-  cases: Array<{ _id: string }>
+  cases: Array<{
+    _id: string;
+    issue: string;
+    messages: Array<{
+      text: string
+    }>
+  }>
+}
+
+const initContent = {
+  cases: [
+    {
+      _id: '',
+      issue: '',
+      messages: [
+        { text: '' }
+      ]
+    }
+  ]
 }
 
 export const Chat: React.FC<props> = (props) => {
   const [issue, setIssue] = useState<string>('');
-  const [content, setContent] = useState<content>();
+  const [content, setContent] = useState<content>(initContent);
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
-
-  setInterval(() => { console.log(content); }, 3000)
-
-  const inputEl = useRef<null | HTMLTextAreaElement>(null);
 
   const history = useHistory();
 
@@ -99,7 +113,7 @@ export const Chat: React.FC<props> = (props) => {
       handleResponse(response);
     })
 
-    inputEl.current.value = '';
+    setMessage('');
     window.scrollTo(0, document.body.scrollHeight);
   }
 
@@ -162,9 +176,9 @@ export const Chat: React.FC<props> = (props) => {
           </section>
           <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
             <textarea
-              ref={inputEl}
               className="message__input"
               placeholder="Your message..."
+              value={message}
               onChange={event => {
                 setMessage(event.target.value);
               }}
