@@ -43,24 +43,26 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
 
   const history = useHistory();
 
+  const { token, currentCase, setCurrentCase } = props;
+
   useEffect(() => {
-    if (props.token === '' && !window.localStorage.getItem('token')) {
+    if (token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
       return;
     }
 
-    if (!props.currentCase) {
+    if (!currentCase) {
       if (window.localStorage.getItem('caseId')) {
         history.push('/dashboard');
         return;
       }
 
-      props.setCurrentCase(window.localStorage.getItem('caseId'));
+      setCurrentCase(window.localStorage.getItem('caseId'));
     }
-    fetch(`/api/cases/${props.currentCase}`, {
+    fetch(`/api/cases/${currentCase}`, {
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
     })
       .then((res) => res.json())
@@ -75,7 +77,7 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line no-console
         console.error(err);
       }); // eslint-disable-next-line react/destructuring-assignment
-  }, [history, props.token, props.currentCase]);
+  }, [history, token, currentCase, setCurrentCase]);
 
   interface Response {
     status: number;
@@ -183,7 +185,7 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
           <p>{userFeedback}</p>
           <section className="chat__messages">
             {// eslint-disable-next-line max-len
-              content.messages.map((oneMessage: { text: React.ReactNode }) => <ChatBubble key={Math.random()} message={oneMessage} />)
+              content.messages.map((oneMessage: any) => <ChatBubble key={Math.random()} message={oneMessage} />)
             }
           </section>
           <button

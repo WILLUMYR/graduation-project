@@ -176,7 +176,7 @@ const Chat: React.FC<Props> = (props: Props) => {
         <p>{userFeedback}</p>
         <section className="chat__messages">
           {// eslint-disable-next-line max-len
-            content.cases[0].messages.map((oneMessage: { text: React.ReactNode }) => <ChatBubble key={Math.random()} message={oneMessage} />)
+            content.cases[0].messages.map((oneMessage: any) => <ChatBubble key={Math.random()} message={oneMessage} />)
           }
         </section>
         <form onSubmit={messageHandleSubmit} className="message__form" action="submit">

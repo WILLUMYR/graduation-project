@@ -2,7 +2,7 @@ import React from 'react';
 import CaseCard from './CaseCard';
 
 interface Props {
-  selectCase: () => void;
+  selectCase: (arg0: string) => void;
   cases: Array<{}>;
 }
 
