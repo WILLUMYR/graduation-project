@@ -48,7 +48,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use((error, req, res, next) => {
   // eslint-disable-next-line no-console
   console.error(error);
