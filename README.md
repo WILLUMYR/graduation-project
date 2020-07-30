@@ -16,3 +16,17 @@ We're using:
 
 * Testing with mongodb-memory-server 
 For integration testing our endpoints we used a module called mongodb-memory-server which allows us to run tests on your a simulated mongodb database on your machine instead of a remote mockdatabase. 
+
+# To test this app on your machine: 
+Supply a .env file in the server folder which should with the following variables:
+MONGO_URI={YOUR_MONGO_DB_URI}
+JWTSECRET={YOUR_JWT_SECRET}
+NODE_ENV=dev
+
+```bash
+git clone git@github.com:Ymirke/graduation-project.git
+cd graduation-project
+npm run installAll
+npm run dev
+```
+
