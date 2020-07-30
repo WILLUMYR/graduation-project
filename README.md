@@ -1,5 +1,5 @@
 # graduation-project
-This was our graduation project for School of Applied techonology. During a period of two weeks we did two sprints to complete this project. 
+This is our graduation project for School of Applied techonology. During a period of two weeks we did two sprints to complete this project. 
 
 # Link to app:
 
