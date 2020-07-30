@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import history from '../history';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
@@ -13,8 +14,6 @@ const Dashboard: React.FC<Props> = (props: Props) => {
   const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
-
-  const history = useHistory();
 
   useEffect(() => {
     if (props.token === '' && !window.localStorage.getItem('token')) {

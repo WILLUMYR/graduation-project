@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from '../Home/Home';
 import Chat from '../Chat/Chat';
@@ -37,7 +37,7 @@ const App = () => {
   }, [token]);
 
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Navbar token={token} saveToken={saveToken} />
       <Switch>
         <Route exact path="/login/patient">
@@ -66,7 +66,7 @@ const App = () => {
           <Home />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 
