@@ -29,4 +29,3 @@ cd graduation-project
 npm run installAll
 npm run dev
 ```
-
