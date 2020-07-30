@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChatBubble from './ChatBubbles/ChatBubbles';
-import history from '../history';
 import './Chat.css';
 
 interface Props {
@@ -35,6 +34,7 @@ const Chat: React.FC<Props> = (props: Props) => {
   const [content, setContent] = useState<Content>(InitContent);
   const [message, setMessage] = useState<string>();
   const [userFeedback, setUserFeedback] = useState<string>('');
+  const history = useHistory();
 
   useEffect(() => {
     if (props.token === '' && !window.localStorage.getItem('token')) {
