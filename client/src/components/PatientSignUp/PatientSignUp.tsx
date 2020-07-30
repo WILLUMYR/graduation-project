@@ -3,12 +3,11 @@ import { useHistory, Link } from 'react-router-dom';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
-interface props {
-  token: string;
+interface Props {
   saveToken: (arg0: string) => void;
 }
 
-export const PatientSignUp: React.FC<props> = (props) => {
+const PatientSignUp: React.FC<Props> = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -28,8 +27,8 @@ export const PatientSignUp: React.FC<props> = (props) => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
-    }).then(response => response.json())
-      .then(data => {
+    }).then((response) => response.json())
+      .then((data) => {
         if (data.token) {
           props.saveToken(data.token);
           history.push('/chat');
@@ -48,7 +47,7 @@ export const PatientSignUp: React.FC<props> = (props) => {
               className="form__text"
               placeholder="Username"
               type="text"
-              onChange={event => {
+              onChange={(event) => {
                 setUsername(event.target.value);
               }}
             />
@@ -57,17 +56,21 @@ export const PatientSignUp: React.FC<props> = (props) => {
               className="form__text"
               placeholder="Password"
               type="password"
-              onChange={event => {
+              onChange={(event) => {
                 setPassword(event.target.value);
               }}
             />
             <br />
-            <p>Email is not required for anonymity reasons, but can be added <br></br>if you wish to recieve notifications about your open cases.</p>
+            <p>
+              Email is not required for anonymity reasons, but can be added
+              <br />
+              if you wish to recieve notifications about your open cases.
+            </p>
             <input
               className="form__text"
               placeholder="Email (optional)"
               type="text"
-              onChange={event => {
+              onChange={(event) => {
                 setEmail(event.target.value);
               }}
             />
@@ -76,7 +79,7 @@ export const PatientSignUp: React.FC<props> = (props) => {
               className="form__select"
               name="Select Gender"
               id=""
-              onChange={event => {
+              onChange={(event) => {
                 setGender(event.target.value);
               }}
             >
@@ -95,3 +98,5 @@ export const PatientSignUp: React.FC<props> = (props) => {
     </>
   );
 };
+
+export default PatientSignUp;

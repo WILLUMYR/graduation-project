@@ -15,16 +15,25 @@ function DisplayButton(props: any) {
       history.push('/chat/psychologist');
     });
   };
-
+  // eslint-disable-next-line react/destructuring-assignment
   if (props.buttonView === 'YourCases') {
-    return <button onClick={() => {
-      props.setCurrentCase(props.id);
-      history.push('/chat/psychologist');
-    }}>Open case</button>;
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          props.setCurrentCase(props.id);
+          history.push('/chat/psychologist');
+        }}
+      >
+        Open case
+      </button>
+    );
   }
+  // eslint-disable-next-line react/destructuring-assignment
   if (props.buttonView === 'Unassigned') {
     return (
       <button
+        type="button"
         onClick={() => {
           assignCase(props.id, props.token);
         }}
@@ -33,37 +42,44 @@ function DisplayButton(props: any) {
       </button>
     );
   }
-  if (props.buttonView === 'AllCases') {
-    return <div></div>;
-  }
-  if (true) return <div></div>;
+  return <div />;
 }
 
 export default function Sidebar(props: any) {
-
   useEffect(() => {
     props.setSidebar(null);
-  }, [props.buttonView])
-
+    // eslint-disable-next-line react/destructuring-assignment
+  }, [props.buttonView]);
+  // eslint-disable-next-line react/destructuring-assignment
   if (props.sidebar) {
     return (
       <section className="right__content">
-        <h1>{props.sidebar._id}</h1>
-        <h2>{props.sidebar.issue}</h2>
-        <p>Patient: {props.sidebar.patientId}</p>
+
+        <h1>
+          {
+            props.sidebar._id // eslint-disable-line no-underscore-dangle
+          }
+        </h1>
+        <p>
+          {props.sidebar.issue}
+        </p>
+        <p>
+          Patient:
+          {props.sidebar.patientId}
+        </p>
         <p>{moment(props.sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
 
         <DisplayButton
           buttonView={props.buttonView}
+          // eslint-disable-next-line no-underscore-dangle
           id={props.sidebar._id}
           token={props.token}
           setCurrentCase={props.setCurrentCase}
         />
       </section>
     );
-  } else {
-    return (
-      <div></div>
-    );
   }
+  return (
+    <div />
+  );
 }

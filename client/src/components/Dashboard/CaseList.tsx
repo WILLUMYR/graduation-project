@@ -1,22 +1,27 @@
 import React from 'react';
 import CaseCard from './CaseCard';
 
-const CaseList = (props: any) => {
+interface Props {
+  selectCase: (arg0: string) => void;
+  cases: Array<{}>;
+}
+
+const CaseList: React.FC<Props> = (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
   if (props.cases.length > 0) {
     return (
       <>
-        {props.cases.map((item: any) => {
-          return <CaseCard selectCase={props.selectCase} key={Math.random()} item={item} />;
-        })}
+        { // eslint-disable-next-line max-len
+          props.cases.map((item: any) => <CaseCard selectCase={props.selectCase} key={Math.random()} item={item} />)
+        }
       </>
     );
-  } else {
-    return (
-      <div>
-        <p>Loading cases...</p>
-      </div>
-    );
   }
+  return (
+    <div>
+      <p>Loading cases...</p>
+    </div>
+  );
 };
 
 export default CaseList;

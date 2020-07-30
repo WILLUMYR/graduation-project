@@ -7,14 +7,15 @@ interface Props {
   saveToken: (arg0: string) => void;
 }
 
-export const Navbar: React.FC<Props> = (props) => {
+const Navbar: React.FC<Props> = (props: Props) => {
   const history = useHistory();
 
   const logout = () => {
     props.saveToken('');
     history.push('/');
-  }
+  };
 
+  // eslint-disable-next-line react/destructuring-assignment
   if (props.token === '') {
     return (
       <header className="home__header">
@@ -25,15 +26,16 @@ export const Navbar: React.FC<Props> = (props) => {
           Login as a psychologist
         </Link>
       </header>
-    )
-  } else {
-    return (
-      <header className="home__header">
-        <Link className="header__title" to="/">
-          Placeholder
-        </Link>
-        <button className="header__link" onClick={() => { logout() }}>Log out</button>
-      </header>
-    )
+    );
   }
-}
+  return (
+    <header className="home__header">
+      <Link className="header__title" to="/">
+        Placeholder
+      </Link>
+      <button type="submit" className="header__link" onClick={() => { logout(); }}>Log out</button>
+    </header>
+  );
+};
+
+export default Navbar;

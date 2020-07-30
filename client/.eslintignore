@@ -1,13 +1,10 @@
 testdb.js
 .env
 node_modules
+**/*test.js
+**/*config.js
 
-
-
-
-/node_modules
-/.pnp
-.pnp.js
+**/*serviceWorker.ts
 
 /coverage
 

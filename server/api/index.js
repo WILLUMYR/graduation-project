@@ -1,5 +1,5 @@
-const patientsApi = require('./patients');
-const psychologistsApi = require('./psychologists');
-const casesApi = require('./cases');
+import { patientsApi } from './patients';
+import { psychologistsApi } from './psychologists';
+import { casesApi } from './cases';
 
-module.exports = { patientsApi, psychologistsApi, casesApi };
+export default { patientsApi, psychologistsApi, casesApi };

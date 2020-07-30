@@ -4,7 +4,7 @@ const Patients = require('./Patients');
 const Cases = require('./Cases');
 const Psychologists = require('./Psychologists');
 
-describe.skip('Model unit tests', () => {
+describe('Model unit tests', () => {
   let connection;
   let db;
 
@@ -14,13 +14,13 @@ describe.skip('Model unit tests', () => {
 
   it('Patient model', async () => {
     const newPatient = new Patients({
-      username: "user23",
-      password: "secret24",
-      email: "user23@protonmail.com",
-      gender: "female",
-    })
+      username: 'user23',
+      password: 'secret24',
+      email: 'user23@protonmail.com',
+      gender: 'female',
+    });
 
-    await newPatient.save()
+    await newPatient.save();
 
     const insertedUser = await Patients.findOne({ username: newPatient.username });
 
@@ -32,22 +32,22 @@ describe.skip('Model unit tests', () => {
 
   it('Case model', async () => {
     const newPatient = new Patients({
-      username: "user23",
-      password: "secret24",
-      email: "user23@protonmail.com",
-      gender: "female",
-    })
+      username: 'user23',
+      password: 'secret24',
+      email: 'user23@protonmail.com',
+      gender: 'female',
+    });
 
-    await newPatient.save()
+    await newPatient.save();
 
     const insertedUser = await Patients.findOne({ username: 'user23' });
 
     const newCase = new Cases({
       patientId: insertedUser.id,
       issue: 'Stringgg with problem here.',
-    })
+    });
 
-    await newCase.save()
+    await newCase.save();
 
     const insertedCase = await Cases.findOne({ issue: newCase.issue });
 
@@ -60,9 +60,9 @@ describe.skip('Model unit tests', () => {
       fullName: 'Sigmant Freid',
       email: 'SF@psycholigist.co.uk',
       password: 'sAc$$t,=?fevWr',
-    })
+    });
 
-    await newPsychologist.save()
+    await newPsychologist.save();
 
     const insertedPsycholoigst = await Psychologists.findOne({ email: newPsychologist.email });
 

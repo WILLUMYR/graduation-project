@@ -3,24 +3,23 @@ import { Link, useHistory } from 'react-router-dom';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
-interface props {
-  token: string;
+interface Props {
   saveToken: (arg0: string) => void;
 }
 
-interface submitObj {
+interface SubmitObj {
   username: string;
   password: string;
 }
 
-export const PatientLogin: React.FC<props> = (props) => {
+const PatientLogin: React.FC<Props> = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const obj: submitObj = {
+    const obj: SubmitObj = {
       username,
       password,
     };
@@ -29,12 +28,13 @@ export const PatientLogin: React.FC<props> = (props) => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(obj),
-    }).then(response => response.json())
-      .then(data => {
+    }).then((response) => response.json())
+      .then((data) => {
         if (data.token) {
           props.saveToken(data.token);
           history.push('/chat');
         } else {
+          // eslint-disable-next-line no-alert
           alert('Login failed.');
         }
       });
@@ -51,7 +51,7 @@ export const PatientLogin: React.FC<props> = (props) => {
               className="form__text"
               placeholder="Username"
               type="text"
-              onChange={event => {
+              onChange={(event) => {
                 setUsername(event.target.value);
               }}
             />
@@ -62,7 +62,7 @@ export const PatientLogin: React.FC<props> = (props) => {
               className="form__text"
               placeholder="Password"
               type="password"
-              onChange={event => {
+              onChange={(event) => {
                 setPassword(event.target.value);
               }}
             />
@@ -78,4 +78,6 @@ export const PatientLogin: React.FC<props> = (props) => {
       <Footer />
     </>
   );
-}
+};
+
+export default PatientLogin;

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
-import moment from 'moment';
 
-interface props {
+interface Props {
   token: string;
-  saveToken: (arg0: string) => void;
   currentCase: any;
   setCurrentCase: any;
 }
 
-interface content {
+interface Content {
   _id: string;
   issue: string;
   notes: Array<{
@@ -23,7 +22,7 @@ interface content {
   }>;
 }
 
-const initContent = {
+const InitContent = {
   _id: '',
   issue: '',
   messages: [{ text: '' }],
@@ -35,73 +34,80 @@ const initContent = {
   ],
 };
 
-export const ChatPsychologist: React.FC<props> = props => {
-  const [content, setContent] = useState<content>(initContent);
+const ChatPsychologist: React.FC<Props> = (props: Props) => {
+  const [content, setContent] = useState<Content>(InitContent);
   const [message, setMessage] = useState<string>();
-  const [userFeedback, setUserFeedback] = useState<string>('');
+  const [userFeedback/* ,setUserFeedback */] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [showNotes, setShowNotes] = useState<boolean>(false);
 
   const history = useHistory();
 
+  const { token, currentCase, setCurrentCase } = props;
+
   useEffect(() => {
-    if (props.token === '' && !window.localStorage.getItem('token')) {
+    if (token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
       return;
     }
 
-    if (!props.currentCase) {
+    if (!currentCase) {
       if (window.localStorage.getItem('caseId')) {
-        console.log('number 2');
         history.push('/dashboard');
         return;
       }
 
-      props.setCurrentCase(window.localStorage.getItem('caseId'));
+      setCurrentCase(window.localStorage.getItem('caseId'));
     }
-    fetch(`/api/cases/${props.currentCase}`, {
+    fetch(`/api/cases/${currentCase}`, {
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
     })
-      .then(res => {
-        console.log(res);
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
+      .then((res) => res.json())
+      .then((data) => {
         const json = JSON.stringify(data);
         window.localStorage.setItem('case', json);
+        // eslint-disable-next-line no-underscore-dangle
         window.localStorage.setItem('caseId', data._id);
         setContent(data);
       })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [history, props.token, props.currentCase]);
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }); // eslint-disable-next-line react/destructuring-assignment
+  }, [history, token, currentCase, setCurrentCase]);
 
-  const handleResponse = (response: any) => {
+  interface Response {
+    status: number;
+  }
+
+  const handleResponse = (response: Response) => {
+    // eslint-disable-next-line no-alert
     if (response.status !== 201) return alert('Error');
-
+    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}`, {
       headers: {
         'x-auth-token': props.token,
       },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setContent(data);
         const json = JSON.stringify(data);
         window.localStorage.setItem('case', json);
       })
-      .catch(err => {
-        console.log(err);
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
       });
+    return undefined;
   };
 
   const submitNote = (event: React.FormEvent) => {
     event.preventDefault();
+    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}/note`, {
       method: 'PUT',
       headers: {
@@ -110,10 +116,11 @@ export const ChatPsychologist: React.FC<props> = props => {
       },
       body: JSON.stringify({ text: note }),
     })
-      .then(response => {
+      .then((response) => {
         handleResponse(response);
       })
-      .catch(err => {
+      .catch((err) => {
+        // eslint-disable-next-line no-console
         console.error(err);
       });
 
@@ -122,6 +129,7 @@ export const ChatPsychologist: React.FC<props> = props => {
 
   const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}/message`, {
       method: 'PUT',
       headers: {
@@ -130,10 +138,11 @@ export const ChatPsychologist: React.FC<props> = props => {
       },
       body: JSON.stringify({ text: message }),
     })
-      .then(response => {
+      .then((response) => {
         handleResponse(response);
       })
-      .catch(err => {
+      .catch((err) => {
+        // eslint-disable-next-line no-console
         console.error(err);
       });
 
@@ -149,81 +158,89 @@ export const ChatPsychologist: React.FC<props> = props => {
         </main>
       </>
     );
-  } else {
-    return (
-      <>
-        <div className="all__content">
-          <main className="chat__content">
-            <div className="action__buttons">
-              <button
-                className="goBack__button"
-                onClick={() => {
-                  history.goBack();
-                }}
-              >
-                Go back
-            </button>
-              <button
-                onClick={() => {
-                  setShowNotes(!showNotes);
-                }}
-                className={showNotes ? 'show__notes__button' : 'hide__notes__button'}
-              >
-                Case Notes
-            </button>
-            </div>
-            <section className="issue__content">
-              <h1>CASE ID: {content._id}</h1>
-              <p className="issue__text">{content.issue}</p>
-            </section>
-            <p>{userFeedback}</p>
-            <section className="chat__messages">
-              {content.messages.map((message: { text: React.ReactNode }) => {
-                return <ChatBubble key={Math.random()} message={message} />;
-              })}
-            </section>
-            <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
-              <input
-                type="text"
-                className="message__input"
-                placeholder="Your message..."
-                value={message}
-                onChange={event => {
-                  setMessage(event.target.value);
-                }}
-              ></input>
-              <input className="message__button" type="submit" />
-            </form>
-          </main>
-          <aside className={showNotes ? 'show__notes' : 'hide__notes'}>
+  }
+  return (
+    <>
+      <div className="all__content">
+        <main className="chat__content">
+          <div className="action__buttons">
             <button
+              type="button"
+              className="goBack__button"
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              Go back
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 setShowNotes(!showNotes);
               }}
+              className={showNotes ? 'show__notes__button' : 'hide__notes__button'}
             >
-              x
+              Case Notes
             </button>
-            {content.notes.map(note => {
-              return (
-                <div className="note__card" key={Math.random()}>
-                  <h4>{note.text}</h4>
-                  <p>{moment(note.createdAt).format('L')}</p>
-                </div>
-              );
-            })}
-            <form className="note__form" action="submit" onSubmit={submitNote}>
-              <input className="note__form__input"
-                value={note}
-                onChange={event => {
-                  setNote(event.target.value);
-                }}
-                type="text"
-              />
-              <input className="note__form__button" type="submit" />
-            </form>
-          </aside>
-        </div>
-      </>
-    );
-  }
+          </div>
+          <section className="issue__content">
+
+            <h1>
+              CASE ID:
+              {// eslint-disable-next-line no-underscore-dangle
+                content._id
+              }
+            </h1>
+            <p className="issue__text">{content.issue}</p>
+          </section>
+          <p>{userFeedback}</p>
+          <section className="chat__messages">
+            {// eslint-disable-next-line max-len
+              content.messages.map((oneMessage: any) => <ChatBubble key={Math.random()} message={oneMessage} />)
+            }
+          </section>
+
+          <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
+            <input
+              type="text"
+              className="message__input"
+              placeholder="Your message..."
+              value={message}
+              onChange={(event) => {
+                setMessage(event.target.value);
+              }}
+            />
+            <input className="message__button" type="submit" />
+          </form>
+        </main>
+        <aside className={showNotes ? 'show__notes' : 'hide__notes'}>
+          <button
+            type="button"
+            onClick={() => {
+              setShowNotes(!showNotes);
+            }}
+          >
+            x
+          </button>
+          {content.notes.map((oneNote) => (// eslint-disable-next-line arrow-body-style
+            <div className="note__card" key={Math.random()}>
+              <h4>{oneNote.text}</h4>
+              <p>{moment(oneNote.createdAt).format('L')}</p>
+            </div>
+          ))}
+          <form className="note__form" action="submit" onSubmit={submitNote}>
+            <input
+              className="note__form__input"
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+              type="text"
+            />
+            <input className="note__form__button" type="submit" />
+          </form>
+        </aside>
+      </div>
+    </>
+  );
 };
+
+export default ChatPsychologist;

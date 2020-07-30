@@ -20,7 +20,7 @@ const respondPayload = (id, res) => {
   });
 };
 
-/**Route     POST api/psychologists
+/** Route     POST api/psychologists
  * Desc      Create new psychologist and get token
  * Access    Public
  */
@@ -56,10 +56,11 @@ router.post(
     } catch (err) {
       next(err);
     }
+    return undefined;
   },
 );
 
-/**Route     GET api/psychologists
+/** Route     GET api/psychologists
  * Desc      Get psychologists data.
  * Access    Private
  */
@@ -72,9 +73,10 @@ router.get('/', auth, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
-/**Route     POST api/psychologists/login
+/** Route     POST api/psychologists/login
  * Desc      Authenticate psychologist and get token
  * Access    Public
  */
@@ -92,6 +94,7 @@ router.post('/login', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+  return undefined;
 });
 
 module.exports = router;
