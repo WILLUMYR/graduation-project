@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import history from '../history';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
@@ -16,7 +15,7 @@ interface SubmitObj {
 const PatientLogin: React.FC<Props> = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

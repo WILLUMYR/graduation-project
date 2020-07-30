@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../Login.css';
 import { Link, useHistory } from 'react-router-dom';
-import history from '../history'
 import Footer from '../Footer/Footer';
 
 interface Props {
@@ -16,7 +15,7 @@ interface SubmitObj {
 const PsychologistLogin: React.FC<Props> = (props: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

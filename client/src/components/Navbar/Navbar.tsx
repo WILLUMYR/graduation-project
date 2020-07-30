@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import history from '../history';
 import './Navbar.css';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = (props: Props) => {
-  // const history = useHistory();
+  const history = useHistory();
 
   const logout = () => {
     props.saveToken('');

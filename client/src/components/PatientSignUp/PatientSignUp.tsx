@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import history from '../history';
 import '../Login.css';
 import Footer from '../Footer/Footer';
 
@@ -13,7 +12,7 @@ const PatientSignUp: React.FC<Props> = (props: Props) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('female');
-  // const history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

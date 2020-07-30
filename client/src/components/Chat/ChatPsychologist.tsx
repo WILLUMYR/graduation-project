@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import history from '../history';
 import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
@@ -41,7 +40,7 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
   const [userFeedback/* ,setUserFeedback */] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [showNotes, setShowNotes] = useState<boolean>(false);
-
+  const history = useHistory();
   const { token, currentCase, setCurrentCase } = props;
 
   useEffect(() => {

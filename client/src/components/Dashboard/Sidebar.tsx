@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
-import history from '../history'
 import moment from 'moment';
 import './Dashboard.css';
+import { useHistory } from 'react-router-dom';
 
 function DisplayButton(props: any) {
-
+  const history = useHistory();
   const assignCase = (caseId: any, token: string) => {
     fetch(`/api/cases/${caseId}/assign`, {
       method: 'PUT',
