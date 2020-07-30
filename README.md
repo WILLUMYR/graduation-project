@@ -19,8 +19,11 @@ For integration testing our endpoints we used a module called mongodb-memory-ser
 
 # To test this app on your machine: 
 Supply a .env file in the server folder which should with the following variables:
+
 MONGO_URI={YOUR_MONGO_DB_URI}
+
 JWTSECRET={YOUR_JWT_SECRET}
+
 NODE_ENV=dev
 
 ```bash
