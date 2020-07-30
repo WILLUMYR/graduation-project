@@ -44,6 +44,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}../client/build/index.html`));
+});
+
 app.use((error, req, res, next) => {
   // eslint-disable-next-line no-console
   console.error(error);

@@ -10,7 +10,7 @@ interface Props {
 const PatientSignUp: React.FC<Props> = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<any>();
   const [gender, setGender] = useState('female');
   const history = useHistory();
 
