@@ -3,6 +3,15 @@ This is our graduation project for School of Applied techonology. During a perio
 
 # Take a look for yourself:
 [Click here -> salt-graduation-project.herokuapp.com](https://salt-graduation-project.herokuapp.com/)
+
+<details>
+  <summary>You can create a patient account or login as a psychologist ...</summary>
+  psychologist login:
+  email: john.doe@gmail.com
+  password: secret
+</details>
+
+
 ( But please be friendly in your inputs 😊 )
 
 # Purpose of project
