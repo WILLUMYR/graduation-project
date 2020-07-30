@@ -39,14 +39,15 @@ app.use('/api/cases', require('./api/cases'));
 app.use('/api/patients', require('./api/patients'));
 app.use('/api/psychologists', require('./api/psychologists'));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}../client/build/index.html`));
+});
+
 app.use((req, res, next) => {
   res.status(404).send();
   next();
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}../client/build/index.html`));
-});
 
 app.use((error, req, res, next) => {
   // eslint-disable-next-line no-console
