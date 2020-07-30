@@ -12,7 +12,7 @@
     "startClient": "cd client && npm run start",
     "startServer": "cd server && npm run dev",
     "dev": "concurrently \"npm run startClient\" \"npm run startServer\"",
-    "start": "cd server && npm i && node index.js -r 80",
+    "start": "cd server && npm i && node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
