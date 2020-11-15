@@ -34,7 +34,6 @@ const PatientLogin: React.FC<Props> = (props: Props) => {
           props.saveToken(data.token);
           history.push('/chat');
         } else {
-          // eslint-disable-next-line no-alert
           alert('Login failed.');
         }
       });

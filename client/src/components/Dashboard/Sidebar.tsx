@@ -1,27 +1,46 @@
 import React, { useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import './Dashboard.css';
 import { useHistory } from 'react-router-dom';
 
-function DisplayButton(props: any) {
+interface displayButtonProps {
+  buttonView: string;
+  id: string;
+  token: string;
+  setCurrentCase: React.Dispatch<React.SetStateAction<any>>;
+}
+
+interface Sidebar {
+  setSidebar: React.Dispatch<React.SetStateAction<any>>;
+  sidebar: any;
+  buttonView: string;
+  token: string;
+  setCurrentCase: React.Dispatch<React.SetStateAction<any>>;
+}
+
+function DisplayButton({
+  buttonView,
+  id,
+  token,
+  setCurrentCase,
+}: displayButtonProps) {
   const history = useHistory();
   const assignCase = (caseId: any, token: string) => {
     fetch(`/api/cases/${caseId}/assign`, {
       method: 'PUT',
       headers: { 'x-auth-token': token },
     }).then(() => {
-      props.setCurrentCase(props.id);
+      setCurrentCase(id);
       history.push('/chat/psychologist');
     });
   };
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.buttonView === 'YourCases') {
+
+  if (buttonView === 'YourCases') {
     return (
       <button
         type="button"
         onClick={() => {
-          props.setCurrentCase(props.id);
+          setCurrentCase(id);
           history.push('/chat/psychologist');
         }}
       >
@@ -29,13 +48,13 @@ function DisplayButton(props: any) {
       </button>
     );
   }
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.buttonView === 'Unassigned') {
+
+  if (buttonView === 'Unassigned') {
     return (
       <button
         type="button"
         onClick={() => {
-          assignCase(props.id, props.token);
+          assignCase(id, token);
         }}
       >
         Assign case
@@ -45,40 +64,35 @@ function DisplayButton(props: any) {
   return <div />;
 }
 
-export default function Sidebar(props: any) {
+export default function Sidebar({
+  setSidebar,
+  buttonView,
+  sidebar,
+  token,
+  setCurrentCase,
+}: Sidebar) {
   useEffect(() => {
-    props.setSidebar(null);
-    // eslint-disable-next-line react/destructuring-assignment
-  }, [props.buttonView]);
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.sidebar) {
+    setSidebar(null);
+  }, [buttonView]);
+  if (sidebar) {
     return (
       <section className="right__content">
-
-        <h1>
-          {
-            props.sidebar._id // eslint-disable-line no-underscore-dangle
-          }
-        </h1>
-        <p>
-          {props.sidebar.issue}
-        </p>
+        <h1>{sidebar._id}</h1>
+        <p>{sidebar.issue}</p>
         <p>
           Patient:
-          {props.sidebar.patientId}
+          {sidebar.patientId}
         </p>
-        <p>{moment(props.sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p>{moment(sidebar.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
 
         <DisplayButton
-          buttonView={props.buttonView}
-          id={props.sidebar._id}
-          token={props.token}
-          setCurrentCase={props.setCurrentCase}
+          buttonView={buttonView}
+          id={sidebar._id}
+          token={token}
+          setCurrentCase={setCurrentCase}
         />
       </section>
     );
   }
-  return (
-    <div />
-  );
+  return <div />;
 }

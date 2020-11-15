@@ -34,7 +34,6 @@ const PsychologistLogin: React.FC<Props> = (props: Props) => {
           props.saveToken(data.token);
           history.push('/dashboard');
         } else {
-          // eslint-disable-next-line no-alert
           alert('Login failed.');
         }
       });

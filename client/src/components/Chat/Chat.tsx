@@ -62,7 +62,6 @@ const Chat: React.FC<Props> = ({ token }: Props) => {
   }
 
   function handleResponse(response: Response) {
-    // eslint-disable-next-line no-alert
     if (response.status !== 201) return alert('Error');
 
     fetch('/api/patients', {
