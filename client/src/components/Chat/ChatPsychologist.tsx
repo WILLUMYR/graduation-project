@@ -37,7 +37,7 @@ const InitContent = {
 const ChatPsychologist: React.FC<Props> = (props: Props) => {
   const [content, setContent] = useState<Content>(InitContent);
   const [message, setMessage] = useState<string>();
-  const [userFeedback/* ,setUserFeedback */] = useState<string>('');
+  const [userFeedback] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [showNotes, setShowNotes] = useState<boolean>(false);
   const history = useHistory();
@@ -67,13 +67,12 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
       .then((data) => {
         const json = JSON.stringify(data);
         window.localStorage.setItem('case', json);
-        // eslint-disable-next-line no-underscore-dangle
         window.localStorage.setItem('caseId', data._id);
         setContent(data);
       })
       .catch((err) => {
         console.error(err);
-      }); // eslint-disable-next-line react/destructuring-assignment
+      });
   }, [history, token, currentCase, setCurrentCase]);
 
   interface Response {
@@ -83,7 +82,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
   const handleResponse = (response: Response) => {
     // eslint-disable-next-line no-alert
     if (response.status !== 201) return alert('Error');
-    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}`, {
       headers: {
         'x-auth-token': props.token,
@@ -103,7 +101,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
 
   const submitNote = (event: React.FormEvent) => {
     event.preventDefault();
-    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}/note`, {
       method: 'PUT',
       headers: {
@@ -124,7 +121,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
 
   const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // eslint-disable-next-line no-underscore-dangle
     fetch(`/api/cases/${content._id}/message`, {
       method: 'PUT',
       headers: {
@@ -172,29 +168,34 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
               onClick={() => {
                 setShowNotes(!showNotes);
               }}
-              className={showNotes ? 'show__notes__button' : 'hide__notes__button'}
+              className={
+                showNotes ? 'show__notes__button' : 'hide__notes__button'
+              }
             >
               Case Notes
             </button>
           </div>
           <section className="issue__content">
-
             <h1>
               CASE ID:
-              {// eslint-disable-next-line no-underscore-dangle
-                content._id
-              }
+              {content._id}
             </h1>
             <p className="issue__text">{content.issue}</p>
           </section>
           <p>{userFeedback}</p>
           <section className="chat__messages">
-            {// eslint-disable-next-line max-len
-              content.messages.map((oneMessage: any) => <ChatBubble key={Math.random()} message={oneMessage} />)
+            {
+              content.messages.map((oneMessage: any) => (
+                <ChatBubble key={Math.random()} message={oneMessage} />
+              ))
             }
           </section>
 
-          <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
+          <form
+            onSubmit={messageHandleSubmit}
+            className="message__form"
+            action="submit"
+          >
             <input
               type="text"
               className="message__input"
@@ -216,7 +217,9 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
           >
             x
           </button>
-          {content.notes.map((oneNote) => (// eslint-disable-next-line arrow-body-style
+          {content.notes.map((
+            oneNote,
+          ) => (
             <div className="note__card" key={Math.random()}>
               <h4>{oneNote.text}</h4>
               <p>{moment(oneNote.createdAt).format('L')}</p>

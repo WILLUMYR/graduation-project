@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
 import './Dashboard.css';
 import { useHistory } from 'react-router-dom';
 import Sidebar from './Sidebar';
@@ -10,14 +9,14 @@ interface Props {
   setCurrentCase: any;
 }
 
-const Dashboard: React.FC<Props> = (props: Props) => {
+const Dashboard: React.FC<Props> = ({ token, setCurrentCase }: Props) => {
   const [cases, setCases] = useState([]);
   const [buttonView, setButtonView] = useState('YourCases');
   const [sidebar, setSidebar] = useState();
 
   const history = useHistory();
   useEffect(() => {
-    if (props.token === '' && !window.localStorage.getItem('token')) {
+    if (token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/psychologist');
     }
   });
@@ -25,16 +24,17 @@ const Dashboard: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     fetch('/api/cases/assigned', {
       headers: {
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
-    }).then((res) => res.json()).then((data) => setCases(data));
-    // eslint-disable-next-line react/destructuring-assignment
-  }, [props.token]);
+    })
+      .then((res) => res.json())
+      .then((data) => setCases(data));
+  }, [token]);
 
   const getCases = (url: string) => {
     fetch(url, {
       headers: {
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
     })
       .then((response) => response.json())
@@ -47,7 +47,6 @@ const Dashboard: React.FC<Props> = (props: Props) => {
   };
 
   const selectCase = (id: String) => {
-    // eslint-disable-next-line no-underscore-dangle
     const newCase = cases.filter((item: { _id: String }) => item._id === id);
     setSidebar(newCase[0]);
   };
@@ -56,7 +55,11 @@ const Dashboard: React.FC<Props> = (props: Props) => {
     <>
       <div className="dashboard__nav">
         <button
-          className={buttonView === 'YourCases' ? 'dashboard__button' : 'dashboard__button--not'}
+          className={
+            buttonView === 'YourCases'
+              ? 'dashboard__button'
+              : 'dashboard__button--not'
+          }
           type="button"
           onClick={() => {
             getCases('api/cases/assigned');
@@ -66,7 +69,11 @@ const Dashboard: React.FC<Props> = (props: Props) => {
           Your Cases
         </button>
         <button
-          className={buttonView === 'Unassigned' ? 'dashboard__button' : 'dashboard__button--not'}
+          className={
+            buttonView === 'Unassigned'
+              ? 'dashboard__button'
+              : 'dashboard__button--not'
+          }
           type="button"
           onClick={() => {
             getCases('api/cases/unassigned');
@@ -76,7 +83,11 @@ const Dashboard: React.FC<Props> = (props: Props) => {
           Unassigned Cases
         </button>
         <button
-          className={buttonView === 'AllCases' ? 'dashboard__button' : 'dashboard__button--not'}
+          className={
+            buttonView === 'AllCases'
+              ? 'dashboard__button'
+              : 'dashboard__button--not'
+          }
           type="button"
           onClick={() => {
             getCases('api/cases');
@@ -95,14 +106,8 @@ const Dashboard: React.FC<Props> = (props: Props) => {
           setSidebar={setSidebar}
           sidebar={sidebar}
           buttonView={buttonView}
-          token={
-            // eslint-disable-next-line react/destructuring-assignment
-            props.token
-          }
-          setCurrentCase={
-            // eslint-disable-next-line react/destructuring-assignment
-            props.setCurrentCase
-          }
+          token={token}
+          setCurrentCase={setCurrentCase}
         />
       </section>
     </>

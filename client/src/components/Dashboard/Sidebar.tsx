@@ -71,7 +71,6 @@ export default function Sidebar(props: any) {
 
         <DisplayButton
           buttonView={props.buttonView}
-          // eslint-disable-next-line no-underscore-dangle
           id={props.sidebar._id}
           token={props.token}
           setCurrentCase={props.setCurrentCase}

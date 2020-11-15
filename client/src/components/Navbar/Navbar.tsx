@@ -7,16 +7,15 @@ interface Props {
   saveToken: (arg0: string) => void;
 }
 
-const Navbar: React.FC<Props> = (props: Props) => {
+const Navbar: React.FC<Props> = ({ token, saveToken }: Props) => {
   const history = useHistory();
 
   const logout = () => {
-    props.saveToken('');
+    saveToken('');
     history.push('/');
   };
 
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.token === '') {
+  if (token === '') {
     return (
       <header className="home__header">
         <Link className="header__title" to="/">
@@ -33,7 +32,15 @@ const Navbar: React.FC<Props> = (props: Props) => {
       <Link className="header__title" to="/">
         Placeholder
       </Link>
-      <button type="submit" className="header__link" onClick={() => { logout(); }}>Log out</button>
+      <button
+        type="submit"
+        className="header__link"
+        onClick={() => {
+          logout();
+        }}
+      >
+        Log out
+      </button>
     </header>
   );
 };

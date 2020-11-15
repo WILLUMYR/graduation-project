@@ -4,12 +4,11 @@ interface Props {
   message: {
     respondent: string;
     text: string;
-  }
+  };
 }
 
-const ChatBubbles: React.FC<Props> = (props: Props) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  const { respondent, text } = props.message;
+const ChatBubbles: React.FC<Props> = ({ message }: Props) => {
+  const { respondent, text } = message;
 
   if (respondent === 'patient') {
     return (

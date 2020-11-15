@@ -99,7 +99,6 @@ const Chat: React.FC<Props> = ({ token }: Props) => {
 
   const messageHandleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // eslint-disable-next-line no-underscore-dangle
     fetch(`api/cases/${content.cases[0]._id}/message`, {
       method: 'PUT',
       headers: {
@@ -116,7 +115,6 @@ const Chat: React.FC<Props> = ({ token }: Props) => {
   };
 
   const closeCase = async () => {
-    // eslint-disable-next-line no-underscore-dangle
     const results = await fetch(`/api/cases/${content.cases[0]._id}/close`, {
       method: 'PUT',
       headers: {
@@ -140,9 +138,9 @@ const Chat: React.FC<Props> = ({ token }: Props) => {
   };
 
   if (
-    !content ||
-    content.cases.length === 0 ||
-    !window.localStorage.getItem('case')
+    !content
+    || content.cases.length === 0
+    || !window.localStorage.getItem('case')
   ) {
     return (
       <>
@@ -186,12 +184,9 @@ const Chat: React.FC<Props> = ({ token }: Props) => {
         </button>
         <p>{userFeedback}</p>
         <section className="chat__messages">
-          {
-            // eslint-disable-next-line max-len
-            content.cases[0].messages.map((oneMessage: any) => (
-              <ChatBubble key={Math.random()} message={oneMessage} />
-            ))
-          }
+          {content.cases[0].messages.map((oneMessage: any) => (
+            <ChatBubble key={Math.random()} message={oneMessage} />
+          ))}
         </section>
         <form
           onSubmit={messageHandleSubmit}
