@@ -53,7 +53,6 @@ const Chat: React.FC<Props> = (props: Props) => {
           window.localStorage.setItem('case', json);
         })
         .catch((err) => {
-          // eslint-disable-next-line no-console
           console.error(err);
           return undefined;
         });
@@ -81,7 +80,6 @@ const Chat: React.FC<Props> = (props: Props) => {
         window.localStorage.setItem('case', json);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       });
     return undefined;

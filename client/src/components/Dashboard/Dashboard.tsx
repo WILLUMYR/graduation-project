@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import './Dashboard.css';
+import { useHistory } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import CaseList from './CaseList';
-import { useHistory } from 'react-router-dom';
 
 interface Props {
   token: string;
@@ -42,7 +42,6 @@ const Dashboard: React.FC<Props> = (props: Props) => {
         setCases(data);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       });
   };

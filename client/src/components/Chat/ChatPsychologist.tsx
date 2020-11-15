@@ -72,7 +72,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
         setContent(data);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       }); // eslint-disable-next-line react/destructuring-assignment
   }, [history, token, currentCase, setCurrentCase]);
@@ -97,7 +96,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
         window.localStorage.setItem('case', json);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       });
     return undefined;
@@ -118,7 +116,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
         handleResponse(response);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       });
 
@@ -140,7 +137,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
         handleResponse(response);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.error(err);
       });
 
