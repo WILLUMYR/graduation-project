@@ -23,11 +23,9 @@ if (process.env.NODE_ENV !== 'test') {
   });
 
   const db = mongoose.connection;
-  // eslint-disable-next-line no-console
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', () => {
-    // eslint-disable-next-line no-console
-    console.log('MongoDB successfully connected!');
+    console.info('MongoDB successfully connected!');
   });
 }
 
@@ -49,7 +47,6 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  // eslint-disable-next-line no-console
   console.error(error);
   res.status(500).send(error.message);
   next();
