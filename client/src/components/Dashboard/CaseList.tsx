@@ -11,10 +11,11 @@ const CaseList: React.FC<Props> = ({ selectCase, cases }: Props) => {
     return (
       <>
         {
-          cases.map((item: any) => (
+          cases.map((item: any, index) => (
             <CaseCard
               selectCase={selectCase}
               key={Math.random()}
+              tabIndex={index}
               item={item}
             />
           ))

@@ -80,7 +80,6 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
   }
 
   const handleResponse = (response: Response) => {
-    no-alert
     if (response.status !== 201) return alert('Error');
     fetch(`/api/cases/${content._id}`, {
       headers: {
@@ -184,11 +183,9 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
           </section>
           <p>{userFeedback}</p>
           <section className="chat__messages">
-            {
-              content.messages.map((oneMessage: any) => (
-                <ChatBubble key={Math.random()} message={oneMessage} />
-              ))
-            }
+            {content.messages.map((oneMessage: any) => (
+              <ChatBubble key={Math.random()} message={oneMessage} />
+            ))}
           </section>
 
           <form
@@ -217,9 +214,7 @@ const ChatPsychologist: React.FC<Props> = (props: Props) => {
           >
             x
           </button>
-          {content.notes.map((
-            oneNote,
-          ) => (
+          {content.notes.map((oneNote) => (
             <div className="note__card" key={Math.random()}>
               <h4>{oneNote.text}</h4>
               <p>{moment(oneNote.createdAt).format('L')}</p>

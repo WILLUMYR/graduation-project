@@ -3,7 +3,7 @@ import moment from 'moment';
 import './Dashboard.css';
 import { useHistory } from 'react-router-dom';
 
-interface displayButtonProps {
+interface DisplayButtonProps {
   buttonView: string;
   id: string;
   token: string;
@@ -23,12 +23,12 @@ function DisplayButton({
   id,
   token,
   setCurrentCase,
-}: displayButtonProps) {
+}: DisplayButtonProps) {
   const history = useHistory();
-  const assignCase = (caseId: any, token: string) => {
+  const assignCase = (caseId: any, tokenString: string) => {
     fetch(`/api/cases/${caseId}/assign`, {
       method: 'PUT',
-      headers: { 'x-auth-token': token },
+      headers: { 'x-auth-token': tokenString },
     }).then(() => {
       setCurrentCase(id);
       history.push('/chat/psychologist');

@@ -2,7 +2,9 @@ import React from 'react';
 import moment from 'moment';
 
 interface Props {
+  key: number;
   selectCase: (arg0: string) => void;
+  tabIndex: number;
   item: {
     _id: string;
     issue: string;
@@ -11,14 +13,18 @@ interface Props {
   };
 }
 
-export default function CaseCard({ item, selectCase }: Props) {
+export default function CaseCard({
+  item, tabIndex, key, selectCase,
+}: Props) {
   return (
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
+      key={key}
+      role="button"
       onClick={() => {
         selectCase(item._id);
       }}
+      tabIndex={tabIndex}
       className="content__card"
     >
       <h2>
