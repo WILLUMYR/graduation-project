@@ -15,6 +15,7 @@
     }
   },
   "rules": {
-    "no-console": [2, { "allow": ["warn", "error"] }]
+    "no-console": [2, { "allow": ["warn", "error"] }],
+    "no-underscore-dangle": "allow"
   }
 }

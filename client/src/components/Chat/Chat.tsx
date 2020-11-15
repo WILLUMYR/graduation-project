@@ -4,7 +4,7 @@ import ChatBubble from './ChatBubbles/ChatBubbles';
 import './Chat.css';
 
 interface Props {
-  token: string
+  token: string;
 }
 
 interface Content {
@@ -12,9 +12,9 @@ interface Content {
     _id: string;
     issue: string;
     messages: Array<{
-      text: string
-    }>
-  }>
+      text: string;
+    }>;
+  }>;
 }
 
 const InitContent = {
@@ -22,14 +22,12 @@ const InitContent = {
     {
       _id: '',
       issue: '',
-      messages: [
-        { text: '' },
-      ],
+      messages: [{ text: '' }],
     },
   ],
 };
 
-const Chat: React.FC<Props> = (props: Props) => {
+const Chat: React.FC<Props> = ({ token }: Props) => {
   const [issue, setIssue] = useState<string>('');
   const [content, setContent] = useState<Content>(InitContent);
   const [message, setMessage] = useState<string>();
@@ -37,13 +35,13 @@ const Chat: React.FC<Props> = (props: Props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (props.token === '' && !window.localStorage.getItem('token')) {
+    if (token === '' && !window.localStorage.getItem('token')) {
       history.push('/login/patient');
     } else {
       fetch('/api/patients', {
         headers: {
           'content-type': 'application/json',
-          'x-auth-token': props.token,
+          'x-auth-token': token,
         },
       })
         .then((res) => res.json())
@@ -57,8 +55,7 @@ const Chat: React.FC<Props> = (props: Props) => {
           return undefined;
         });
     }
-    // eslint-disable-next-line react/destructuring-assignment
-  }, [props.token, history]);
+  }, [token, history]);
 
   interface Response {
     status: number;
@@ -71,9 +68,10 @@ const Chat: React.FC<Props> = (props: Props) => {
     fetch('/api/patients', {
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
-    }).then((res) => res.json())
+    })
+      .then((res) => res.json())
       .then((data) => {
         setContent(data);
         const json = JSON.stringify(data);
@@ -91,7 +89,7 @@ const Chat: React.FC<Props> = (props: Props) => {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
       body: JSON.stringify({ issue }),
     }).then((response) => {
@@ -106,7 +104,7 @@ const Chat: React.FC<Props> = (props: Props) => {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
       body: JSON.stringify({ text: message }),
     }).then((response) => {
@@ -122,7 +120,7 @@ const Chat: React.FC<Props> = (props: Props) => {
     const results = await fetch(`/api/cases/${content.cases[0]._id}/close`, {
       method: 'PUT',
       headers: {
-        'x-auth-token': props.token,
+        'x-auth-token': token,
       },
     });
 
@@ -141,7 +139,11 @@ const Chat: React.FC<Props> = (props: Props) => {
     }
   };
 
-  if (!content || content.cases.length === 0 || !window.localStorage.getItem('case')) {
+  if (
+    !content ||
+    content.cases.length === 0 ||
+    !window.localStorage.getItem('case')
+  ) {
     return (
       <>
         <main className="chat__content">
@@ -155,7 +157,11 @@ const Chat: React.FC<Props> = (props: Props) => {
                   setIssue(event.target.value);
                 }}
               />
-              <input className="issue__button" type="submit" value="Submit issue" />
+              <input
+                className="issue__button"
+                type="submit"
+                value="Submit issue"
+              />
             </form>
           </section>
         </main>
@@ -169,14 +175,29 @@ const Chat: React.FC<Props> = (props: Props) => {
         <section className="issue__content">
           <p className="issue__text">{content.cases[0].issue}</p>
         </section>
-        <button type="button" className="close__case__button" onClick={() => { closeCase(); }}>Close case</button>
+        <button
+          type="button"
+          className="close__case__button"
+          onClick={() => {
+            closeCase();
+          }}
+        >
+          Close case
+        </button>
         <p>{userFeedback}</p>
         <section className="chat__messages">
-          {// eslint-disable-next-line max-len
-            content.cases[0].messages.map((oneMessage: any) => <ChatBubble key={Math.random()} message={oneMessage} />)
+          {
+            // eslint-disable-next-line max-len
+            content.cases[0].messages.map((oneMessage: any) => (
+              <ChatBubble key={Math.random()} message={oneMessage} />
+            ))
           }
         </section>
-        <form onSubmit={messageHandleSubmit} className="message__form" action="submit">
+        <form
+          onSubmit={messageHandleSubmit}
+          className="message__form"
+          action="submit"
+        >
           <input
             type="text"
             className="message__input"
